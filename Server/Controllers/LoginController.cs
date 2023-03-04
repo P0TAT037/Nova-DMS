@@ -11,16 +11,14 @@ namespace Nova_DMS.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private IConfiguration? config;
-        private string? ConnectionString;
-        private SqlConnection db;
+        private string? _ConnectionString;
+        private SqlConnection? _db;
 
-        public LoginController() {
+        public LoginController(IConfiguration config) {
             try
             {
-                config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-                ConnectionString = config.GetConnectionString("SQLServer");
-                db= new SqlConnection(ConnectionString);
+                _ConnectionString = config.GetConnectionString("SQLServer");
+                _db = new SqlConnection(_ConnectionString);
 
             }catch(Exception ex)
             {
@@ -32,7 +30,7 @@ namespace Nova_DMS.Controllers
         [HttpGet]
         public IEnumerable<User> LogIn(string username, string password) {
             var param = new { username = username, password = password };
-            return db.Query<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
+            return _db.Query<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
         }
 
         [HttpPost]
@@ -40,7 +38,7 @@ namespace Nova_DMS.Controllers
             var param = new {name = name, username = username, password = password};
             try
             {
-                return db.Execute("INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)", param);
+                return _db.Execute("INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)", param);
 
             }
             catch

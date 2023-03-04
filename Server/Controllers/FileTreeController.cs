@@ -5,7 +5,7 @@ namespace Nova_DMS.Controllers
 {
     [Route("/getTree")]
     [ApiController]
-    public class FileTreeController : Controller
+    public class FileTreeController : ControllerBase
     {
         [HttpGet]
         public List<Obj> Get()
