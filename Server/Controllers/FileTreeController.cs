@@ -3,9 +3,9 @@ using Nova_DMS.Models;
 
 namespace Nova_DMS.Controllers
 {
-    [Route("/getTree")]
+    [Route("api/getTree")]
     [ApiController]
-    public class FileTreeController : ControllerBase
+    public class FileTreeController : Controller
     {
         [HttpGet]
         public List<Obj> Get()

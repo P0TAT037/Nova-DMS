@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Nova_DMS.Services;
 
-public class MinIoOps:IMinIoOps
+public class MinIoService:IMinIoService
 {
     private string _endpoint = "localhost:9000";
     private string _accessKey = "dms-backend";
@@ -19,7 +19,7 @@ public class MinIoOps:IMinIoOps
     public string SecretKey { get => _secretKey; set => _secretKey = value; }
     public string BucketName { get => _bucketName; set => _bucketName = value; }
 
-    public MinIoOps()
+    public MinIoService()
     {
         _client = new MinioClient()
                             .WithEndpoint(Endpoint)
@@ -91,7 +91,7 @@ public class MinIoOps:IMinIoOps
         return data;
     }
 
-    public async Task UploadObjectAsync( string objName, string contentType, byte[] obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
+    public async Task UploadObjectAsync( string objName, string contentType, Stream obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
     {
 
         minioClient = minioClient == null ? _client : minioClient;
@@ -113,7 +113,8 @@ public class MinIoOps:IMinIoOps
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(bucketName)
             .WithObject(objName)
-            .WithRequestBody(obj)
+            .WithStreamData(obj)
+            .WithObjectSize(obj.Length)
             .WithContentType(contentType);
         await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
 

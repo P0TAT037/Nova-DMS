@@ -7,29 +7,29 @@ using System.Data.Common;
 
 namespace Nova_DMS.Controllers
 {
-    [Route("/user")]
+    [Route("api/user")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class LoginController : Controller
     {
-        private string? _ConnectionString;
         private SqlConnection? _db;
 
-        public LoginController(IConfiguration config) {
+        public LoginController(IConfiguration config, SqlConnection conn) {
             try
             {
-                _ConnectionString = config.GetConnectionString("SQLServer");
-                _db = new SqlConnection(_ConnectionString);
+                var _ConnectionString = config.GetConnectionString("SQLServer");
+                conn.ConnectionString = _ConnectionString;
+                _db = conn;
 
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
-        
-        
+             
         [HttpGet]
         public IEnumerable<User> LogIn(string username, string password) {
-            var param = new { username = username, password = password };
+            var param = new { username, password };
             return _db.Query<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
         }
 
@@ -38,13 +38,15 @@ namespace Nova_DMS.Controllers
             var param = new {name = name, username = username, password = password};
             try
             {
-                return _db.Execute("INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)", param);
+                var sql = "INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)" +
+                          "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+                    return _db.Query<int>(sql, param).Single();
 
             }
             catch
             {
 
-                return 0;
+                return -1;
             }
         }
     }
