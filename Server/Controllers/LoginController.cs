@@ -5,49 +5,40 @@ using Microsoft.Data.SqlClient;
 using Nova_DMS.Models;
 using System.Data.Common;
 
-namespace Nova_DMS.Controllers
+namespace Nova_DMS.Controllers;
+
+[Route("api/user")]
+[ApiController]
+public class LoginController : Controller
 {
-    [Route("api/user")]
-    [ApiController]
-    public class LoginController : Controller
-    {
-        private SqlConnection? _db;
+    private readonly SqlConnection? _db = null!;
 
-        public LoginController(IConfiguration config, SqlConnection conn) {
-            try
-            {
-                var _ConnectionString = config.GetConnectionString("SQLServer");
-                conn.ConnectionString = _ConnectionString;
-                _db = conn;
+    public LoginController(IConfiguration config) {
+        try
+        {
+            var _ConnectionString = config.GetConnectionString("SQLServer");
+            _db = new SqlConnection(_ConnectionString);
 
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
-             
-        [HttpGet]
-        public IEnumerable<User> LogIn(string username, string password) {
-            var param = new { username, password };
-            return _db.Query<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
+    }
+         
+    [HttpGet]
+    public async Task<IEnumerable<User>> LogIn(string username, string password) {
+        var param = new { username, password };
+        return await _db.QueryAsync<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
+    }
 
-        [HttpPost]
-        public int SignUp(string name, string username, string password) {
-            var param = new {name = name, username = username, password = password};
-            try
-            {
-                var sql = "INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)" +
-                          "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-                    return _db.Query<int>(sql, param).Single();
-
-            }
-            catch
-            {
-
-                return -1;
-            }
-        }
+    [HttpPost]
+    public async Task<IEnumerable<int>> SignUp(string name, string username, string password) {
+        var param = new {name = name, username = username, password = password};
+        
+        var sql = "INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)" +
+                    "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+        return await _db.QueryAsync<int>(sql, param);
+        
     }
 }
