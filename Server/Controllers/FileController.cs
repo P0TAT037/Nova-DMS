@@ -57,7 +57,7 @@ public class FileController : Controller
             
             return fileId;
         }
-        catch(Exception ex)
+        catch
         {
             return -1;
         }
@@ -65,6 +65,5 @@ public class FileController : Controller
         //TODO:
         // - HeirarchyId will not work, look for another way
         // - Add file metadata to ElasticSearch db
-        // - return file id if the process is successfull else return -1
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Nova_DMS.Models;
+using System.ComponentModel;
 using System.Data.Common;
 
 namespace Nova_DMS.Controllers;
@@ -34,6 +35,7 @@ public class LoginController : Controller
 
     [HttpPost]
     public async Task<IEnumerable<int>> SignUp(string name, string username, string password) {
+
         var param = new {name = name, username = username, password = password};
         
         var sql = "INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)" +
