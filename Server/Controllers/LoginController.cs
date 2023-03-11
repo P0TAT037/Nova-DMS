@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Nova_DMS.Models;
 using System.ComponentModel;
+using System.Data;
 using System.Data.Common;
 
 namespace Nova_DMS.Controllers;
@@ -12,25 +13,23 @@ namespace Nova_DMS.Controllers;
 [ApiController]
 public class LoginController : Controller
 {
-    private readonly SqlConnection? _db = null!;
+    private readonly string _connectionString  = null!;
 
     public LoginController(IConfiguration config) {
-        try
-        {
-            var _ConnectionString = config.GetConnectionString("SQLServer");
-            _db = new SqlConnection(_ConnectionString);
+        
+        _connectionString = config.GetConnectionString("SQLServer")!;
 
-        }
-        catch(Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
     }
          
     [HttpGet]
-    public async Task<IEnumerable<User>> LogIn(string username, string password) {
-        var param = new { username, password };
-        return await _db.QueryAsync<User>("SELECT NAME FROM NOV.USERS WHERE USERNAME = @username AND PASSWORD = @password", param);
+    public async Task<User> LogIn(string username, string password) {
+        var param = new DynamicParameters();
+        param.Add("@username", username);
+        param.Add("@password", password);
+        
+        using (var _db = new SqlConnection(_connectionString)) { 
+            return await _db.QueryFirstOrDefaultAsync<User>("Select * FROM NOV.GetUser(@username, @password)", param);
+        }
     }
 
     [HttpPost]
@@ -40,7 +39,10 @@ public class LoginController : Controller
         
         var sql = "INSERT INTO NOV.USERS (NAME, USERNAME, PASSWORD) VALUES (@name, @username, @password)" +
                     "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-        return await _db.QueryAsync<int>(sql, param);
         
+        using(var _db = new SqlConnection(_connectionString))
+        {
+            return await _db.QueryAsync<int>(sql, param);
+        }
     }
 }

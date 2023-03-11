@@ -2,8 +2,8 @@
 {
     public class Obj
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string Dir { get; set; }
+        public string HID { get; set; } = null!;
     }
 }
