@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options => builder.Configuration.Bind("JwtSettings", options));
 
-builder.Services.AddScoped<IMinIoService, MinIoService>();
+builder.Services.AddScoped<IObjStorageService, MinIoService>();
 
 var app = builder.Build();
 
