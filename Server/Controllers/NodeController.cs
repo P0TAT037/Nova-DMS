@@ -93,8 +93,7 @@ public class NodeController : ControllerBase
                     _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
                     
                     var fs = file.OpenReadStream();
-                    await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);
-                    
+                    await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);   
                 }
                 
                 var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID=nodeDataDTO.UserId });
