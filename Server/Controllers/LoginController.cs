@@ -11,7 +11,7 @@ namespace Nova_DMS.Controllers;
 
 [Route("api/user")]
 [ApiController]
-public class LoginController : Controller
+public class LoginController : ControllerBase
 {
     private readonly string _connectionString  = null!;
 

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Nova_DMS.Services;
+using Nova_DMS.Services.Extenstions;
 
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine();
@@ -23,6 +24,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddElasticSearch(builder.Configuration);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options => builder.Configuration.Bind("JwtSettings", options));
 
