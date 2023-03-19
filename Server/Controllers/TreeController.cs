@@ -8,11 +8,11 @@ namespace Nova_DMS.Controllers
 {
     [Route("api/getNodes/")]
     [ApiController]
-    public class FileTreeController : Controller
+    public class TreeController : ControllerBase
     {
         private readonly SqlConnection? _db;
 
-        public FileTreeController(IMinIoService ms, IConfiguration config)
+        public TreeController(IObjStorageService ms, IConfiguration config)
         {
             
              var _ConnectionString = config.GetConnectionString("SQLServer");
@@ -20,15 +20,6 @@ namespace Nova_DMS.Controllers
            
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Obj>> Get(int userId, int repoId, string hierarchyId)
-        {
-            DynamicParameters param = new DynamicParameters();
-            param.Add("userId", userId);
-            param.Add("repoId", repoId);
-            param.Add("hierarchyId", hierarchyId);
-            return await _db.QueryAsync<Obj>("SELECT * from NOV.GetNodes(@userId, @repoId, cast(@hierarchyId as hierarchyid))", param);
-            
-        }
+        
     }
 }
