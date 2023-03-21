@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Nova_DMS.Services;
 using Nova_DMS.Services.Extenstions;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 Console.WriteLine();
@@ -22,12 +26,32 @@ builder.Services.AddCors(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o => {
+    var securityDefinition = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        In = ParameterLocation.Header,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    };
+    o.AddSecurityDefinition("oauth2", securityDefinition);
+    o.OperationFilter<SecurityRequirementsOperationFilter>();;
+});
 
 
 builder.Services.AddElasticSearch(builder.Configuration);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme,options => builder.Configuration.Bind("JwtSettings", options));
+builder.Services.AddAuthentication()
+    .AddJwtBearer(options => options.TokenValidationParameters = new (){
+        
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]!)),
+        
+        ValidateIssuer = false,
+        ValidateAudience = false,   
+
+        ValidateLifetime = true,
+    });
 
 builder.Services.AddScoped<IObjStorageService, MinIoService>();
 
@@ -43,8 +67,9 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
 app.UseCors();
-app.UseAuthentication();
+
 app.UseAuthorization();
 
 

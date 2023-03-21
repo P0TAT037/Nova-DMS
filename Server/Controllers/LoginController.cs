@@ -69,26 +69,31 @@ public class LoginController : ControllerBase
             return BadRequest("wrong username or password");
         }
         
+        //TODO: add user roles to the user model and the token claims.
         var user = new User { Id = result.Id, Username= username ,Level = result.Level};
-        string token = CreatToken(user);
+        string token = GenerateToken(user);
         
         return Ok(new { result.Name, token });
     }
 
-    private string CreatToken(User user)
+    private string GenerateToken(User user)
     {
         List<Claim> claims = new List<Claim>()
         {
-            new Claim("Id", user.ToString()!),
-            new Claim("Username", user.Username),
-            new Claim("Level", user.Level.ToString()),
+            new Claim("id", user.ToString()!),
+            new Claim("username", user.Username),
+            new Claim("level", user.Level.ToString()),
         };
+
+        var issuer = _config["JWT:Issuer"];
+
+        var audience = _config["JWT:Audience"];
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]!));
 
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
-        var token = new JwtSecurityToken(claims: claims, signingCredentials: cred, expires: DateTime.Now.AddDays(1));
+        var token = new JwtSecurityToken(issuer: issuer, audience:audience, claims: claims, signingCredentials: cred, expires: DateTime.Now.AddDays(1));
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

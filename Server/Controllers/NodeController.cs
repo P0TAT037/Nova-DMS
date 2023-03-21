@@ -14,6 +14,8 @@ using System.Transactions;
 
 namespace Nova_DMS.Controllers;
 
+
+[Authorize]
 [Route("api/node/")]
 [ApiController]
 public class NodeController : ControllerBase
@@ -40,7 +42,7 @@ public class NodeController : ControllerBase
 
     [HttpGet]
     //[Authorize]
-    public async Task<string> GetAsync([FromRoute] string id)
+    public async Task<string> GetAsync(string id)
     {
         return await _minIoService.GetObjectURLAsync(id);
     }
@@ -48,7 +50,7 @@ public class NodeController : ControllerBase
     
     [HttpGet]
     [Route("metadata")]
-    public async Task<IActionResult> GetMetadataAsyc([FromRoute] string id)
+    public async Task<IActionResult> GetMetadataAsyc(string id)
     {
         var result = await _elasticClient.SearchAsync<Metadata>(q => q.Query(
             q => q.Term(t => t.Id, id)
