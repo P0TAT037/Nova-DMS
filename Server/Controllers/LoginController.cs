@@ -80,7 +80,7 @@ public class LoginController : ControllerBase
     {
         List<Claim> claims = new List<Claim>()
         {
-            new Claim("id", user.ToString()!),
+            new Claim("id", user.Id.ToString()!),
             new Claim("username", user.Username),
             new Claim("level", user.Level.ToString()),
         };

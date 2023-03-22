@@ -7,6 +7,7 @@ using Microsoft.SqlServer.Types;
 using Nest;
 using Nova_DMS.Models;
 using Nova_DMS.Models.DTOs;
+using Nova_DMS.Security;
 using Nova_DMS.Services;
 using System.Collections.Specialized;
 using System.Data;
@@ -15,17 +16,20 @@ using System.Transactions;
 namespace Nova_DMS.Controllers;
 
 
-[Authorize]
+//[Authorize]
 [Route("api/node/")]
 [ApiController]
+
 public class NodeController : ControllerBase
 {
     private readonly IObjStorageService _minIoService;
     private readonly SqlConnection _db = null!;
     private readonly IElasticClient _elasticClient = null!;
+    private readonly IConfiguration _config;
 
     public NodeController(IObjStorageService ms, IElasticClient es, IConfiguration config)
     {
+        _config = config;
         try
         {
             var _ConnectionString = config.GetConnectionString("SQLServer");
@@ -41,7 +45,7 @@ public class NodeController : ControllerBase
     }
 
     [HttpGet]
-    //[Authorize]
+    [AuthorizeNode]
     public async Task<string> GetAsync(string id)
     {
         return await _minIoService.GetObjectURLAsync(id);
