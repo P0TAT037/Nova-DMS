@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Nova_DMS.Services;
 
-public class MinIoService:IMinIoService
+public class MinIoService:IObjStorageService
 {
     private string _endpoint = "localhost:9000";
     private string _accessKey = "dms-backend";

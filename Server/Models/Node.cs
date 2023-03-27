@@ -1,6 +1,6 @@
 ﻿namespace Nova_DMS.Models
 {
-    public class Obj
+    public class Node
     {
         public string Name { get; set; } = null!;
 
