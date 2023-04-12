@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Nova_DMS.Controllers;
 
-[Route("api/user")]
+[Route("/user")]
 [ApiController]
 public class LoginController : ControllerBase
 {
