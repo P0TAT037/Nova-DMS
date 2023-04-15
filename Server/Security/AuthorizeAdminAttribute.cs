@@ -25,7 +25,7 @@ public class AuthorizeAdminAttribute : Attribute, IAsyncAuthorizationFilter
             var level = token.Claims.First(c => c.Type == "level").Value;
             
             int l = int.Parse(level);
-            if (l == _level)
+            if (l >= _level)
             {
                 return Task.CompletedTask;
             }
