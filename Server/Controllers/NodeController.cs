@@ -17,7 +17,7 @@ namespace Nova_DMS.Controllers;
 
 
 //[Authorize]
-[Route("api/node/")]
+[Route("/node")]
 [ApiController]
 
 public class NodeController : ControllerBase

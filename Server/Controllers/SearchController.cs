@@ -4,7 +4,7 @@ using Nova_DMS.Models;
 
 namespace Nova_DMS.Controllers;
 
-[Route("api/search")]
+[Route("/search")]
 [ApiController]
 public class SearchController : ControllerBase
 {
