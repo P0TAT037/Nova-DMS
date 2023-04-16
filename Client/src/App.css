@@ -1,21 +1,38 @@
+@font-face {
+  font-family: 'Inter', sans-serif;
+  src: url(./fonts/Inter-VariableFont_slnt\,wght.ttf);
+}
 .row-main{
-  background-color: #1e1e1e96;
+  background-color: #1e1e1e;
+  font-family: 'Inter', sans-serif;
 }
 .btn-files{
   background-color: #292929c4;
   color:aliceblue;
-  border-radius: 10px;
+  border-radius: 15px;
   border: 2px solid #000000;
-  width: 9.5vw;
-  height: 7vh;
+  width: 13.5vw;
+  height: 8vh;
+  margin-top: 8px;
   transition: 0.25s;
   background-image: url('./image/folder-icon.png');
   background-repeat: no-repeat;
 }
 .btn-files:hover{
-  width: 10vw;
   transition: 0.25s;
-  border-color: #6a55f5;
+  border-color: #393838;
+}
+.btn-back{
+  background-color: #292929c4;
+  color:aliceblue;
+  border-radius: 15px;
+  border: 2px solid #000000;
+  width: 3vw;
+  height: 8vh;
+  margin-top: 8px;
+  transition: 0.25s;
+  background-image: url('./image/back-icon.png');
+  background-repeat: no-repeat;
 }
 .col-home-base{
   background-color: #1e1e1e00;
@@ -33,6 +50,7 @@
   color: aliceblue;
   border-radius: 10px;
   transition: 0.25s;
+  width: 70vw;
   height: 6vh;
 }
 .input-search:focus{

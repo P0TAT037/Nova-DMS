@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import apis from "./API-shortcuts/APIsc.js"
 
 function LoginPage({ onSignupClick }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -23,12 +25,16 @@ function LoginPage({ onSignupClick }) {
         var token = loginrespone.token
         localStorage.setItem('token', token);
         navigate(`/home`)
+
       }
       else if (this.status === 400){
         document.getElementById("login conformation").innerHTML="Login failed, please make sure you typed your Username and Password correctly."
       }
+      else if (this.status === 404){
+        document.getElementById("login conformation").innerHTML="An error has occured, client cannot connect to server"
+      }
     };
-    xhttp.open("GET", `https://localhost:7052/api/user?username=`+username +`&password=` + password, true);
+    xhttp.open("GET", `https://localhost:7052/user?username=`+username +`&password=` + password, true);
     xhttp.send();
     
   };
@@ -85,7 +91,7 @@ function SignupPage({ onLoginClick }) {
         document.getElementById("login conformation").innerHTML="This account is already used, please type in a different account."
       }
     };
-    xhttp.open("POST", 'https://localhost:7052/api/user?name='+name+'&username='+username+'&password='+password, true);
+    xhttp.open("POST", 'https://localhost:7052/user?name='+name+'&username='+username+'&password='+password, true);
     xhttp.send();
   };
 
