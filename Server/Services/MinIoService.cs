@@ -14,16 +14,16 @@ public class MinIoService:IObjStorageService
     private string _bucketName = "dev";
     private MinioClient _client;
 
-    public string Endpoint { get => _endpoint; set => _endpoint = value; }
-    public string AccessKey { get => _accessKey; set => _accessKey = value; }
-    public string SecretKey { get => _secretKey; set => _secretKey = value; }
-    public string BucketName { get => _bucketName; set => _bucketName = value; }
-
-    public MinIoService()
+    public MinIoService(string endpoint, string accessKey, string secretKey, string bucketName)
     {
+        _endpoint = endpoint;
+        _accessKey = accessKey;
+        _secretKey = secretKey;
+        _bucketName = bucketName;
+
         _client = new MinioClient()
-                            .WithEndpoint(Endpoint)
-                            .WithCredentials(AccessKey, SecretKey)
+                            .WithEndpoint(_endpoint)
+                            .WithCredentials(_accessKey, _secretKey)
                             .Build();
     }
 

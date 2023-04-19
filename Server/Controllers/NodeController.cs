@@ -92,9 +92,11 @@ public class NodeController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> UploadAsync([FromForm]NodeDataDTO nodeDataDTO, IFormFile? file)
     {
-        
+        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         try
         {
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -102,24 +104,25 @@ public class NodeController : ControllerBase
                 var param = new DynamicParameters();
                 param.Add("@Name", nodeDataDTO.Name);
                 param.Add("@Dir", nodeDataDTO.Dir);
+                param.Add("@isFolder", nodeDataDTO.Type == "folder");
                 param.Add("@return", direction: ParameterDirection.ReturnValue);
                
-                _db.Execute("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
+                await _db.ExecuteAsync("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
                 int fileId = param.Get<int>("@return");
 
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
                     param = new DynamicParameters();
                     param.Add("@FileId", fileId);
-                    param.Add("@id", nodeDataDTO.UserId);
+                    param.Add("@id", UserId);
                     param.Add("@perm", nodeDataDTO.DefaultPerm);
                     _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
                     
-                    var fs = file.OpenReadStream();
+                    var fs = file!.OpenReadStream();
                     await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);   
                 }
                 
-                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID=nodeDataDTO.UserId });
+                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
                 
                 Metadata metadata = new Metadata { 
                     Id = fileId,
@@ -134,8 +137,12 @@ public class NodeController : ControllerBase
                     Version = 0
                 };
                 
-                await _elasticClient.IndexDocumentAsync(metadata);
-                
+                 var response = _elasticClient.IndexDocument(metadata);
+                if (!response.IsValid)
+                {
+                    System.Console.WriteLine(response.DebugInformation);
+                    throw new Exception(response.DebugInformation);
+                }
                 transaction.Complete();
 
                 return Ok(fileId);
@@ -143,7 +150,7 @@ public class NodeController : ControllerBase
         }
         catch (Exception e) {
             await Console.Out.WriteLineAsync(e.Message);
-            return BadRequest();
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }        
     }
 

@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nova_DMS.Security;
 using Nova_DMS.Services;
-using Nova_DMS.Services.Extenstions;
+using Nova_DMS.Services.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
@@ -53,6 +53,9 @@ builder.Services.AddSwaggerGen(c => {
 
 
 builder.Services.AddElasticSearch(builder.Configuration);
+builder.Services.AddObjStorage(builder.Configuration);
+
+
 builder.Services.AddAuthentication()
     .AddJwtBearer(options => options.TokenValidationParameters = new (){
         
@@ -65,7 +68,8 @@ builder.Services.AddAuthentication()
         ValidateLifetime = true,
     });
 
-builder.Services.AddScoped<IObjStorageService, MinIoService>();
+
+
 
 var app = builder.Build();
 
