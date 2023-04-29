@@ -1,1 +1,0 @@
-./minio.exe server . --console-address :9090
