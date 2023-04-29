@@ -34,7 +34,7 @@ this will start:
 
 ### appsettings.json
 
-your's should look like the [template](https://github.com/P0TAT037/Nova-DMS/Server/[CONFIG]/appsettingsTemplate.json)included in this folder.
+your's should look like the [template](https://github.com/P0TAT037/Nova-DMS/blob/master/Server/%5BCONFIG%5D/appsettingsTemplate.json) included in this folder.
 you'll need to :
 
 - fill in your connection string.
