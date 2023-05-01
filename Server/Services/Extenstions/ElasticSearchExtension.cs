@@ -2,9 +2,9 @@
 using Nest;
 using Nova_DMS.Models;
 
-namespace Nova_DMS.Services.Extenstions;
+namespace Nova_DMS.Services.Extensions;
 
-public static class ElasticSearchExtensions
+public static class ElasticSearchExtension
 {
     public static void AddElasticSearch(this IServiceCollection Services, IConfiguration config) {
         var url = config["ElasticSearch:Uri"];

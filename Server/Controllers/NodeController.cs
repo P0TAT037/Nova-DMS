@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Linq;
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,15 +12,14 @@ using Nova_DMS.Security;
 using Nova_DMS.Services;
 using System.Collections.Specialized;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Transactions;
 
 namespace Nova_DMS.Controllers;
 
 
-//[Authorize]
 [Route("/node")]
 [ApiController]
-
 public class NodeController : ControllerBase
 {
     private readonly IObjStorageService _minIoService;
@@ -54,30 +54,49 @@ public class NodeController : ControllerBase
     
     [HttpGet]
     [Route("metadata")]
-    public async Task<IActionResult> GetMetadataAsyc(string id)
+    public async Task<Metadata> GetMetadataAsync(string id)
     {
-        var result = await _elasticClient.SearchAsync<Metadata>(q => q.Query(
+        var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
             q => q.Term(t => t.Id, id)
             )
         );
-        return Ok(result.Documents);
+        return result.Documents.FirstOrDefault<Metadata>()!;
+    }
+
+    private async Task<IEnumerable<Metadata>> GetMetadataAsync(List<string> ids)
+    {
+        var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
+            q => q.Ids(id => id.Values(ids))
+            )
+        );
+        return result.Documents!;
     }
 
     [HttpGet]
     [Route("getNodes")]
-    public async Task<IEnumerable<Node>> Get([FromRoute]int userId, string hierarchyId)
+    [Authorize]
+    public async Task<IEnumerable<Node>> GetNodesAsync(string hierarchyId)
     {
+        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var userId = jwt.Claims.First(c => c.Type == "id").Value;
         DynamicParameters param = new DynamicParameters();
         param.Add("userId", userId);
         param.Add("hierarchyId", hierarchyId);
-        return await _db.QueryAsync<Node>("SELECT * from NOV.GetNodes(@userId, cast(@hierarchyId as hierarchyid))", param);
-
+        var results = await _db.QueryAsync<Node>("SELECT * from NOV.GetNodes(@userId, cast(@hierarchyId as hierarchyid))", param);
+        var metadata = await GetMetadataAsync(results.Select(r => r.Id.ToString()).ToList());
+        for(int i = 0; i < results.Count(); i++)
+        {
+            results.ElementAt(i).Metadata = metadata.ElementAt(i);
+        }
+        return results;
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> UploadAsync([FromForm]NodeDataDTO nodeDataDTO, IFormFile? file)
     {
-        
+        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         try
         {
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -85,24 +104,25 @@ public class NodeController : ControllerBase
                 var param = new DynamicParameters();
                 param.Add("@Name", nodeDataDTO.Name);
                 param.Add("@Dir", nodeDataDTO.Dir);
+                param.Add("@isFolder", nodeDataDTO.Type == "folder");
                 param.Add("@return", direction: ParameterDirection.ReturnValue);
                
-                _db.Execute("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
+                await _db.ExecuteAsync("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
                 int fileId = param.Get<int>("@return");
 
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
                     param = new DynamicParameters();
                     param.Add("@FileId", fileId);
-                    param.Add("@id", nodeDataDTO.UserId);
+                    param.Add("@id", UserId);
                     param.Add("@perm", nodeDataDTO.DefaultPerm);
                     _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
                     
-                    var fs = file.OpenReadStream();
+                    var fs = file!.OpenReadStream();
                     await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);   
                 }
                 
-                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID=nodeDataDTO.UserId });
+                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
                 
                 Metadata metadata = new Metadata { 
                     Id = fileId,
@@ -117,8 +137,12 @@ public class NodeController : ControllerBase
                     Version = 0
                 };
                 
-                await _elasticClient.IndexDocumentAsync(metadata);
-                
+                 var response = _elasticClient.IndexDocument(metadata);
+                if (!response.IsValid)
+                {
+                    System.Console.WriteLine(response.DebugInformation);
+                    throw new Exception(response.DebugInformation);
+                }
                 transaction.Complete();
 
                 return Ok(fileId);
@@ -126,7 +150,7 @@ public class NodeController : ControllerBase
         }
         catch (Exception e) {
             await Console.Out.WriteLineAsync(e.Message);
-            return BadRequest();
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }        
     }
 

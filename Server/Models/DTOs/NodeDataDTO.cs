@@ -4,8 +4,6 @@ namespace Nova_DMS.Models.DTOs;
 
 public class NodeDataDTO
 {
-    public int UserId { get; set; }
-
     public string Dir { get; set; } = null!;
 
     public string Name { get; set; } = null!;
