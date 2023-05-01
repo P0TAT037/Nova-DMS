@@ -1,7 +1,8 @@
 import {Route,Routes} from 'react-router-dom';
-import {Home} from'./HomeComponent.js';
-import Notfound from './Notfound.js'
-import LoginPageContainer from './LoginpageContainer.js';
+import {Home} from'../Containers/HomepageContainer.js';
+import Notfound from '../Misc/Notfound.js'
+import LoginPageContainer from '../Containers/LoginpageContainer.js';
+import Test from "../Tests/test.js"
 function App() {
     return (
       <div>
@@ -9,6 +10,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path='/' element={<LoginPageContainer/>}/>
           <Route path='*' element={<Notfound/>}/>
+          <Route path='/test' element={<Test/>}/>
         </Routes>
       </div>
     );

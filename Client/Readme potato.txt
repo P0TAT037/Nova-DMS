@@ -72,3 +72,19 @@ returns [];
 if i rember anything else will tell you,
 was supposed to finish signup/login page today but i gave up, gonna get back at it tommorw
 glhf
+
+
+
+
+
+
+17/4/2023
+pls finish delete node api
+post node needs a folder option
+finsih update node
+wats da difference between content and description, and do user need to type in both for them?
+post node ignores directory
+make api to give premission to user on a single file, takes input of userid and file name
+make get api that returns users that are premitted on file
+delete api that delete user's premission on single file, takes input of user id and file name
+
