@@ -35,9 +35,9 @@ public static class ElasticSearchExtension
             return;
         }
         
-        Services.AddSingleton<IElasticClient>(client);
-     
-         CreateIndex(client, defaultIndex);
+        CreateIndex(client, defaultIndex);
+        
+        Services.AddSingleton<IElasticClient>(client); 
         
     }
 

@@ -109,19 +109,19 @@ public class NodeController : ControllerBase
                
                 await _db.ExecuteAsync("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
                 int fileId = param.Get<int>("@return");
+                
+                param = new DynamicParameters();
+                param.Add("@FileId", fileId);
+                param.Add("@id", UserId);
+                param.Add("@perm", nodeDataDTO.DefaultPerm);
+                _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
 
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
-                    param = new DynamicParameters();
-                    param.Add("@FileId", fileId);
-                    param.Add("@id", UserId);
-                    param.Add("@perm", nodeDataDTO.DefaultPerm);
-                    _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
-                    
                     var fs = file!.OpenReadStream();
                     await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);   
                 }
-                
+
                 var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
                 
                 Metadata metadata = new Metadata { 
@@ -134,10 +134,10 @@ public class NodeController : ControllerBase
                     Created = DateTime.Now,
                     Updated = DateTime.Now,
                     EditedBy = userName,
-                    Version = 0
+                    Version = 1
                 };
                 
-                 var response = _elasticClient.IndexDocument(metadata);
+                var response = _elasticClient.IndexDocument(metadata);
                 if (!response.IsValid)
                 {
                     System.Console.WriteLine(response.DebugInformation);
@@ -156,9 +156,39 @@ public class NodeController : ControllerBase
 
     //TODO:
     [HttpPut]
-    public async Task<int> UpdateAsync()
+    public async Task<IActionResult> UpdateAsync([FromForm]Metadata metadata, IFormFile? file)
     {
-        throw new NotImplementedException();
+        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
+        var fileId = metadata.Id;
+        try
+        {
+
+            if (!metadata.Type.Equals("folder") && file != null)
+            {
+                var fs = file!.OpenReadStream();
+                await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
+            }
+            var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
+
+            metadata.EditedBy = userName;
+            metadata.Updated = DateTime.Now;
+            metadata.Version += 1;
+            
+            var response = _elasticClient.IndexDocument(metadata);
+            if (!response.IsValid)
+            {
+                System.Console.WriteLine(response.DebugInformation);
+                throw new Exception(response.DebugInformation);
+            }
+
+            return Ok(fileId);
+            
+        }
+        catch (Exception e) {
+            await Console.Out.WriteLineAsync(e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 
     [HttpDelete]

@@ -6,25 +6,15 @@ using System.Text;
 
 namespace Nova_DMS.Services;
 
-public class MinIoService:IObjStorageService
+public class MinIoService : IObjStorageService
 {
-    private string _endpoint = "localhost:9000";
-    private string _accessKey = "dms-backend";
-    private string _secretKey = "backend-passwd";
-    private string _bucketName = "dev";
     private MinioClient _client;
+    private string _bucketName;
 
-    public MinIoService(string endpoint, string accessKey, string secretKey, string bucketName)
+    public MinIoService(MinioClient client, string bucketName)
     {
-        _endpoint = endpoint;
-        _accessKey = accessKey;
-        _secretKey = secretKey;
+        _client = client;
         _bucketName = bucketName;
-
-        _client = new MinioClient()
-                            .WithEndpoint(_endpoint)
-                            .WithCredentials(_accessKey, _secretKey)
-                            .Build();
     }
 
     public async Task<string> GetUploadURLAsync( string objName, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
@@ -97,35 +87,32 @@ public class MinIoService:IObjStorageService
         minioClient = minioClient == null ? _client : minioClient;
         bucketName = bucketName == null ? _bucketName : bucketName;
 
-
-        // Make a bucket on the server, if not already present.
-        var beArgs = new BucketExistsArgs()
-            .WithBucket(bucketName);
-        bool found = await minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-        if (!found)
-        {
-            var mbArgs = new MakeBucketArgs()
-                .WithBucket(bucketName);
-            await minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-        }
-
-        // Upload a file to bucket.
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(bucketName)
             .WithObject(objName)
             .WithStreamData(obj)
             .WithObjectSize(obj.Length)
             .WithContentType(contentType);
-        await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
-
-
+        await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);   
     }
 
 
     //to be implemented
-    public async static Task GetVersionsAsync( string objName, string? bucketName = null, MinioClient? minioClient = null)
+    public async Task GetVersionsAsync( string objName, string? bucketName = null, MinioClient? minioClient = null)
     {
-        throw new NotImplementedException();
+        
+        minioClient = minioClient == null ? _client : minioClient;
+        bucketName = bucketName == null ? _bucketName : bucketName;
+        // minioClient.list
+        // var versions = await minioClient.List(bucketName, objName, true).ConfigureAwait(false);
+
+        // var previousVersionId = versions[1].VersionId;
+
+        // var GetObjectArgs = new GetObjectArgs()
+        //     .WithBucket(bucketName)
+        //     .WithObject(objName)
+        //     .WithVersionId(previousVersionId);
+        // await minioClient.GetObjectAsync(GetObjectArgs).ConfigureAwait(false);
     }
 
     public async static Task GetObjectVersionAsync( string objName,  string VersionId, string? bucketName = null, MinioClient? minioClient = null)

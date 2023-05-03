@@ -51,6 +51,7 @@ builder.Services.AddSwaggerGen(c => {
     });
 });
 
+builder.Services.AddScoped<SqlConnection>(_ => new SqlConnection(builder.Configuration.GetConnectionString("SQLServer")!));
 
 builder.Services.AddElasticSearch(builder.Configuration);
 builder.Services.AddObjStorage(builder.Configuration);
