@@ -19,8 +19,8 @@
   background-repeat: no-repeat;
 }
 .btn-files:hover{
-  transition: 0.25s;
   border-color: #393838;
+  width: 14vw;
 }
 .btn-back{
   background-color: #292929c4;
