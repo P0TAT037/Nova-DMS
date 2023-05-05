@@ -1,5 +1,5 @@
 const apis = {
-userapi : `https://localhost:5298/user`
+userapi : `https://localhost:7052/user`
 };
 
 export default apis;

@@ -9,6 +9,7 @@ using Nova_DMS.Services.Extensions;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
@@ -21,7 +22,9 @@ builder.Services.AddCors(options =>
                         policy.AllowAnyMethod()
                               .AllowAnyHeader()
                               .AllowCredentials()
+                            //   .AllowAnyOrigin();
                               .WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()!);
+                              System.Console.WriteLine(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()![0]);
                     });
 });
 
