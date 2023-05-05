@@ -57,7 +57,6 @@ public class LoginController : ControllerBase
          
     [HttpGet]
     public async Task<IActionResult> LogIn(string username, string password) {
-        
         var param = new DynamicParameters();
         param.Add("@username", username);
         UserDTO? result;
