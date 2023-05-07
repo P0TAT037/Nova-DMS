@@ -35,7 +35,7 @@ function SignupPage({ onLoginClick }) {
     };
   
     return (
-      <body className='login-body'>
+      <div className='login-body'>
       <div className='container-fluid login-container'>
     <div className='row row-login'>
       <div className='col-10 m-5'>
@@ -64,7 +64,7 @@ function SignupPage({ onLoginClick }) {
       </div>
     </div>
   </div>
-  </body>
+  </div>
     );
   }
 export {SignupPage};
