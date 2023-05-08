@@ -74,6 +74,7 @@ public class SearchController : ControllerBase
         return Ok(new SearchResult { hits = searchResult.Total, results = searchResult.Documents });
     }
 
+
     [HttpGet]
     [Route("filter")]
     [Authorize]

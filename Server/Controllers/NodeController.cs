@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -52,6 +53,14 @@ public class NodeController : ControllerBase
     }
 
     
+    [HttpGet]
+    [Route("version/{versionId}")]
+    [AuthorizeNode]
+    public async Task<List<byte>> GetVersionAsync(string id, string versionId)
+    {
+        return await _minIoService.GetObjectAsync(id, versionId: versionId);
+    }
+
     [HttpGet]
     [Route("metadata")]
     public async Task<Metadata> GetMetadataAsync(string id)
@@ -115,11 +124,12 @@ public class NodeController : ControllerBase
                 param.Add("@id", UserId);
                 param.Add("@perm", nodeDataDTO.DefaultPerm);
                 _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
-
+                string? versionId = "1";
+                
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
                     var fs = file!.OpenReadStream();
-                    await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);   
+                    versionId = await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);
                 }
 
                 var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
@@ -134,13 +144,12 @@ public class NodeController : ControllerBase
                     Created = DateTime.Now,
                     Updated = DateTime.Now,
                     EditedBy = userName,
-                    Version = 1
                 };
-                
+                metadata.Versions.Add(1, versionId);
+
                 var response = _elasticClient.IndexDocument(metadata);
                 if (!response.IsValid)
                 {
-                    System.Console.WriteLine(response.DebugInformation);
                     throw new Exception(response.DebugInformation);
                 }
                 transaction.Complete();
@@ -161,19 +170,20 @@ public class NodeController : ControllerBase
         var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         var fileId = metadata.Id;
+        var versionId = (metadata.Versions.Count + 1).ToString();
         try
         {
 
             if (!metadata.Type.Equals("folder") && file != null)
             {
                 var fs = file!.OpenReadStream();
-                await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
+                versionId = await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
             }
             var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
 
             metadata.EditedBy = userName;
             metadata.Updated = DateTime.Now;
-            metadata.Version += 1;
+            metadata.Versions.Add(metadata.Versions.Count + 1, versionId);
             
             var response = _elasticClient.IndexDocument(metadata);
             if (!response.IsValid)

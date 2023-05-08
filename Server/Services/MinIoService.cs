@@ -56,10 +56,6 @@ public class MinIoService : IObjStorageService
         minioClient = minioClient == null ? _client : minioClient;
         bucketName = bucketName == null ? _bucketName : bucketName;
 
-
-        StatObjectArgs objStats = new StatObjectArgs().WithBucket(bucketName).WithObject(objName);
-        await minioClient.StatObjectAsync(objStats);
-
         List<byte> data = new List<byte>();
         GetObjectArgs args = new GetObjectArgs()
                                     .WithBucket(bucketName)
@@ -81,7 +77,7 @@ public class MinIoService : IObjStorageService
         return data;
     }
 
-    public async Task UploadObjectAsync( string objName, string contentType, Stream obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
+    public async Task<string> UploadObjectAsync( string objName, string contentType, Stream obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
     {
 
         minioClient = minioClient == null ? _client : minioClient;
@@ -93,33 +89,18 @@ public class MinIoService : IObjStorageService
             .WithStreamData(obj)
             .WithObjectSize(obj.Length)
             .WithContentType(contentType);
-        await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);   
+        await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
+
+        StatObjectArgs args = new StatObjectArgs()
+            .WithBucket(bucketName)
+            .WithObject(objName);
+        
+        var stat = await minioClient.StatObjectAsync(args).ConfigureAwait(false);
+        return stat.VersionId;
     }
 
 
     //to be implemented
-    public async Task GetVersionsAsync( string objName, string? bucketName = null, MinioClient? minioClient = null)
-    {
-        
-        minioClient = minioClient == null ? _client : minioClient;
-        bucketName = bucketName == null ? _bucketName : bucketName;
-        // minioClient.list
-        // var versions = await minioClient.List(bucketName, objName, true).ConfigureAwait(false);
-
-        // var previousVersionId = versions[1].VersionId;
-
-        // var GetObjectArgs = new GetObjectArgs()
-        //     .WithBucket(bucketName)
-        //     .WithObject(objName)
-        //     .WithVersionId(previousVersionId);
-        // await minioClient.GetObjectAsync(GetObjectArgs).ConfigureAwait(false);
-    }
-
-    public async static Task GetObjectVersionAsync( string objName,  string VersionId, string? bucketName = null, MinioClient? minioClient = null)
-    {
-        throw new NotImplementedException();
-
-    }
 
     public async static Task RemoveObjectAsync(string objName, string? bucketName = null, MinioClient? minioClient = null)
     {

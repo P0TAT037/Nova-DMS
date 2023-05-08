@@ -1,4 +1,5 @@
-﻿namespace Nova_DMS.Models;
+﻿using System.Collections;
+namespace Nova_DMS.Models;
 
 public class Metadata
 {
@@ -20,5 +21,5 @@ public class Metadata
 
     public string? EditedBy { get; set; }
 
-    public int Version { get; set; }
+    public Hashtable Versions { get; set; } = new Hashtable();
 }
