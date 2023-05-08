@@ -24,7 +24,7 @@ public class AuthorizeNodeAttribute : Attribute, IAsyncAuthorizationFilter
     public Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
     {
         var config = filterContext.HttpContext.RequestServices.GetService<IConfiguration>();
-        var _db = new SqlConnection(config.GetConnectionString("SqlServer"));
+        var _db = new SqlConnection(config!.GetConnectionString("SqlServer"));
         StringValues authToken;
         filterContext.HttpContext.Request.Headers.TryGetValue("Authorization", out authToken);
         if (authToken.Count != 0)

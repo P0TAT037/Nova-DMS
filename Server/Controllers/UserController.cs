@@ -12,18 +12,18 @@ namespace Nova_DMS.Controllers;
 public class UserController : ControllerBase
 {
     IConfiguration config;
+    SqlConnection db;
 
-    public UserController(IConfiguration configuration)
+    public UserController(IConfiguration configuration, SqlConnection connection)
     {
         this.config = configuration;
+        this.db = connection;
     }
 
     [HttpPut]
     [AuthorizeAdmin]
     public async Task<IActionResult> AddRole(int usrId, int roleId)
     {
-
-        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
             db.Execute($"INSERT INTO NOV.USERS_ROLES VALUES({usrId}, {roleId})");
@@ -43,7 +43,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> RemoveRole(int usrId, int roleId)
     {
 
-        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
             db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = {usrId} AND ROLE_ID = {roleId}");
@@ -52,7 +51,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             await Console.Out.WriteLineAsync(e.Message);
-            return BadRequest("Something wrong happend");
+            return BadRequest("Something wrong happened");
         }
 
         return Ok();
@@ -64,8 +63,6 @@ public class UserController : ControllerBase
     [Route("admin")]
     public async Task<IActionResult> AssignAdmin(int usrId)
     {
-
-        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
             db.Execute($"Update NOV.USERS Set Level = 1 Where ID = {usrId}");
@@ -73,7 +70,7 @@ public class UserController : ControllerBase
         catch (Exception e)
         {
             await Console.Out.WriteLineAsync(e.Message);
-            return BadRequest("Something wrong happend");
+            return BadRequest("Something wrong happened");
         }
 
         return Ok();
@@ -84,8 +81,6 @@ public class UserController : ControllerBase
     [Route("admin")]
     public async Task<IActionResult> RemoveAdmin(int usrId)
     {
-
-        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
             db.Execute($"Update NOV.USERS Set Level = 0 Where ID = {usrId}");
@@ -161,4 +156,20 @@ public class UserController : ControllerBase
         }
     }
 
+
+    [HttpGet]
+    [Route("all")]
+    public async Task<IActionResult> GetAllUsers()
+    {
+        try
+        {
+            var result = await db.QueryAsync<User>($"Select ID, Username, Name, Level From NOV.USERS");
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            await Console.Out.WriteLineAsync(e.Message);
+            return BadRequest("Something wrong happened");
+        }
+    }
 }

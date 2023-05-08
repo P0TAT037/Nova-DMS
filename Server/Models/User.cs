@@ -12,4 +12,6 @@ public class User
     
     public int Level { get; set; }
 
+    public List<Role> Roles { get; set; } = new List<Role>();
+
 }
