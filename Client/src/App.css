@@ -6,7 +6,7 @@
   background-color: #1e1e1e;
   font-family: 'Inter', sans-serif;
 }
-.btn-files{
+.btn-folders{
   background-color: #292929c4;
   color:aliceblue;
   border-radius: 15px;
@@ -19,6 +19,22 @@
   background-repeat: no-repeat;
 }
 .btn-files:hover{
+  border-color: #393838;
+  width: 14vw;
+}
+.btn-files{
+  background-color: #292929c4;
+  color:aliceblue;
+  border-radius: 15px;
+  border: 2px solid #000000;
+  width: 13.5vw;
+  height: 8vh;
+  margin-top: 8px;
+  transition: 0.25s;
+  background-image: url('./image/file-icon.png');
+  background-repeat: no-repeat;
+}
+.btn-files2:hover{
   border-color: #393838;
   width: 14vw;
 }
@@ -81,9 +97,23 @@
   height: 45vh;
   width: 40vw;
 }
+.div-showfile-popup{
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  border: 2px solid #000000;
+  position: absolute;
+  top: 6vh;
+  left: 15vw;
+  height: 90vh;
+  width: 69vw;
+}
 .btn-popup-close{
   float: right;
   background-color: white;
+}
+.row-bottom{
+  position: fixed;
+   bottom: 2.2vh;
 }
 /*             login page              */
 .login-body{

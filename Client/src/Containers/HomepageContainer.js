@@ -3,35 +3,55 @@ import { useState } from "react";
 import Uploadfunc from "../Home-buttons/uploadfunc.js"
 import Newfolderfunc from "../Home-buttons/newfolderfunc.js";
 import { parseJwt } from "../Home-functions/parsejwt.js";
+import { Showfile } from "../Home-functions/displayfile.js";
+import { useNavigate } from 'react-router-dom';
 
 
-var hidarr = [];
+var hidarr = [{ name: "root", hid: "/" ,
+metadata:{
+    type:"folder"
+}
+}];
 const token = localStorage.getItem('token');
 
 function Home() {
+    const navigate = useNavigate();
     const userinfo = parseJwt(token);
-    const [filetree, setFiletree] = useState([{ name: "root", hid: "/" }]);
+    const [filetree, setFiletree] = useState([{ name: "root", hid: "/" ,
+    metadata:{
+        type:"folder"
+    }
+}]);
+const [fileclicked,setFileclicked] = useState(false);
+const [clickedfileid,setclickedfileid] = useState();
     useEffect(() => {
-        Getfiles("/", "root","true",(tree) => { setFiletree(tree) })
+        Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
     }, [])
     const goback = () => {
         hidarr.pop();
         var backhid = hidarr.pop();
-        console.log(backhid.hid);
-        
         Getfiles(backhid.hid, backhid.name ,"true", (tree) => { setFiletree(tree) })
     }
     const DirButton = (dir) =>{
         var index = hidarr.findIndex(x => x.hid ===dir.hid);
-        console.log(index);
         hidarr = hidarr.slice(0,index+1);
         var DirGet = hidarr[hidarr.length - 1];
-        console.log(DirGet);
         Getfiles(DirGet.hid ,DirGet.name , "false",(tree) => { setFiletree(tree) })
         
     }
+    const handlefileClick = (state) =>{
+        setFileclicked(state)
+    }
+    const logout = () =>{
+        localStorage.setItem('token', "");
+        hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}
+}];
+        navigate(`/`)
+    }
     return (
+        console.log(filetree),
         <div className="container-fluid">
+            <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
             <div className="row row-main">
                 <div className="col-12 col-home-base">
                 <div className="row m-1">
@@ -43,36 +63,56 @@ function Home() {
                 <div className="row p-1" style={{color: "white"}}>
                 <div className="col-9 p-3" style={{color: "white" , fontSize: 32}}>Welcome, {userinfo.username}</div> 
                 <div className="row row-main">
+                    
                 {
                     hidarr.map((directory) => (
-                        <div className="col-1" key={directory.hid}>
+                        <div className="col-2" key={directory.hid}>
                         <button onClick={() => DirButton(directory)}>{directory.name}</button>
                         </div>
                     ))} 
                     </div>
-                <div className="col-9 p-3" style={{color: "white" , fontSize: 32}}>folders:</div>
+                    {hidarr.length !== 1 && (
+                <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
+                    )}
+                    <div className="col-9"></div>
                 <div className="col-1">
                 <button onClick={() => Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })}>O</button>
                 </div>
                 <div className="col-1">
-                    <Newfolderfunc/>
+                    <Newfolderfunc location={hidarr} token={token}/>
+                    
                 </div>
                 <div className="col-1">
                     <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} dir={hidarr[hidarr.length - 1]} token={token}/>
-                </div>
-                {hidarr.length !== 1 && (
-                <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
-                    )}    
+                </div>    
                     </div>
                 {filetree.map((folder) => (
                     <div className="col-3" key={folder.hid}>
-                        <button className="btn-files" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
+                        {folder.metadata.type === "folder" && (<div>
+                        <button className="btn-folders" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
                             {folder.name}
                         </button>
+                        </div>)}
+                        {folder.metadata.type !== "folder" &&(
+                            <div>
+                           <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
+                           {folder.name}
+                       </button> 
+                       </div>
+                        )
+
+                        }
                     </div>
-                    ))}
+                    ))
+                    
+                    }
                     </div>
-                    <div className="col-11 p-3" style={{color: "white" , fontSize: 32 }}>files: (map files here)</div> 
+                    <div className="row row-bottom">
+                        <div className="col" onClick={() => logout()}><button>Logout</button></div>
+                        <div className="col"><button>R</button></div>
+                        <div className="col"><button>A</button></div>
+                        </div>
+                        
                 </div>
             </div>
         </div>
@@ -86,7 +126,6 @@ const Getfiles = (hid,name1, push,callback) => { //hideous, i know
         hidarr.push(obj);
     }
     
-    console.log(hidarr)
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open(
         "GET",

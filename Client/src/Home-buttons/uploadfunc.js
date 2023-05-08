@@ -14,7 +14,6 @@ function Uploadfunc(info){
     }
     function handleFileChange(event) {
         const file = event.target.files[0];
-        console.log(file.type,file.name);
         document.getElementById("upload-file-name").value=file.name;
         formData.append("file", file);
         //console.log(formData);
