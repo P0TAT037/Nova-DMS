@@ -21,5 +21,5 @@ public class Metadata
 
     public string? EditedBy { get; set; }
 
-    public Hashtable Versions { get; set; } = new Hashtable();
+    public int Version { get; set; }
 }

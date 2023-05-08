@@ -54,12 +54,21 @@ public class NodeController : ControllerBase
 
     
     [HttpGet]
-    [Route("version/{versionId}")]
+    [Route("/{versionId}")]
     [AuthorizeNode]
     public async Task<List<byte>> GetVersionAsync(string id, string versionId)
     {
         return await _minIoService.GetObjectAsync(id, versionId: versionId);
     }
+
+    [HttpGet]
+    [Route("versions")]
+    [AuthorizeNode]
+    public List<Tuple<string, string>> GetVersions(string id)
+    {
+        return _minIoService.GetVersions(id);
+    }
+
 
     [HttpGet]
     [Route("metadata")]
@@ -124,12 +133,11 @@ public class NodeController : ControllerBase
                 param.Add("@id", UserId);
                 param.Add("@perm", nodeDataDTO.DefaultPerm);
                 _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
-                string? versionId = "1";
                 
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
                     var fs = file!.OpenReadStream();
-                    versionId = await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);
+                    await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);
                 }
 
                 var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
@@ -144,8 +152,8 @@ public class NodeController : ControllerBase
                     Created = DateTime.Now,
                     Updated = DateTime.Now,
                     EditedBy = userName,
+                    Version = 1
                 };
-                metadata.Versions.Add(1, versionId);
 
                 var response = _elasticClient.IndexDocument(metadata);
                 if (!response.IsValid)
@@ -165,25 +173,25 @@ public class NodeController : ControllerBase
 
     //TODO:
     [HttpPut]
+    [AuthorizeNode(perm: 1)]
     public async Task<IActionResult> UpdateAsync([FromForm]Metadata metadata, IFormFile? file)
     {
         var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         var fileId = metadata.Id;
-        var versionId = (metadata.Versions.Count + 1).ToString();
         try
         {
 
             if (!metadata.Type.Equals("folder") && file != null)
             {
                 var fs = file!.OpenReadStream();
-                versionId = await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
+                await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
             }
             var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
 
             metadata.EditedBy = userName;
             metadata.Updated = DateTime.Now;
-            metadata.Versions.Add(metadata.Versions.Count + 1, versionId);
+            metadata.Version = metadata.Version+1;
             
             var response = _elasticClient.IndexDocument(metadata);
             if (!response.IsValid)
@@ -202,9 +210,35 @@ public class NodeController : ControllerBase
     }
 
     [HttpDelete]
-    public async Task<int> DeleteAsync() 
+    [AuthorizeNode(perm: 1)]
+    public async Task DeleteFileAsync(string id, string? versionId, bool? lastVersion) 
     {
-        throw new NotImplementedException();
+        await _minIoService.RemoveObjectAsync(id, versionId);
+        if(versionId == null)
+        {
+            await _elasticClient.DeleteAsync<Metadata>(id);
+            return;
+        }
+        
+        if(lastVersion == true)
+        {
+            var result = await GetMetadataAsync(new List<string> { id });
+            var metadata = result.FirstOrDefault<Metadata>();
+            metadata!.Version = metadata!.Version - 1;
+            var response = _elasticClient.IndexDocument(metadata);
+        }
+    }
+
+    [HttpDelete]
+    [Route("deleteFolder")]
+    [AuthorizeNode(perm: 1)]
+    public async Task DeleteFolderAsync(string id)
+    {
+        var nodes = await GetNodesAsync(id);
+        foreach(var node in nodes)
+        {
+            await DeleteFileAsync(node.Id.ToString(), null, null);
+        }
     }
 
 }

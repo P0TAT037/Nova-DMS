@@ -63,13 +63,18 @@ public class RoleController : ControllerBase
 
     [HttpGet]
     [AuthorizeAdmin]
+
+    
     public async Task<IActionResult> GetRoles()
     {
         var db = new SqlConnection(_config.GetConnectionString("SQLServer"));
+        
+        //TODO: query the db once then use linq instead of this shit
         try
         {
             var result = await db.QueryAsync<Role>("SELECT * FROM nov.Roles");
             var sql = "SELECT ID, USERNAME, NAME ,[LEVEL] FROM nov.Users join nov.USERS_ROLES on nov.USERs.ID = nov.USERS_ROLES.USER_ID WHERE nov.USERS_ROLES.ROLE_ID = @role_id";
+            
             for(int i = 0; i < result.Count(); i++)
             {
                 result.ElementAt(i).users = await db.QueryAsync<User>(sql , new { role_id = result.ElementAt(i).Id});

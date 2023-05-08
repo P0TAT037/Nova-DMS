@@ -19,8 +19,8 @@ public class MinIoService : IObjStorageService
 
     public async Task<string> GetUploadURLAsync( string objName, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
     {
-        minioClient = minioClient == null ? _client : minioClient;
-        bucketName = bucketName == null ? _bucketName : bucketName;
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
 
         PresignedPutObjectArgs args = new PresignedPutObjectArgs()
                                         .WithBucket(bucketName)
@@ -36,8 +36,8 @@ public class MinIoService : IObjStorageService
     public async Task<string> GetObjectURLAsync( string objName, string? bucketName= null, int duration = 60, MinioClient? minioClient = null)
     {
 
-        minioClient = minioClient == null ? _client : minioClient;
-        bucketName = bucketName == null ? _bucketName : bucketName;
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
 
 
         PresignedGetObjectArgs args = new PresignedGetObjectArgs()
@@ -53,8 +53,8 @@ public class MinIoService : IObjStorageService
     public async Task<List<byte>> GetObjectAsync( string objName, string? bucketName = null, MinioClient? minioClient = null, string? versionId = null)
     {
 
-        minioClient = minioClient == null ? _client : minioClient;
-        bucketName = bucketName == null ? _bucketName : bucketName;
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
 
         List<byte> data = new List<byte>();
         GetObjectArgs args = new GetObjectArgs()
@@ -77,11 +77,11 @@ public class MinIoService : IObjStorageService
         return data;
     }
 
-    public async Task<string> UploadObjectAsync( string objName, string contentType, Stream obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
+    public async Task UploadObjectAsync( string objName, string contentType, Stream obj, string? bucketName = null, int duration = 60, MinioClient? minioClient = null)
     {
 
-        minioClient = minioClient == null ? _client : minioClient;
-        bucketName = bucketName == null ? _bucketName : bucketName;
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
 
         var putObjectArgs = new PutObjectArgs()
             .WithBucket(bucketName)
@@ -90,21 +90,44 @@ public class MinIoService : IObjStorageService
             .WithObjectSize(obj.Length)
             .WithContentType(contentType);
         await minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
-
-        StatObjectArgs args = new StatObjectArgs()
-            .WithBucket(bucketName)
-            .WithObject(objName);
         
-        var stat = await minioClient.StatObjectAsync(args).ConfigureAwait(false);
-        return stat.VersionId;
     }
 
-
-    //to be implemented
-
-    public async static Task RemoveObjectAsync(string objName, string? bucketName = null, MinioClient? minioClient = null)
+    public List<Tuple<string, string>> GetVersions(string objName, string? bucketName = null, MinioClient? minioClient = null)
     {
-        throw new NotImplementedException();
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
+
+        var versions = new List<Tuple<string, string>>();
+
+        var args = new ListObjectsArgs()
+            .WithBucket(bucketName)
+            .WithPrefix(objName+'/')
+            .WithVersions(true);
+
+        var observable = minioClient.ListObjectsAsync(args);
+        
+        observable.Subscribe(
+            item => versions.Add(new Tuple<string, string>(item.Key, item.VersionId)),
+            ex => Console.WriteLine(ex));
+
+        return versions;
+    }
+
+    public async Task RemoveObjectAsync(string objName, string? bucketName = null, MinioClient? minioClient = null, string? versionId = null)
+    {
+        minioClient = minioClient ?? _client;
+        bucketName = bucketName ?? _bucketName;
+
+        var args = new RemoveObjectArgs()
+            .WithBucket(bucketName)
+            .WithObject(objName);
+
+        if(versionId != null)
+        {
+            args = args.WithVersionId(versionId);
+        }
+        await minioClient.RemoveObjectAsync(args);
     }
 }
 

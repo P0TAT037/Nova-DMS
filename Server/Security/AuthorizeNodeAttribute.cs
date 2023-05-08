@@ -15,6 +15,11 @@ namespace Nova_DMS.Security;
 [AttributeUsage(AttributeTargets.Method)]
 public class AuthorizeNodeAttribute : Attribute, IAsyncAuthorizationFilter
 {
+    int _perm;
+    public AuthorizeNodeAttribute(int perm = 0)
+    {
+        _perm = perm;
+    }
 
     public Task OnAuthorizationAsync(AuthorizationFilterContext filterContext)
     {
@@ -32,10 +37,10 @@ public class AuthorizeNodeAttribute : Attribute, IAsyncAuthorizationFilter
             param.Add("@USRID", int.Parse(userId));
             param.Add("@FILEID", int.Parse(fileId!));
 
-            var result = _db.Query("SELECT * FROM NOV.FILES_USERS WHERE FILE_ID = @FILEID AND USER_ID = @USRID", param: param);
+            var result = _db.Query<int>("SELECT NOV.FILES_USERS.PERM FROM NOV.FILES_USERS WHERE FILE_ID = @FILEID AND USER_ID = @USRID", param: param);
             
 
-            if(result.Count() == 0)
+            if(result.Count() == 0 || result.First() < _perm)
             {
                 filterContext.Result = new UnauthorizedResult();
             }
