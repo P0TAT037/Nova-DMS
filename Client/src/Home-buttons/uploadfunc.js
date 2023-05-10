@@ -16,7 +16,7 @@ function Uploadfunc(info){
         const file = event.target.files[0];
         document.getElementById("upload-file-name").value=file.name;
         formData.append("file", file);
-        //console.log(formData);
+        console.log(file);
     }
     function handleuploadclick(){
     formData.append("UserId", "0");
@@ -26,19 +26,7 @@ function Uploadfunc(info){
     formData.append("Type", "image/png");
     formData.append("Content", "imaaagee");
     formData.append("DefaultPerm", "true");
-
-    fetch("https://localhost:7052/node", {
-        method: "POST",
-        headers: {
-            "accept": "*/*",
-          "Authorization": `Bearer ${info.token}`,
-          "Content-Type": "multipart/form-data"
-        },
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.error(error));
+    console.log(formData);
     }
     //this was used to test the api, but it sends back "bad request"
 

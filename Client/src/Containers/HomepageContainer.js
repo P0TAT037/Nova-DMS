@@ -5,7 +5,7 @@ import Newfolderfunc from "../Home-buttons/newfolderfunc.js";
 import { parseJwt } from "../Home-functions/parsejwt.js";
 import { Showfile } from "../Home-functions/displayfile.js";
 import { useNavigate } from 'react-router-dom';
-
+import { Getmetadata } from "../Home-buttons/metadatafunc.js";
 
 var hidarr = [{ name: "root", hid: "/" ,
 metadata:{
@@ -24,6 +24,7 @@ function Home() {
 }]);
 const [fileclicked,setFileclicked] = useState(false);
 const [clickedfileid,setclickedfileid] = useState();
+const [metadataclicked,setMetadataclicked] = useState(false);
     useEffect(() => {
         Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
     }, [])
@@ -42,22 +43,25 @@ const [clickedfileid,setclickedfileid] = useState();
     const handlefileClick = (state) =>{
         setFileclicked(state)
     }
+    const handlemetaClick = (state) =>{
+        setMetadataclicked(state)
+    }
     const logout = () =>{
         localStorage.setItem('token', "");
-        hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}
-}];
+        hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
     return (
         console.log(filetree),
         <div className="container-fluid">
+            
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
             <div className="row row-main">
-                <div className="col-12 col-home-base">
+                <div id="main-coloumn" className="col-12 col-home-base"> 
                 <div className="row m-1">
                 <div className="row p-1" >
                 <div className="col-2"><img className="img-fluid" src={require('../image/logo-home.png')} alt="logo" /></div>
-                <div className="col-9"><input className="input-search" placeholder="search..."></input></div>
+                <div className="col-9"><input id="input-search" className="input-search" placeholder="search..."></input></div>
                 <div className="col-1"><button>go</button></div>
                 </div>
                 <div className="row p-1" style={{color: "white"}}>
@@ -92,12 +96,14 @@ const [clickedfileid,setclickedfileid] = useState();
                         <button className="btn-folders" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
                             {folder.name}
                         </button>
+                        <button className="btn-metadata" onClick={() => setMetadataclicked(true)}>...</button>
                         </div>)}
                         {folder.metadata.type !== "folder" &&(
                             <div>
                            <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
                            {folder.name}
                        </button> 
+                       <button className="btn-metadata" onClick={() => setMetadataclicked(true)}>...</button>
                        </div>
                         )
 
@@ -114,7 +120,9 @@ const [clickedfileid,setclickedfileid] = useState();
                         </div>
                         
                 </div>
+                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick}/>
             </div>
+            
         </div>
    
     );
