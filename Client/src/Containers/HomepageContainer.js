@@ -25,6 +25,8 @@ function Home() {
 const [fileclicked,setFileclicked] = useState(false);
 const [clickedfileid,setclickedfileid] = useState();
 const [metadataclicked,setMetadataclicked] = useState(false);
+const [metadata,setMetadata] = useState();
+// pls pls pls fix your horrifying names
     useEffect(() => {
         Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
     }, [])
@@ -96,14 +98,14 @@ const [metadataclicked,setMetadataclicked] = useState(false);
                         <button className="btn-folders" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
                             {folder.name}
                         </button>
-                        <button className="btn-metadata" onClick={() => setMetadataclicked(true)}>...</button>
+                        <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
                         </div>)}
                         {folder.metadata.type !== "folder" &&(
                             <div>
                            <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
                            {folder.name}
                        </button> 
-                       <button className="btn-metadata" onClick={() => setMetadataclicked(true)}>...</button>
+                       <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
                        </div>
                         )
 
@@ -120,7 +122,7 @@ const [metadataclicked,setMetadataclicked] = useState(false);
                         </div>
                         
                 </div>
-                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick}/>
+                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} />
             </div>
             
         </div>
