@@ -82,7 +82,7 @@
   color: aliceblue;
   border-radius: 10px;
   transition: 0.25s;
-  width: 70vw;
+  width: 64vw;
   height: 6vh;
 }
 .input-search-aftermeta{
@@ -91,7 +91,7 @@
   color: aliceblue;
   border-radius: 10px;
   transition: 0.25s;
-  width: 50vw;
+  width: 44vw;
   height: 6vh;
 }
 .input-search:focus{
