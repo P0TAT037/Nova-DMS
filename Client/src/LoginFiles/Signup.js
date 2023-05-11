@@ -30,7 +30,7 @@ function SignupPage({ onLoginClick }) {
           document.getElementById("login conformation").innerHTML="This account is already used, please type in a different account."
         }
       };
-      xhttp.open("POST", apis.userapi + `?name='+name+'&username='+username+'&password='+password`, true);
+      xhttp.open("POST", apis.userapi + `?name=${name}&username=${username}&password=${password}`, true);
       xhttp.send();
     };
   

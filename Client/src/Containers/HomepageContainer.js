@@ -123,7 +123,7 @@ function Home() {
                             <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
                             {folder.name}
                             </button> 
-                            <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
+                            <button className="z-index-1 btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
                         </>
                         )}
                 </div>)

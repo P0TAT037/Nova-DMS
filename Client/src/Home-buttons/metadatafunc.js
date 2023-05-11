@@ -8,7 +8,6 @@ function Getmetadata(props){
     }
     var metadata = props.metadata
     return(
-        console.log(props.metadata),
         props.clicked !== false &&
         <div id="metadata-column" className="col-3 col-home-base">
             <div className="row">
