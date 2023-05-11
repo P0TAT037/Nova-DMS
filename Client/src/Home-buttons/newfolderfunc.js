@@ -25,7 +25,7 @@ function Newfolderfunc(info){
         formData.append('Description', `${folderdesc}`);
         formData.append('Type', 'folder');
         formData.append('Content', `${foldercontent}`);
-        formData.append('DefaultPerm', '');
+        formData.append('DefaultPerm', 'true');
         formData.append('file', ``);
         fetch(endpoint, {
           method: 'POST',
@@ -46,6 +46,22 @@ function Newfolderfunc(info){
           console.error('There was a problem with the fetch operation:', error);
         });
         alert("Folder Created.")
+    }
+    function testfile(){
+      var foldername = document.getElementById("folder-name").value
+        var folderdesc = document.getElementById("folder-desc").value
+        var foldercontent = document.getElementById("folder-content").value
+      const formData = new FormData();
+        formData.append('Dir', `${location[location.length-1].hid}`);
+        formData.append('Name', `${foldername}`);
+        formData.append('Description', `${folderdesc}`);
+        formData.append('Type', 'folder');
+        formData.append('Content', `${foldercontent}`);
+        formData.append('DefaultPerm', '');
+        formData.append('file', ``);
+        for (var pair of formData.entries()) {
+          console.log(pair[0]+ ': ' + pair[1]); 
+      }
     }
     return(
         
@@ -71,6 +87,7 @@ function Newfolderfunc(info){
                 }
                 <br></br>
                 <button onClick={handlefoldersubmit}>Create Folder</button>
+                <button onClick={testfile}>Test file</button>
             </div>
         )}
         </div>

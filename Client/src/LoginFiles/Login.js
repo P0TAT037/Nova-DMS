@@ -24,7 +24,7 @@ function LoginPage({ onSignupClick }) {
         var loginrespone = JSON.parse(xhttp.responseText);
         var token = loginrespone.token
         localStorage.setItem('token', token);
-        navigate(`/home`)
+        navigate(`/home`);
 
       }
       else if (this.status === 400){
