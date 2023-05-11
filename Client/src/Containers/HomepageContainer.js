@@ -53,14 +53,14 @@ function Home() {
     }
     //Function that logs out
     const logout = () =>{
-        localStorage.setItem('token', "");
+        delete localStorage['token']; // you need to use cookies, not local storage
         hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
 
     //HTML Return
     return (
-        console.log(filetree),
+        console.log(filetree,userinfo.level),
         <div className="container-fluid">
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
@@ -137,7 +137,10 @@ function Home() {
                     {/* Role management */}
                         <div className="col"><ManageRoles/></div>
                     {/* Admin Management */}
-                        <div className="col"><ManageAdmins location={hidarr} token={token}/></div>
+                    {userinfo.level === '2' && (
+                        <div className="col"><ManageAdmins token={token}/></div>
+                    )}
+                        
                     </div>
                 </div>
                 {/* Metadata bar */}

@@ -39,3 +39,8 @@ returns status code 200;
 -----delete api that delete user's premission on single file, takes input of user id and file name
 ======> changeperm does do that too, but it uses file id
 
+
+nigga sleep nigga sleep
+errors i faced:
+getnodes still retarded.
+

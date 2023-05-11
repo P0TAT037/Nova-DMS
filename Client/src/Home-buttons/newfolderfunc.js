@@ -25,7 +25,7 @@ function Newfolderfunc(info){
         formData.append('Description', `${folderdesc}`);
         formData.append('Type', 'folder');
         formData.append('Content', `${foldercontent}`);
-        formData.append('DefaultPerm', '');
+        formData.append('DefaultPerm', 'true');
         formData.append('file', ``);
         fetch(endpoint, {
           method: 'POST',
