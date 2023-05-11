@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Transactions;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -113,7 +114,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("changeperm")]
-    //[AuthorizeAdminOrOwner]
+    [AuthorizeAdminOrOwner]
     public async Task<IActionResult> EditPermission(int usrId, int FileId, bool? perm)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
@@ -138,7 +139,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("getFileUsers")]
-    //[AuthorizeAdminOrOwner]
+    [AuthorizeAdminOrOwner]
     public async Task<IActionResult> GetFileUsers(int usrId, int FileId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
@@ -171,5 +172,28 @@ public class UserController : ControllerBase
             await Console.Out.WriteLineAsync(e.Message);
             return BadRequest("Something wrong happened");
         }
+    }
+
+    [HttpDelete]
+    [AuthorizeAdmin(level:2)]
+    public async Task<IActionResult> DeleteUser(int usrId)
+    {
+        try
+        {
+            using (var transactionScope = new TransactionScope())
+            {
+                db.Execute($"Delete From NOV.FILES_USERS Where USER_ID = {usrId}");
+                db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = {usrId}");
+                db.Execute($"Delete From NOV.FILES_OWNERS Where UserID = {usrId}");
+                db.Execute($"Delete From NOV.USERS Where ID = {usrId}");
+            }
+        }
+        catch (Exception e)
+        {
+            await Console.Out.WriteLineAsync(e.Message);
+            return StatusCode(500,"Something wrong happened");
+        }
+
+        return Ok();
     }
 }

@@ -70,16 +70,32 @@ public class NodeController : ControllerBase
     }
 
 
-    [HttpGet]
-    [Route("metadata")]
-    public async Task<Metadata> GetMetadataAsync(string id)
-    {
-        var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
-            q => q.Term(t => t.Id, id)
-            )
-        );
-        return result.Documents.FirstOrDefault<Metadata>()!;
+    [HttpPut]
+    [Route("move")]
+    [AuthorizeAdminOrOwner]
+    public async Task<IActionResult> MoveNode(int FileId, string newDir) {
+        try
+        {
+            await _db.ExecuteAsync("Update Nov.FILES set DIR = Cast(@newDir as hierarchyid) where ID = @FileId", new {newDir, FileId});
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500);
+        }
     }
+
+    // [HttpGet]
+    // [Route("metadata")]
+    // public async Task<Metadata> GetMetadataAsync(string id)
+    // {
+    //     var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
+    //         q => q.Term(t => t.Id, id)
+    //         )
+    //     );
+    //     return result.Documents.FirstOrDefault<Metadata>()!;
+    // }
 
     private async Task<IEnumerable<Metadata>> GetMetadataAsync(List<string> ids)
     {
@@ -127,7 +143,8 @@ public class NodeController : ControllerBase
                
                 await _db.ExecuteAsync("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
                 int fileId = param.Get<int>("@return");
-                
+                await _db.ExecuteAsync("Insert into NOV.Files_OWNERS values (@FileId, @UsrId)", param: new { FileId = fileId, UsrId = UserId });
+
                 param = new DynamicParameters();
                 param.Add("@FileId", fileId);
                 param.Add("@id", UserId);

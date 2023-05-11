@@ -20,10 +20,12 @@ public class LoginController : ControllerBase
 {
     private readonly string _connectionString  = null!;
     private readonly IConfiguration _config;
+    private readonly SqlConnection _db;
 
-    public LoginController(IConfiguration config) {
+    public LoginController(IConfiguration config, SqlConnection db) {
         _config = config;
         _connectionString = config.GetConnectionString("SQLServer")!;
+        _db = db;
 
     }
 
@@ -70,18 +72,22 @@ public class LoginController : ControllerBase
         
         //TODO: add user roles to the user model and the token claims.
         var user = new User { Id = result.Id, Username= username ,Level = result.Level};
-        string token = GenerateToken(user);
+        var roles = _db.Query<Role>
+        ("Select Nov.ROLES.ID, NOV.ROLES.Name FROM NOV.ROLES join NOV.USERS_ROLES on (NOV.ROLES.ID = NOV.USERS_ROLES.USER_ID) Where NOV.Roles.ID = @UserId"
+        , param: new{UserId = user.Id});
+        string token = GenerateToken(user, roles);
         
         return Ok(new { result.Name, token });
     }
 
-    private string GenerateToken(User user)
+    private string GenerateToken(User user, IEnumerable<Role> roles)
     {
         List<Claim> claims = new List<Claim>()
         {
             new Claim("id", user.Id.ToString()!),
             new Claim("username", user.Username),
             new Claim("level", user.Level.ToString()),
+            new Claim ("roles", String.Join(",", roles.Select(r => (r.Id, r.Name))))
         };
 
         var issuer = _config["JWT:Issuer"];

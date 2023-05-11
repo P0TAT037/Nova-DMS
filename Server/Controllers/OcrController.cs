@@ -12,7 +12,7 @@ public class OcrController
 {
 
     [HttpGet]
-    public async Task<IActionResult> GetTextAsync()
+    public Task<IActionResult> GetTextAsync()
     {
         throw new NotImplementedException();
     }
