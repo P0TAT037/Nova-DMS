@@ -105,7 +105,7 @@ function Home() {
                 </div>
                 {/* New File Function */}
                 <div className="col-1">
-                    <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} dir={hidarr[hidarr.length - 1]} token={token}/>
+                    <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} location={hidarr} token={token}/>
                 </div>
 
             </div>
