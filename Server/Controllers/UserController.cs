@@ -175,6 +175,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete]
+    [Route("delete")]
     [AuthorizeAdmin(level:2)]
     public async Task<IActionResult> DeleteUser(int usrId)
     {

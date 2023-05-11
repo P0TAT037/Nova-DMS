@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Nova_DMS.Models;
+using Nova_DMS.Models.DTOs;
 using Nova_DMS.Security;
 
 namespace Nova_DMS.Controllers;
@@ -63,24 +64,22 @@ public class RoleController : ControllerBase
 
     [HttpGet]
     [AuthorizeAdmin]
-
-    
     public async Task<IActionResult> GetRoles()
     {
         var db = new SqlConnection(_config.GetConnectionString("SQLServer"));
         
-        //TODO: query the db once then use linq instead of this shit
         try
         {
-            var result = await db.QueryAsync<Role>("SELECT * FROM nov.Roles");
-            var sql = "SELECT ID, USERNAME, NAME ,[LEVEL] FROM nov.Users join nov.USERS_ROLES on nov.USERs.ID = nov.USERS_ROLES.USER_ID WHERE nov.USERS_ROLES.ROLE_ID = @role_id";
-            
-            for(int i = 0; i < result.Count(); i++)
-            {
-                result.ElementAt(i).users = await db.QueryAsync<User>(sql , new { role_id = result.ElementAt(i).Id});
-            }
+            var roles = await db.QueryAsync<Role>("SELECT * FROM nov.Roles");
+            var sql = "SELECT ID, USERNAME, NAME ,[LEVEL], ROLE_ID FROM nov.Users join nov.USERS_ROLES on nov.USERs.ID = nov.USERS_ROLES.USER_ID";
+            var users=  await db.QueryAsync<UserWithRoleDTO>(sql);
+              
+            for(int i = 0; i < roles.Count(); i++) 
+            { 
+            roles.ElementAt(i).users = users.Where(x=>x.RoleId== roles.ElementAt(i).Id);
+            } 
 
-            return Ok(result);
+            return Ok(roles);
         }
         catch (Exception e)
         {
