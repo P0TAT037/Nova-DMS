@@ -138,6 +138,24 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Route("changeperm/{roleId}")]
+    [AuthorizeAdminOrOwner]
+    public async Task<IActionResult> EditRolePermission(int RoleId, int FileId, bool? perm)
+    {
+        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
+        try
+        {
+            db.Execute($"ChangePermByRole", new {RoleId, FileId, perm}, commandType: CommandType.StoredProcedure);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            await Console.Out.WriteLineAsync(e.Message);
+            return BadRequest("Something wrong happened");
+        }
+    }
+
+    [HttpGet]
     [Route("getFileUsers")]
     [AuthorizeAdminOrOwner]
     public async Task<IActionResult> GetFileUsers(int usrId, int FileId)
