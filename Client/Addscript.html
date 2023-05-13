@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<script>
+function addstuff(){
+    var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+                document.getElementById("status").innerHTML+= `added user 1 to system`
+              }
+            }
+            xhttp.open("GET", `https://localhost:7052/user?name=user1&username=user1&password=user1` , true);
+            xhttp.send();
+    var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+                document.getElementById("status").innerHTML+= `added user 2 to system`
+              }
+            }
+            xhttp.open("GET", `https://localhost:7052/user?name=user2&username=user2&password=user2` , true);
+            xhttp.send();
+    var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+                document.getElementById("status").innerHTML+= `added subadmin to system`
+              }
+            }
+            xhttp.open("GET", `https://localhost:7052/user?name=subadmin1&username=subadmin&password=subadmin` , true);
+            xhttp.send();
+}
+</script>
+<body>
+    Please make sure your server is running🏃🏃
+    <button onclick=addstuff()>click to add</button>
+    <div id="status"></div>
+</body>
