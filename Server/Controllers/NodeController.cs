@@ -76,8 +76,8 @@ public class NodeController : ControllerBase
     public async Task<IActionResult> MoveNode(int FileId, string newDir) {
         try
         {
-            await _db.ExecuteAsync("Update Nov.FILES set DIR = Cast(@newDir as hierarchyid) where ID = @FileId", new {newDir, FileId});
-            await _db.ExecuteAsync("Update Nov.FILES_USERS set HID = Cast(@newDir as hierarchyid) where FILE_ID = @FileId", new {newDir, FileId});
+            await _db.ExecuteAsync("Update Nov.FILES set DIR = Cast(@newDir as hierarchyid) where ID = @FileId", new {newDir, FileId}).ConfigureAwait(false);
+            await _db.ExecuteAsync("Update Nov.FILES_USERS set HID = Cast(@newDir as hierarchyid) where FILE_ID = @FileId", new {newDir, FileId}).ConfigureAwait(false);
 
             return Ok();
         }
