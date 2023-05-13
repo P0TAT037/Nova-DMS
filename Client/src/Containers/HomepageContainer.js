@@ -136,7 +136,7 @@ function Home() {
                     {/* Logout */}
                         <div className="col" onClick={() => logout()}><button>Logout</button></div>
                     {/* Role management */}
-                    {userinfo.level === '1' | '2' && (
+                    {userinfo.level > 0 && (
                     <div className="col"><ManageRoles token={token}/></div>
                     )}
                     {/* Admin Management */}
