@@ -76,7 +76,7 @@ public class RoleController : ControllerBase
               
             for(int i = 0; i < roles.Count(); i++) 
             { 
-            roles.ElementAt(i).users = users.Where(x=>x.RoleId== roles.ElementAt(i).Id);
+            roles.ElementAt(i).users = users.Where(x=>x.RoleId== roles.ElementAt(i).Id).ToList();
             } 
 
             return Ok(roles);
