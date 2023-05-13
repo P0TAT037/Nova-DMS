@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Searchbyfilters } from "../Home-functions/Searchbyfilters";
+import data from '../Endpoint-url.json';
 function Test(info){
    
-    
+    console.log(data.url+ "user/gogogagaa")
     return(
         <>
-        <div className="col-8"><input id="input-search" className="input-search" placeholder="search..."></input></div>
-        <div className="col-1"><button>go</button></div>
-        <div className="col-1"><Searchbyfilters/></div>
+        
         </>
         
     );

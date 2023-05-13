@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apis from "../API-shortcuts/APIsc.js"
+import data from "../Endpoint-url.json"
 
 function SignupPage({ onLoginClick }) {
     const [name, setName] = useState('');
@@ -30,7 +30,7 @@ function SignupPage({ onLoginClick }) {
           document.getElementById("login conformation").innerHTML="This account is already used, please type in a different account."
         }
       };
-      xhttp.open("POST", apis.userapi + `?name=${name}&username=${username}&password=${password}`, true);
+      xhttp.open("POST", data.url + `user/?name=${name}&username=${username}&password=${password}`, true);
       xhttp.send();
     };
   

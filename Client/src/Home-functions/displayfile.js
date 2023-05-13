@@ -1,3 +1,4 @@
+import data from "../Endpoint-url.json"
 function Showfile(props){
     var fileurl = ""
         if(props.clicked !== false){
@@ -9,7 +10,7 @@ function Showfile(props){
                 document.getElementById("iframe").innerHTML=`<iframe src="${fileurl}" style="height:84vh;width:64vw;" title="description"></iframe>`
               }
             }
-            xhttp.open("GET", `https://localhost:7052/node?id=${props.fileid}` , true);
+            xhttp.open("GET", data.url +`node?id=${props.fileid}` , true);
             xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp.send();
           }

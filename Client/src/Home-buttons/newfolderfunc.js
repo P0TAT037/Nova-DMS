@@ -1,4 +1,5 @@
 import { useState } from "react";
+import data from "../Endpoint-url.json"
 function Newfolderfunc(info){
     const [ispressed,setIspressed] = useState(false);
     var location = info.location
@@ -13,7 +14,7 @@ function Newfolderfunc(info){
         var folderdesc = document.getElementById("folder-desc").value
         var foldercontent = document.getElementById("folder-content").value
         
-        const endpoint = 'https://localhost:7052/node';
+        const endpoint = data.url + 'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,

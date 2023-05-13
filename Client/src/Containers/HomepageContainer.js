@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import data from "../Endpoint-url.json"
 import Uploadfunc from "../Home-buttons/uploadfunc.js"
 import Newfolderfunc from "../Home-buttons/newfolderfunc.js";
 import { parseJwt } from "../Home-functions/parsejwt.js";
@@ -161,7 +162,7 @@ const Getfiles = (hid,name1, push,callback) => { //hideous, i know
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open(
         "GET",
-        `https://localhost:7052/node/getNodes?hierarchyId=${hid}`,
+        data.url + `node/getNodes?hierarchyId=${hid}`,
         false
     );
     xmlhttp.setRequestHeader("Authorization", `Bearer ${token}`);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apis from "../API-shortcuts/APIsc.js"
+import data from '../Endpoint-url.json';
 
 function LoginPage({ onSignupClick }) {
   const [username, setUsername] = useState('');
@@ -34,7 +34,7 @@ function LoginPage({ onSignupClick }) {
         document.getElementById("login conformation").innerHTML="An error has occured, client cannot connect to server"
       }
     };
-    xhttp.open("GET", apis.userapi + `?username=`+username +`&password=` + password, true);
+    xhttp.open("GET", data.url+ `user/?username=`+username +`&password=` + password, true);
     xhttp.send();
     
   };

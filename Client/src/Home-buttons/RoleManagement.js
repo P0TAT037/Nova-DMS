@@ -1,4 +1,5 @@
 import { useState } from "react";
+import data from "../Endpoint-url.json"
 function ManageRoles(props){
     const [ispressed,setIspressed] = useState(false);
     const [users,setUsers] = useState();
@@ -11,7 +12,7 @@ function ManageRoles(props){
                 setUsers(JSON.parse(xhttp.responseText));
             }
         }
-        xhttp.open("GET",`https://localhost:7052/user/all`, true);
+        xhttp.open("GET",data.url + `user/all`, true);
         xhttp.send();
     }
     function handleexitclick(){

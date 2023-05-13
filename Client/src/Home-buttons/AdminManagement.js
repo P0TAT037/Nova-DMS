@@ -1,4 +1,5 @@
 import { useState } from "react";
+import data from "../Endpoint-url.json"
 function ManageAdmins(info){
     const [ispressed,setIspressed] = useState(false);
     const [addpressed,setAddpressed] = useState(false);
@@ -11,7 +12,7 @@ function ManageAdmins(info){
                 setUsers(JSON.parse(xhttp.responseText));
             }
         }
-        xhttp.open("GET",`https://localhost:7052/user/all`, true);
+        xhttp.open("GET", data.url + `user/all`, true);
         xhttp.send();
         
         console.log(users)
@@ -23,7 +24,7 @@ function ManageAdmins(info){
                 alert("User Yeeted from admin");
             }
         }
-        xhttp.open("DELETE",`https://localhost:7052/user/admin?usrId=${userid}`, false);
+        xhttp.open("DELETE",data.url +`user/admin?usrId=${userid}`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
     }
@@ -34,7 +35,7 @@ function ManageAdmins(info){
                 alert("User added to admin");
             }
         }
-        xhttp.open("PUT",`https://localhost:7052/user/admin?usrId=${userid}`, false);
+        xhttp.open("PUT",data.url + `user/admin?usrId=${userid}`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
     }

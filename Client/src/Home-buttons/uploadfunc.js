@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import data from "../Endpoint-url.json"
 function Uploadfunc(info){
     var file;
     const formData = new FormData();
@@ -25,7 +25,7 @@ function Uploadfunc(info){
         var desc = document.getElementById("upload-file-desc").value
         var content = document.getElementById("upload-file-content").value
 
-        const endpoint = 'https://localhost:7052/node';
+        const endpoint = data.url +'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,
