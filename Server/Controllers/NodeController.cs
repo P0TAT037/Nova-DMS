@@ -87,18 +87,7 @@ public class NodeController : ControllerBase
             return StatusCode(500);
         }
     }
-
-    // [HttpGet]
-    // [Route("metadata")]
-    // public async Task<Metadata> GetMetadataAsync(string id)
-    // {
-    //     var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
-    //         q => q.Term(t => t.Id, id)
-    //         )
-    //     );
-    //     return result.Documents.FirstOrDefault<Metadata>()!;
-    // }
-
+    
     private async Task<IEnumerable<Metadata>> GetMetadataAsync(List<string> ids)
     {
         var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(

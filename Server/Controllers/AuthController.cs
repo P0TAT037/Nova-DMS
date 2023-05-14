@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -14,23 +15,22 @@ using System.Text;
 
 namespace Nova_DMS.Controllers;
 
-[Route("/user")]
+[Route("/auth")]
 [ApiController]
-public class LoginController : ControllerBase
+public class AuthController : ControllerBase
 {
     private readonly string _connectionString  = null!;
     private readonly IConfiguration _config;
     private readonly SqlConnection _db;
 
-    public LoginController(IConfiguration config, SqlConnection db) {
+    public AuthController(IConfiguration config, SqlConnection db) {
         _config = config;
         _connectionString = config.GetConnectionString("SQLServer")!;
         _db = db;
 
     }
 
-    //TODO: queries to stored procedures
-    [HttpPost]
+    [HttpPost("signup")]
     public async Task<IActionResult> SignUp(string name, string username, string password) {
 
         var param = new {name = name, username = username, password = BCrypt.Net.BCrypt.HashPassword(password)};
@@ -57,7 +57,7 @@ public class LoginController : ControllerBase
     }
 
          
-    [HttpGet]
+    [HttpGet("login")]
     public async Task<IActionResult> LogIn(string username, string password) {
         var param = new DynamicParameters();
         param.Add("@username", username);
@@ -70,14 +70,49 @@ public class LoginController : ControllerBase
             return BadRequest("wrong username or password");
         }
         
-        //TODO: add user roles to the user model and the token claims.
         var user = new User { Id = result.Id, Username= username ,Level = result.Level};
         var roles = _db.Query<Role>
         ("Select Nov.ROLES.ID, NOV.ROLES.Name FROM NOV.ROLES join NOV.USERS_ROLES on (NOV.ROLES.ID = NOV.USERS_ROLES.USER_ID) Where NOV.Roles.ID = @UserId"
         , param: new{UserId = user.Id});
         string token = GenerateToken(user, roles);
-        
+        await GenerateRefreshToken();
         return Ok(new { result.Name, token });
+    }
+
+    [HttpGet("refresh")]
+    [Authorize]
+    public async Task<IActionResult> RefreshToken()
+    {
+        
+        var RequestToken = Request.Cookies["refreshToken"];
+        Guid token;
+        Guid.TryParse(RequestToken, out token);
+        var param = new { token };
+        var refreshToken = await _db.QueryFirstOrDefaultAsync<RefreshToken>("Select * FROM NOV.REFRESH_TOKENS WHERE TOKEN = @token", param);
+        if (refreshToken is null || refreshToken.Expires < DateTime.Now)
+        {
+            return Unauthorized();
+        }
+
+        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var claims = jwt.Claims;
+        var newToken = ConstructToken(claims.ToList());
+        string newtTokenString = new JwtSecurityTokenHandler().WriteToken(newToken);
+        return Ok(newtTokenString);
+    }
+
+    [HttpGet("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout() {
+        try
+        {
+            await _db.ExecuteAsync("Delete From NOV.REFRESH_TOKENS WHERE TOKEN = @token", new {token = Request.Cookies["refreshToken"]});
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(500, "Something went wrong");
+        }
+        return Ok();
     }
 
     private string GenerateToken(User user, IEnumerable<Role> roles)
@@ -90,6 +125,14 @@ public class LoginController : ControllerBase
             new Claim ("roles", String.Join(",", roles.Select(r => (r.Id, r.Name))))
         };
 
+        var token = ConstructToken(claims);
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return tokenString;
+    }
+
+    private JwtSecurityToken ConstructToken(List<Claim> claims)
+    {
         var issuer = _config["JWT:Issuer"];
 
         var audience = _config["JWT:Audience"];
@@ -98,10 +141,21 @@ public class LoginController : ControllerBase
 
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
-        var token = new JwtSecurityToken(issuer: issuer, audience:audience, claims: claims, signingCredentials: cred, expires: DateTime.Now.AddDays(1));
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var token = new JwtSecurityToken(issuer: issuer, audience: audience, claims: claims, signingCredentials: cred, expires: DateTime.Now.AddDays(1));
+        return token;
     }
 
-
+    private async Task GenerateRefreshToken()
+    {
+        var token = new RefreshToken();
+        var sql = "INSERT INTO NOV.REFRESH_TOKENS (token, expires) VALUES (@token, @expires)";
+        var param = new { token = token.Token, expires = token.Expires };
+        await _db.ExecuteAsync(sql, param);
+        var cookieOptions = new CookieOptions()
+        {
+            HttpOnly = true,
+            Expires = token.Expires
+        };
+        Response.Cookies.Append("refreshToken", token.Token.ToString(), cookieOptions);
+    }
 }
