@@ -87,7 +87,7 @@ public class NodeController : ControllerBase
             return StatusCode(500);
         }
     }
-    
+
     private async Task<IEnumerable<Metadata>> GetMetadataAsync(List<string> ids)
     {
         var result = await _elasticClient.SearchAsync<Metadata>(s => s.Query(
@@ -219,7 +219,7 @@ public class NodeController : ControllerBase
 
     [HttpDelete]
     [AuthorizeNode(perm: 1)]
-    public async Task DeleteFileAsync(string id, string? versionId, bool? lastVersion) 
+    public async Task DeleteFileAsync(string id, string? versionId = null) 
     {
         await _minIoService.RemoveObjectAsync(id, versionId);
         if(versionId == null)
@@ -228,13 +228,11 @@ public class NodeController : ControllerBase
             return;
         }
         
-        if(lastVersion == true)
-        {
-            var result = await GetMetadataAsync(new List<string> { id });
-            var metadata = result.FirstOrDefault<Metadata>();
-            metadata!.Version = metadata!.Version - 1;
-            var response = _elasticClient.IndexDocument(metadata);
-        }
+        var result = await GetMetadataAsync(new List<string> { id });
+        var metadata = result.FirstOrDefault<Metadata>();
+        metadata!.Version = metadata!.Version - 1;
+        var response = _elasticClient.IndexDocument(metadata);
+        
     }
 
     [HttpDelete]
@@ -245,7 +243,7 @@ public class NodeController : ControllerBase
         var nodes = await GetNodesAsync(id);
         foreach(var node in nodes)
         {
-            await DeleteFileAsync(node.Id.ToString(), null, null);
+            await DeleteFileAsync(node.Id.ToString());
         }
     }
 
