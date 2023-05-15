@@ -34,7 +34,7 @@ function LoginPage({ onSignupClick }) {
         document.getElementById("login conformation").innerHTML="An error has occured, client cannot connect to server"
       }
     };
-    xhttp.open("GET", data.url+ `user/?username=`+username +`&password=` + password, true);
+    xhttp.open("GET", data.url+ `auth/login/?username=`+username +`&password=` + password, true);
     xhttp.send();
     
   };

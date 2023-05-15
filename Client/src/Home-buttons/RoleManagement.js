@@ -5,6 +5,7 @@ function ManageRoles(props){
     const [users,setUsers] = useState([]);
     const [userstoadd, setUserstoadd] =useState([]);
     const [roles,setRoles] = useState([]);
+    const [currentrole,setCurrentrole] = useState();
     const [currentstate,setCurrentstate] = useState(0); //change this goofy ahh name
     function handlebuttonclick(){
         setIspressed(true);
@@ -56,7 +57,7 @@ function ManageRoles(props){
         xhttp.send();
 
     }
-    function addusers(){
+    function showusers(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
@@ -66,27 +67,52 @@ function ManageRoles(props){
         xhttp.open("GET", data.url + `user/all`, true);
         xhttp.send();
     }
+    function adduser(userid){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                alert("user added to role")
+            }
+        }
+        xhttp.open("PUT", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
+        xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
+        xhttp.send();
+    }
+    function deleteuser(userid){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                alert("user deleted from role")
+            }
+        }
+        xhttp.open("DELETE", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
+        xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
+        xhttp.send();
+    }
     function handleexitclick(){
         setIspressed(false);
     }
     
     return(
+        console.log(currentrole),
         <div>
             <button onClick={handlebuttonclick}>R</button>
             {ispressed !== false &&(
             <div className="div-popup z-index-2" style={{top: "-70vh"}}>
-                <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
+                <button  className="btn-popup-close" onClick={() => {setCurrentstate(0) ; handleexitclick()}}>X</button>
+                {/* Show current roles */}
                 {currentstate === 0 &&(
                     <div>
                         Roles on this system
                         {roles.map((role)=>(
-                            <div key={role.id} onClick={() => {setCurrentstate(2); setUsers(role.users)}}>{role.name}
+                            <div key={role.id} ><button onClick={() => {setCurrentstate(2); setUsers(role.users); setCurrentrole(role.id);}}>{role.name}</button>
                             <button onClick={() => {removerole(role.name); Refresh()}}>Remove</button>
                             </div>
                         ))}
                         <button style={{position:"relative", bottom:"-5vh"}} onClick={() => setCurrentstate(1)}>Add New role</button>
                     </div>
                 )}
+                {/* Create Role */}
                 {
                    currentstate === 1 &&(
                     <div>
@@ -99,6 +125,7 @@ function ManageRoles(props){
                     </div>
                 ) 
                 }
+                {/* Show Role users */}
                 {
                    currentstate === 2 &&(
                     <div>
@@ -106,13 +133,14 @@ function ManageRoles(props){
                         Users on this role:
                         <br></br>
                         {users.map((user) => (
-                            <div>{user.name}
-                            <button>Remove user</button> {/*ill leave this here till users appear inside roles */}
+                            <div key={user.id}>{user.name}
+                            <button onClick={() => deleteuser(user.id)}>Remove user</button> {/*ill leave this here till users appear inside roles */}
                             </div>))}
-                        <button onClick={() => {setCurrentstate(3); addusers()} }>Add users</button>
+                        <button onClick={() => {setCurrentstate(3); showusers()} }>Add users</button>
                     </div>
                 ) 
                 }
+                {/* Add users to role */}
                 {
                     currentstate === 3 &&(
                         <>
@@ -122,7 +150,7 @@ function ManageRoles(props){
                             <br></br>
                         {userstoadd.map((user) => (
                             <div key={user.id}>{user.name}
-                            <button>Add user</button> {/*ill leave this here till users appear inside roles */}
+                            <button onClick={() => adduser(user.id)}>Add user</button> {/*ill leave this here till users appear inside roles */}
                             </div>))}
                         </div>
                         </>
