@@ -58,6 +58,7 @@ function Home() {
         hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
+    //function that goes to location of pressed file in search
     function handlelocationclick(location){
         Getfiles(`${location}`, "root","false",(tree) => { setFiletree(tree) })
     }

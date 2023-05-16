@@ -42,5 +42,14 @@ returns status code 200;
 
 nigga sleep nigga sleep
 errors i faced:
-getnodes still retarded.
+15/5/2023:
+getnodes goes semi infinity mode (/0/ has /0/1/ inside, requesting /0/ returns /0/ inside it /0/, going inside that other /0/ returns /0/ and stops, why lol?)
+delete node doesnt delete anything lol
+getnodes gets retarded after deleting a file, returns error 500
+getnodes blows up even more after adding a file
+getnodes blows up even more after adding a folder with permission true (added folder with permission true with admin)
+put user in role request always puts user in the first role, if given id of a different role, it still puts user in the first role.
+/search api always return 0 hits
+/search/filter return -> TypeError: Failed to execute 'fetch' on 'Window': Request with GET/HEAD method cannot have body.
 
+please make delete with id instead of name
