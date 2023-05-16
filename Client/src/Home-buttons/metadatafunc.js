@@ -16,7 +16,7 @@ function Getmetadata(props){
             <div className="col-4"><FilePermissions/></div>
 
                 {/* File Deletion */}
-            <div className="col-3"><DeleteFile/></div>
+            <div className="col-3"><DeleteFile id={metadata.id} name={metadata.name}/></div>
 
                 {/* File Editing */}
             <div className="col-2"><EditFile/></div>

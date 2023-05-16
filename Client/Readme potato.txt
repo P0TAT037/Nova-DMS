@@ -43,8 +43,11 @@ returns status code 200;
 nigga sleep nigga sleep
 errors i faced:
 15/5/2023:
+<blows up means index out of range>
 getnodes goes semi infinity mode (/0/ has /0/1/ inside, requesting /0/ returns /0/ inside it /0/, going inside that other /0/ returns /0/ and stops, why lol?)
-delete node doesnt delete anything lol
+getnodes blow up after adding 2 folder in the same directory
+delete node makes getnodes blow up
+delete folder doesnt work
 getnodes gets retarded after deleting a file, returns error 500
 getnodes blows up even more after adding a file
 getnodes blows up even more after adding a folder with permission true (added folder with permission true with admin)

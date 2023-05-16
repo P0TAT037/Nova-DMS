@@ -1,5 +1,5 @@
 import { useState } from "react";
-function DeleteFile(info){
+function DeleteFile(props){
     const [ispressed,setIspressed] = useState(false);
     function handlebuttonclick(){
         setIspressed(true);
@@ -13,7 +13,6 @@ function DeleteFile(info){
             <button onClick={handlebuttonclick}>Delete</button>
             {ispressed !== false &&(
             <div className="div-popup z-index-2" >
-                DeleteFile
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
             </div>
         )}
