@@ -58,6 +58,9 @@ function Home() {
         hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
+    function handlelocationclick(location){
+        Getfiles(`${location}`, "root","false",(tree) => { setFiletree(tree) })
+    }
 
     //HTML Return
     return (
@@ -72,7 +75,7 @@ function Home() {
                 <div className="row m-1">
                 <div className="row p-1" >
                 <div className="col-2"><img className="img-fluid" src={require('../image/logo-home.png')} alt="logo" /></div>
-                <SearchFunction/>
+                <SearchFunction token={token} onClick={handlelocationclick}/>
                 </div>
 
                 {/* Welcome (Very Important) */}
