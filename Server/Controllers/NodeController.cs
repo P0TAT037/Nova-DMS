@@ -108,7 +108,8 @@ public class NodeController : ControllerBase
         param.Add("userId", userId);
         param.Add("hierarchyId", hierarchyId);
         var results = await _db.QueryAsync<Node>("SELECT * from NOV.GetNodes(@userId, cast(@hierarchyId as hierarchyid))", param);
-        var metadata = await GetMetadataAsync(results.Select(r => r.Id.ToString()).ToList());
+        var Ids = results.Select(r => r.Id).ToList();
+        var metadata = await GetMetadataAsync(Ids);
         for(int i = 0; i < results.Count(); i++)
         {
             results.ElementAt(i).Metadata = metadata.ElementAt(i);
@@ -218,14 +219,24 @@ public class NodeController : ControllerBase
     }
 
     [HttpDelete]
-    [AuthorizeNode(perm: 1)]
-    public async Task DeleteFileAsync(string id, string? versionId = null) 
+    [AuthorizeAdmin]
+    public async Task<IActionResult> DeleteFileAsync(string id, string? versionId = null) 
     {
         await _minIoService.RemoveObjectAsync(id, versionId);
+        try
+        {
+            await DeleteNodeFromDB(id);
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine(e);
+            return StatusCode(500, "something wrong happened while trying to communicate with the db");
+        }
+        
         if(versionId == null)
         {
             await _elasticClient.DeleteAsync<Metadata>(id);
-            return;
+            return Ok();
         }
         
         var result = await GetMetadataAsync(new List<string> { id });
@@ -233,18 +244,32 @@ public class NodeController : ControllerBase
         metadata!.Version = metadata!.Version - 1;
         var response = _elasticClient.IndexDocument(metadata);
         
+        return Ok();
     }
 
     [HttpDelete]
     [Route("deleteFolder")]
-    [AuthorizeNode(perm: 1)]
-    public async Task DeleteFolderAsync(string id)
+    [AuthorizeAdmin]
+    public async Task DeleteFolderAsync(string HID)
     {
-        var nodes = await GetNodesAsync(id);
+        var nodes = await GetNodesAsync(HID);
+        var tmp = HID.Split('/');
+        var id = tmp[tmp.Length-2];
+        await DeleteNodeFromDB(id);
+
         foreach(var node in nodes)
         {
             await DeleteFileAsync(node.Id.ToString());
         }
+    }
+
+    private async Task DeleteNodeFromDB(string id)
+    {
+        await _db.ExecuteAsync(@"BEGIN TRANSACTION
+                                    DELETE FROM NOV.FILES_USERS WHERE NOV.FILES_USERS.FILE_ID = @ID;
+                                    DELETE FROM NOV.FILES_OWNERS WHERE NOV.FILES_OWNERS.FileID = @ID;
+                                    DELETE FROM NOV.FILES WHERE NOV.FILES.ID = @ID
+                                    COMMIT", param: new { ID = id });
     }
 
 }

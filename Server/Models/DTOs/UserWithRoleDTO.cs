@@ -7,6 +7,5 @@ namespace Nova_DMS.Models.DTOs;
 
 public class UserWithRoleDTO : User
 {
-
-    public int RoleId { get; set; }
+        public int RoleId { get; set; }
 }

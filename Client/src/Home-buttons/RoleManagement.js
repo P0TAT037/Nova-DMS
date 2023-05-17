@@ -45,14 +45,14 @@ function ManageRoles(props){
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
-    function removerole(name){
+    function removerole(roleid){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 alert("role deleted")
             }
         }
-        xhttp.open("DELETE",data.url + `role?name=${name}`, true);
+        xhttp.open("DELETE",data.url + `role?id=${roleid}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
 
@@ -106,7 +106,7 @@ function ManageRoles(props){
                         Roles on this system
                         {roles.map((role)=>(
                             <div key={role.id} ><button onClick={() => {setCurrentstate(2); setUsers(role.users); setCurrentrole(role.id);}}>{role.name}</button>
-                            <button onClick={() => {removerole(role.name); Refresh()}}>Remove</button>
+                            <button onClick={() => {removerole(role.id); Refresh()}}>Remove</button>
                             </div>
                         ))}
                         <button style={{position:"relative", bottom:"-5vh"}} onClick={() => setCurrentstate(1)}>Add New role</button>
