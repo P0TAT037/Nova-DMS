@@ -183,7 +183,7 @@ public class NodeController : ControllerBase
     //TODO:
     [HttpPut]
     [AuthorizeNode(perm: 1)]
-    public async Task<IActionResult> UpdateAsync([FromForm]Metadata metadata, IFormFile? file)
+    public async Task<IActionResult> UpdateAsync(string id, [FromForm]Metadata metadata, IFormFile? file)
     {
         var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
@@ -202,6 +202,16 @@ public class NodeController : ControllerBase
             metadata.Updated = DateTime.Now;
             metadata.Version = metadata.Version+1;
             
+        try
+        {
+            await _db.ExecuteAsync("Update Nov.FILES set NAME = @name where ID = @FileId", new {name = metadata.Name, FileId = metadata.Id}).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500);
+        }
+
             var response = _elasticClient.IndexDocument(metadata);
             if (!response.IsValid)
             {

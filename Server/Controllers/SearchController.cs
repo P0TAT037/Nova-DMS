@@ -16,16 +16,15 @@ public class SearchController : ControllerBase
 
     [Flags]
     public enum Fields
-    {
-        None = 0,
-        Name = 1,
-        Type = 2,
-        Description = 4,
-        Content = 8,
-        Author = 16,
-        EditedBy = 32,
-        Created = 64,
-        Updated = 128,
+    {   
+        name = 1,
+        type = 2,
+        description = 4,
+        content = 8,
+        author = 16,
+        editedBy = 32,
+        created = 64,
+        updated = 128,
     }
 
     IElasticClient _elasticClient;
@@ -39,9 +38,9 @@ public class SearchController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Search(string searchText, int page = 0, Fields setFields = Fields.Name )
+    public async Task<IActionResult> Search(string searchText, int page = 0, Fields setFields = Fields.name | Fields.description | Fields.content )
     {
-        var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
+        var jwt = new JwtSecurityToken(Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         
         var fileIds = await _db.QueryAsync<int>("Select Files_Users.File_Id from Nov.Files_Users where Nov.Files_Users.User_Id = @UserId", new { UserId }).ConfigureAwait(false);
@@ -75,10 +74,10 @@ public class SearchController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpPost]
     [Route("filter")]
     [Authorize]
-    public async Task<ActionResult> Filter([FromBody] Dictionary<string, string> searchFields, int page = 0)
+    public async Task<ActionResult> Filter(Dictionary<string, string> searchFields, int page = 0)
     {
 
         var Query = await BuildQuery(searchFields);
@@ -97,6 +96,7 @@ public class SearchController : ControllerBase
 
         var boolQueryDescriptor = new BoolQueryDescriptor<Metadata>();
         boolQueryDescriptor.Must(m => m.Ids(ids => ids.Values(fileIds.Select(f => f.ToString()))));
+
 
         foreach (var searchField in searchFields)
         {
