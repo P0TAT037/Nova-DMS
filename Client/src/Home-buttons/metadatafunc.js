@@ -19,7 +19,10 @@ function Getmetadata(props){
             <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
 
                 {/* File Editing */}
-            <div className="col-2"><EditFile /></div>
+            {metadata.type !== "folder" &&(
+                <div className="col-2"><EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo}/></div>
+                )}    
+            
             
                 <div className="col-3">
             <button className="btn-popup-close" onClick={() => {props.onClick(false); document.getElementById("main-coloumn").className="col-12 col-home-base";

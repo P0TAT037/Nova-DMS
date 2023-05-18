@@ -47,7 +47,6 @@ function DeleteFile(props){
         handleexitclick();
     }
     return(
-        console.log(props),
         <div>
             <button onClick={handlebuttonclick}>Delete</button>
             {ispressed !== false &&(

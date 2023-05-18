@@ -152,7 +152,7 @@ function Home() {
                     </div>
                 </div>
                 {/* Metadata bar */}
-                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} hid={selectedhid} token={token}/>
+                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo}/>
             </div>
         </div>
     );
