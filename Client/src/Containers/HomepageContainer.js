@@ -26,6 +26,7 @@ function Home() {
     const [clickedfileid,setclickedfileid] = useState();
     const [metadataclicked,setMetadataclicked] = useState(false);
     const [metadata,setMetadata] = useState();
+    const [selectedhid, setSelectedhid] = useState("");
     // pls pls pls fix your horrifying names
     useEffect(() => {
         Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
@@ -65,7 +66,7 @@ function Home() {
 
     //HTML Return
     return (
-        console.log(filetree,userinfo.level),
+        console.log(filetree),
         <div className="container-fluid">
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
@@ -121,14 +122,14 @@ function Home() {
                         <button className="btn-folders" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
                             {folder.name}
                         </button>
-                        <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
+                        <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata); setSelectedhid(folder.hid)}}>...</button>
                         </div>)}
                         {folder.metadata.type !== "folder" &&(
                         <>
                             <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
                             {folder.name}
                             </button> 
-                            <button className="z-index-1 btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata)}}>...</button>
+                            <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata); setSelectedhid(folder.hid)}}>...</button>
                         </>
                         )}
                 </div>)
@@ -151,7 +152,7 @@ function Home() {
                     </div>
                 </div>
                 {/* Metadata bar */}
-                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} />
+                <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} hid={selectedhid} token={token}/>
             </div>
         </div>
     );

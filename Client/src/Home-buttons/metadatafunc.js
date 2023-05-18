@@ -16,10 +16,10 @@ function Getmetadata(props){
             <div className="col-4"><FilePermissions/></div>
 
                 {/* File Deletion */}
-            <div className="col-3"><DeleteFile id={metadata.id} name={metadata.name}/></div>
+            <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
 
                 {/* File Editing */}
-            <div className="col-2"><EditFile/></div>
+            <div className="col-2"><EditFile /></div>
             
                 <div className="col-3">
             <button className="btn-popup-close" onClick={() => {props.onClick(false); document.getElementById("main-coloumn").className="col-12 col-home-base";
