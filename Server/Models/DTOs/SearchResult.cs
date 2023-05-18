@@ -8,5 +8,5 @@ namespace Nova_DMS.Models;
 public class SearchResult
 {
     public long hits { get; set; }
-    public IEnumerable<Node>? results { get; set; }
+    public IEnumerable<Node> results { get; set; } = new List<Node>();
 }

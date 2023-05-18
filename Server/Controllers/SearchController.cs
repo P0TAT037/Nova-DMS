@@ -63,7 +63,7 @@ public class SearchController : ControllerBase
 
     private async Task<string> GetHid(int id)
     {
-        return await _db.QueryFirstAsync<string>("Select DIR from Nov.Files where Id = @id", new { id }).ConfigureAwait(false) ;
+        return await _db.QueryFirstAsync<string>("Select DIR.ToString() from Nov.Files where Id = @id", new { id }).ConfigureAwait(false);
     }
 
     [HttpPost]
