@@ -59,7 +59,7 @@ function Uploadfunc(info){
           alert("File Created.")
         
     }
-    //this was used to test the api, but it sends back "bad request"
+    
 
     
 
