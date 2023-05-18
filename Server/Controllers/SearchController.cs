@@ -26,7 +26,7 @@ public class SearchController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Search(string searchText, int page = 0, List<string>? fields = null)
+    public async Task<IActionResult> Search(string searchText, List<string>? fields = null)
     {
         if (fields == null)
         {
@@ -51,24 +51,37 @@ public class SearchController : ControllerBase
                         )
                     )
             )
-        )
-        .From(page*10)
-        .Size(10));
-        return Ok(new SearchResult { hits = searchResult.Total, results = searchResult.Documents });
+        ));
+        
+        List<Node> results = new List<Node>();
+        foreach (var metadata in searchResult.Documents)
+        {
+            results.Add(new Node { Id = metadata.Id.ToString(), Name = metadata.Name, HID = await GetHid(metadata.Id), Metadata = metadata });
+        }
+        return Ok(new SearchResult { hits = searchResult.Total, results = results });
     }
 
+    private async Task<string> GetHid(int id)
+    {
+        return await _db.QueryFirstAsync<string>("Select DIR from Nov.Files where Id = @id", new { id }).ConfigureAwait(false) ;
+    }
 
     [HttpPost]
     [Route("filter")]
     [Authorize]
-    public async Task<ActionResult> Filter(Dictionary<string, string> searchFields, int page = 0)
+    public async Task<ActionResult> Filter(Dictionary<string, string> searchFields)
     {
 
         var Query = await BuildQuery(searchFields);
 
-        var searchResponse = await _elasticClient.SearchAsync<Metadata>(s => s.Query(q=>q.Bool(b=>Query)).From(page*10).Size(10));
+        var resultsMetadata = await _elasticClient.SearchAsync<Metadata>(s => s.Query(q=>q.Bool(b=>Query)));
 
-        return Ok(new SearchResult { hits = searchResponse.Total, results = searchResponse.Documents });
+        List<Node> results = new List<Node>();
+        foreach (var metadata in resultsMetadata.Documents)
+        {
+            results.Add(new Node { Id = metadata.Id.ToString(), Name = metadata.Name, HID = await GetHid(metadata.Id), Metadata = metadata });
+        }
+        return Ok(new SearchResult { hits = resultsMetadata.Total, results = results });
     }
 
     private async Task<BoolQueryDescriptor<Metadata>> BuildQuery([FromBody] Dictionary<string, string> searchFields)
