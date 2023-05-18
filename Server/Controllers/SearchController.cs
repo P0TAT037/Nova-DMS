@@ -24,7 +24,7 @@ public class SearchController : ControllerBase
     }
 
 
-    [HttpGet]
+    [HttpPost]
     [Authorize]
     public async Task<IActionResult> Search(string searchText, int page = 0, List<string>? fields = null)
     {
@@ -45,9 +45,9 @@ public class SearchController : ControllerBase
                             .Values(fileIds.Select(f => f.ToString()))
                         ),
                         m => 
-                        m.MultiMatch(m => m
+                        m.QueryString(q => q
                             .Fields(fields.ToArray())
-                            .Query(searchText)
+                            .Query('*'+searchText+"*")
                         )
                     )
             )
