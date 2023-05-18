@@ -14,43 +14,28 @@ namespace Nova_DMS.Controllers;
 public class SearchController : ControllerBase
 {
 
-    [Flags]
-    public enum Fields
-    {   
-        name = 1,
-        type = 2,
-        description = 4,
-        content = 8,
-        author = 16,
-        editedBy = 32,
-        created = 64,
-        updated = 128,
-    }
-
     IElasticClient _elasticClient;
     SqlConnection _db = null!;
     
     public SearchController(IElasticClient elasticClient, SqlConnection db) {
         _elasticClient = elasticClient;
         _db = db;
+        string[] fields = {"", "", };
     }
 
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Search(string searchText, int page = 0, Fields setFields = Fields.name | Fields.description | Fields.content )
+    public async Task<IActionResult> Search(string searchText, int page = 0, List<string>? fields = null)
     {
+        if (fields == null)
+        {
+            fields = new List<string>(){"name", "description", "content"};
+        }
         var jwt = new JwtSecurityToken(Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         
         var fileIds = await _db.QueryAsync<int>("Select Files_Users.File_Id from Nov.Files_Users where Nov.Files_Users.User_Id = @UserId", new { UserId }).ConfigureAwait(false);
-        
-        
-
-        var searchFieldsNames = Enum.GetNames(typeof(Fields))
-            .Where(name => setFields.HasFlag((Fields)Enum.Parse(typeof(Fields), name)))
-            .ToArray();
-
 
         var searchResult = await _elasticClient.SearchAsync<Metadata>(s => s
         .Query(q => q
@@ -58,12 +43,11 @@ public class SearchController : ControllerBase
                 .Must(m => m
                         .Ids(ids => ids
                             .Values(fileIds.Select(f => f.ToString()))
-                    ),
-                    m => 
-                    m.MultiMatch(m=>m
-                    .Fields(f=>f
-                        .Fields(searchFieldsNames))
-                        .Query(searchText)
+                        ),
+                        m => 
+                        m.MultiMatch(m => m
+                            .Fields(fields.ToArray())
+                            .Query(searchText)
                         )
                     )
             )
