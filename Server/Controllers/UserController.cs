@@ -145,8 +145,7 @@ public class UserController : ControllerBase
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
-            db.Query<int>("Select USER_ID From NOV.USERS_ROLES Where ROLE_ID = @RoleId", new {RoleId});
-            db.Execute($"ChangePerm", new {RoleId, FileId, perm}, commandType: CommandType.StoredProcedure);
+            await db.ExecuteAsync($"ChangePermByRole", new {RoleId, FileId, perm}, commandType: CommandType.StoredProcedure);
             return Ok();
         }
         catch (Exception e)
