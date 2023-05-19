@@ -73,12 +73,10 @@ public class NodeController : ControllerBase
     [HttpPut]
     [Route("move")]
     [AuthorizeAdminOrOwner]
-    public async Task<IActionResult> MoveNode(int FileId, string newDir) {
+    public async Task<IActionResult> MoveNode(int nodeId, string newDir) {
         try
         {
-            await _db.ExecuteAsync("Update Nov.FILES set DIR = Cast(@newDir as hierarchyid) where ID = @FileId", new {newDir, FileId}).ConfigureAwait(false);
-            await _db.ExecuteAsync("Update Nov.FILES_USERS set HID = Cast(@newDir as hierarchyid) where FILE_ID = @FileId", new {newDir, FileId}).ConfigureAwait(false);
-
+            await _db.ExecuteAsync("dbo.MoveNode",  param: new { nodeId, newDir }, commandType: CommandType.StoredProcedure);
             return Ok();
         }
         catch (Exception e)
