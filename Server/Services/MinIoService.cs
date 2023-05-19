@@ -1,4 +1,5 @@
-﻿using Azure.Core;
+﻿using System.Linq;
+using Azure.Core;
 using Minio;
 using Minio.Exceptions;
 using System.Net;
@@ -93,23 +94,34 @@ public class MinIoService : IObjStorageService
         
     }
 
-    public List<Tuple<string, string>> GetVersions(string objName, string? bucketName = null, MinioClient? minioClient = null)
+    public List<string> GetVersions(string objName, string? bucketName = null, MinioClient? minioClient = null)
     {
         minioClient = minioClient ?? _client;
         bucketName = bucketName ?? _bucketName;
 
-        var versions = new List<Tuple<string, string>>();
+        var versions = new List<string>();
 
         var args = new ListObjectsArgs()
             .WithBucket(bucketName)
-            .WithPrefix(objName+'/')
+            .WithPrefix(objName)
             .WithVersions(true);
 
-        var observable = minioClient.ListObjectsAsync(args);
+
+        var observable = minioClient.ListObjectsAsync(args);    
+        var StatObjectAsyncArgs = new StatObjectArgs()
+            .WithBucket(bucketName)
+            .WithObject(objName);         
+
+        bool isComplete = false;
+        var sub = observable.Subscribe(
+            onNext: item => versions.Add(item.VersionId),
+            onCompleted: () => {isComplete = true;},
+            onError: ex => Console.WriteLine(ex));
         
-        observable.Subscribe(
-            item => versions.Add(new Tuple<string, string>(item.Key, item.VersionId)),
-            ex => Console.WriteLine(ex));
+        //wait for the observable to complete
+        while (!isComplete){} 
+
+        sub.Dispose();
 
         return versions;
     }

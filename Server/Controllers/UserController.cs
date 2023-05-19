@@ -159,13 +159,12 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("getFileUsers")]
     [AuthorizeAdminOrOwner]
-    public async Task<IActionResult> GetFileUsers(int usrId, int FileId)
+    public async Task<IActionResult> GetFileUsers(int FileId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
-          
-            var result = await db.QueryAsync($"Select user_ID, PERM From NOV.FILES_USERS Where FILE_ID = {FileId}");
+            var result = await db.QueryAsync($"Select user_ID, PERM as perm From NOV.FILES_USERS Where FILE_ID = {FileId}");
            
             return Ok(result);
         }

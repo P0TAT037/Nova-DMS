@@ -64,7 +64,7 @@ public class NodeController : ControllerBase
     [HttpGet]
     [Route("versions")]
     [AuthorizeNode]
-    public List<Tuple<string, string>> GetVersions(string id)
+    public List<string> GetVersions(string id)
     {
         return _minIoService.GetVersions(id);
     }
@@ -178,7 +178,6 @@ public class NodeController : ControllerBase
         }        
     }
 
-    //TODO:
     [HttpPut]
     [AuthorizeNode(perm: 1)]
     public async Task<IActionResult> UpdateAsync(string id, [FromForm]Metadata metadata, IFormFile? file)
@@ -228,12 +227,14 @@ public class NodeController : ControllerBase
 
     [HttpDelete]
     [AuthorizeAdmin]
-    public async Task<IActionResult> DeleteFileAsync(string id, string? versionId = null) 
+    public async Task<IActionResult> DeleteFileAsync(string id) 
     {
-        await _minIoService.RemoveObjectAsync(id, versionId);
+        await _minIoService.RemoveObjectAsync(id);
         try
         {
             await DeleteNodeFromDB(id);
+            await _elasticClient.DeleteAsync<Metadata>(id);
+
         }
         catch (Exception e)
         {
@@ -241,18 +242,8 @@ public class NodeController : ControllerBase
             return StatusCode(500, "something wrong happened while trying to communicate with the db");
         }
         
-        if(versionId == null)
-        {
-            await _elasticClient.DeleteAsync<Metadata>(id);
-            return Ok();
-        }
-        
-        var result = await GetMetadataAsync(new List<string> { id });
-        var metadata = result.FirstOrDefault<Metadata>();
-        metadata!.Version = metadata!.Version - 1;
-        var response = _elasticClient.IndexDocument(metadata);
-        
         return Ok();
+        
     }
 
     [HttpDelete]
