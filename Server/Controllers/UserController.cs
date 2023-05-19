@@ -174,6 +174,24 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpGet]
+    [Route("getUserRoles")]
+    [AuthorizeAdmin]
+    public async Task<IActionResult> GetUserRoles(int usrId)
+    {
+        var db = new SqlConnection(config.GetConnectionString("SqlServer"));
+        try
+        {
+            var result = await db.QueryAsync($"Select ROLE_ID From NOV.USERS_ROLES Where USER_ID = @usrId", new {usrId});
+           
+            return Ok(result);
+        }
+        catch (Exception e)
+        {
+            await Console.Out.WriteLineAsync(e.Message);
+            return BadRequest("Something wrong happened");
+        }
+    }
 
     [HttpGet]
     [Route("all")]
