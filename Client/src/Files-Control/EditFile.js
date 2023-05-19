@@ -11,7 +11,7 @@ function EditFile(props){
     function handleexitclick(){
         setIspressed(false);
     }
-    console.log(props.userinfo);
+    console.log(props.metadata.id);
     function handleFileChange(event) {
         file = event.target.files[0];
         document.getElementById("upload-file-name").value=file.name;
@@ -22,21 +22,26 @@ function EditFile(props){
         var filename = document.getElementById("update-file-name").value
         var desc = document.getElementById("update-file-desc").value
         var content = document.getElementById("update-file-content").value
-        const endpoint = data.url +'node';
+        let time = getCurrentTime();
+        const endpoint = data.url +`node?id=${props.metadata.id}`;
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${props.token}`,
         };
 
         console.log(formData,filename,desc,content);
-        formData.append('Dir', ``);
+        formData.append('EditedBy', `${props.userinfo.username}`);
+        formData.append('Created', `${props.metadata.created}`);
+        formData.append('Author', `${props.metadata.author}`);
         formData.append('Name', `${filename}`);
-        formData.append('Description', `${desc}`);
-        formData.append('Type', `${file.type}`);
+        formData.append('Version', `1`);
         formData.append('Content', `${content}`);
-        formData.append('DefaultPerm', 'true');
+        formData.append('Type', `${file.type}`);
+        formData.append('Updated', `${time}`);
+        formData.append('Id', `${props.metadata.id}`);
+        formData.append('Description', `${desc}`);
         fetch(endpoint, {
-            method: 'POST',
+            method: 'PUT',
             headers: headers,
             body: formData
           })
@@ -48,12 +53,13 @@ function EditFile(props){
             return response.json();
           })
           .then(data => {
+            alert("File Updated.")
             console.log(data);
           })
           .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
           });
-          alert("File Created.")
+          
     }
     
     return(
