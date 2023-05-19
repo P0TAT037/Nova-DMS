@@ -32,6 +32,7 @@ public class SearchController : ControllerBase
         {
             fields = new List<string>(){"name", "description", "content"};
         }
+        
         var jwt = new JwtSecurityToken(Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
         

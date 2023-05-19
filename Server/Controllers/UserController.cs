@@ -27,7 +27,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            db.Execute($"INSERT INTO NOV.USERS_ROLES VALUES({usrId}, {roleId})");
+            db.Execute($"INSERT INTO NOV.USERS_ROLES VALUES(@usrId, @roleId)", new {usrId, roleId});
 
         }
         catch (Exception e)
