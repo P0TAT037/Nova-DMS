@@ -5,8 +5,9 @@ function Test(info){
    
     console.log(data.url+ "user/gogogagaa")
     return(
+        console.log(JSON.stringify([])),
         <>
-        
+
         </>
         
     );
