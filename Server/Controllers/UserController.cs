@@ -46,7 +46,7 @@ public class UserController : ControllerBase
 
         try
         {
-            db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = {usrId} AND ROLE_ID = {roleId}");
+            db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = @usrId AND ROLE_ID = @roleId", new {usrId, roleId});
 
         }
         catch (Exception e)
@@ -66,7 +66,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            db.Execute($"Update NOV.USERS Set Level = 1 Where ID = {usrId}");
+            db.Execute($"Update NOV.USERS Set Level = 1 Where ID = @usrId", new {usrId});
         }
         catch (Exception e)
         {
@@ -84,7 +84,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            db.Execute($"Update NOV.USERS Set Level = 0 Where ID = {usrId}");
+            db.Execute($"Update NOV.USERS Set Level = 0 Where ID = @usrId", new {usrId});
         }
         catch (Exception e)
         {
@@ -122,7 +122,7 @@ public class UserController : ControllerBase
         {
             if (perm == null)
             {
-                db.Execute($"Delete From NOV.FILES_USERS Where USER_ID = {usrId} AND FILE_ID = {FileId}");
+                db.Execute($"Delete From NOV.FILES_USERS Where USER_ID = @usrId AND FILE_ID = @FileId", new {usrId, FileId});
             }
             else
             {
@@ -164,7 +164,7 @@ public class UserController : ControllerBase
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
-            var result = await db.QueryAsync($"Select user_ID, PERM as perm From NOV.FILES_USERS Where FILE_ID = {FileId}");
+            var result = await db.QueryAsync($"Select user_ID, PERM as perm From NOV.FILES_USERS Where FILE_ID = @FileId", new {FileId});
            
             return Ok(result);
         }
@@ -201,10 +201,10 @@ public class UserController : ControllerBase
         {
             using (var transactionScope = new TransactionScope())
             {
-                db.Execute($"Delete From NOV.FILES_USERS Where USER_ID = {usrId}");
-                db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = {usrId}");
-                db.Execute($"Delete From NOV.FILES_OWNERS Where UserID = {usrId}");
-                db.Execute($"Delete From NOV.USERS Where ID = {usrId}");
+                db.Execute($"Delete From NOV.FILES_USERS Where USER_ID = @usrId", new {usrId});
+                db.Execute($"Delete From NOV.USERS_ROLES Where USER_ID = @usrId", new {usrId});
+                db.Execute($"Delete From NOV.FILES_OWNERS Where UserID = @usrId", new {usrId});
+                db.Execute($"Delete From NOV.USERS Where ID = @usrId", new {usrId});
             }
         }
         catch (Exception e)
