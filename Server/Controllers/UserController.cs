@@ -4,6 +4,7 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Nova_DMS.Models;
+using Nova_DMS.Models.DTOs;
 using Nova_DMS.Security;
 
 namespace Nova_DMS.Controllers;
@@ -177,19 +178,19 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("getUserRoles")]
     [AuthorizeAdmin]
-    public async Task<IActionResult> GetUserRoles(int usrId)
+    public async Task<IEnumerable<int>> GetUserRoles(int usrId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
-            var result = await db.QueryAsync($"Select ROLE_ID From NOV.USERS_ROLES Where USER_ID = @usrId", new {usrId});
+            var result = await db.QueryAsync<int>($"Select ROLE_ID as RoleId From NOV.USERS_ROLES Where USER_ID = @usrId", new {usrId});
            
-            return Ok(result);
+            return result;
         }
         catch (Exception e)
         {
             await Console.Out.WriteLineAsync(e.Message);
-            return BadRequest("Something wrong happened");
+            return new List<int>();
         }
     }
 
@@ -200,7 +201,13 @@ public class UserController : ControllerBase
         try
         {
             var result = await db.QueryAsync<User>($"Select ID, Username, Name, Level From NOV.USERS");
-            return Ok(result);
+            List<UserAndRolesDTO> usersWithRoles = new List<UserAndRolesDTO>();
+            foreach (var user in result)
+            {
+                usersWithRoles.Add(new UserAndRolesDTO() { User = user, Roles = await GetUserRoles(user.Id)});
+            }
+            
+            return Ok(usersWithRoles);
         }
         catch (Exception e)
         {
