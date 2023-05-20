@@ -14,9 +14,8 @@ function EditFile(props){
     console.log(props.metadata.id);
     function handleFileChange(event) {
         file = event.target.files[0];
-        document.getElementById("upload-file-name").value=file.name;
-        formData.append("file", file);
-        console.log(file.type);
+        document.getElementById("update-file-name").value=file.name;
+        console.log(file);
     }
     function updatefile(){
         var filename = document.getElementById("update-file-name").value
@@ -29,7 +28,6 @@ function EditFile(props){
           'Authorization': `Bearer ${props.token}`,
         };
 
-        console.log(formData,filename,desc,content);
         formData.append('EditedBy', `${props.userinfo.username}`);
         formData.append('Created', `${props.metadata.created}`);
         formData.append('Author', `${props.metadata.author}`);
@@ -40,6 +38,7 @@ function EditFile(props){
         formData.append('Updated', `${time}`);
         formData.append('Id', `${props.metadata.id}`);
         formData.append('Description', `${desc}`);
+        formData.append("file", file);
         fetch(endpoint, {
             method: 'PUT',
             headers: headers,
@@ -59,7 +58,7 @@ function EditFile(props){
           .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
           });
-          
+          console.log(formData);
     }
     
     return(
