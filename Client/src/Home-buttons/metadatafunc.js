@@ -18,10 +18,11 @@ function Getmetadata(props){
                 {/* File Deletion */}
             <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
 
-                {/* File Editing */}
+                {/* Editing */}
             {metadata.type !== "folder" &&(
                 <div className="col-2"><EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo}/></div>
-                )}    
+                )}   
+            
             
             
                 <div className="col-3">

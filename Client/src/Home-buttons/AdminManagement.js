@@ -13,6 +13,7 @@ function ManageAdmins(info){
             }
         }
         xhttp.open("GET", data.url + `user/all`, true);
+        xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
         
         console.log(users)
