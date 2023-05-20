@@ -13,7 +13,7 @@ function Getmetadata(props){
             <div className="row">
 
                 {/* Permission Control */}
-            <div className="col-4"><FilePermissions/></div>
+            <div className="col-4"><FilePermissions metadata={props.metadata} token={props.token}/></div>
 
                 {/* File Deletion */}
             <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>

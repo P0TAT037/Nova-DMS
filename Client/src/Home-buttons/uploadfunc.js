@@ -2,18 +2,22 @@ import { useState } from "react";
 import data from "../Endpoint-url.json"
 function Uploadfunc(info){
     var file;
+    var perm
+    var defaultperm
     const formData = new FormData();
     const [ispressed,setIspressed] = useState(false);
     var location = info.location
     console.log(location)
     function handlebuttonclick(){
         setIspressed(true);
+        
         //console.log(info.level,info.dir,info.id)
         
     }
     function handleexitclick(){
         setIspressed(false);
     }
+    
     function handleFileChange(event) {
         file = event.target.files[0];
         document.getElementById("upload-file-name").value=file.name;
@@ -25,6 +29,14 @@ function Uploadfunc(info){
         var desc = document.getElementById("upload-file-desc").value
         var content = document.getElementById("upload-file-content").value
 
+
+        perm = document.getElementsByName("perm")
+        for(let i = 0; i < perm.length; i++) {
+          if (perm[i].checked){
+            defaultperm = perm[i].value
+          }
+        }
+        
         const endpoint = data.url +'node';
         const headers = {
           'accept': '*/*',
@@ -37,7 +49,7 @@ function Uploadfunc(info){
         formData.append('Description', `${desc}`);
         formData.append('Type', `${file.type}`);
         formData.append('Content', `${content}`);
-        formData.append('DefaultPerm', 'true');
+        formData.append('DefaultPerm', `${defaultperm}`);
         fetch(endpoint, {
             method: 'POST',
             headers: headers,
@@ -65,7 +77,7 @@ function Uploadfunc(info){
 
     
     return(
-        
+      console.log(perm),
         <div>
             <button onClick={handlebuttonclick}>+</button>
             {ispressed !== false &&(
@@ -81,11 +93,14 @@ function Uploadfunc(info){
                 {info.level !== "0" &&(
                     <div>
                     <br></br>
-                    <input type="radio" id="write-radio" name="perm" value="false"></input>
-                    <label htmlFor="age2">Read Only </label>
+                    <input type="radio" id="rw-radio" name="perm" value="false"></input>
+                    <label htmlFor="age2">Users can Read Only </label>
                     <br></br>
                     <input type="radio" id="rw-radio" name="perm" value="true"></input>
-                    <label htmlFor="age3">Read and Write </label>
+                    <label htmlFor="age3">Users can Read and Write </label>
+                    <br></br>
+                    <input type="radio" id="rw-radio" name="perm" value=""></input>
+                    <label htmlFor="age3">Only Me</label>
                     <br></br>
                     </div>
                 )}

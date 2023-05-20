@@ -15,8 +15,8 @@ function searchrequest(){
         }
         xhttp.open("POST",data.url + `search?searchText=${searchinput}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
-        xhttp.send();
-}
+        xhttp.send([]);
+}                  
 function gotolocation(hid){
     props.onClick(hid)
     setIspressed(false)
