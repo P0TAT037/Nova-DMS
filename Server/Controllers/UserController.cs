@@ -178,19 +178,19 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("getUserRoles")]
     [AuthorizeAdmin]
-    public async Task<IEnumerable<int>> GetUserRoles(int usrId)
+    public async Task<IEnumerable<dynamic>> GetUserRoles(int usrId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
         {
-            var result = await db.QueryAsync<int>($"Select ROLE_ID as RoleId From NOV.USERS_ROLES Where USER_ID = @usrId", new {usrId});
+            var result = await db.QueryAsync($"Select ROLE_ID as RoleId,  NAME as name  From NOV.USERS_ROLES join NOV.ROLES on (ROLES.ID = USERS_ROLES.ROLE_ID) Where USER_ID = @usrId", new {usrId});
            
             return result;
         }
         catch (Exception e)
         {
             await Console.Out.WriteLineAsync(e.Message);
-            return new List<int>();
+            return null;
         }
     }
 

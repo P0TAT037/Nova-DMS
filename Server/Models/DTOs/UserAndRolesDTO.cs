@@ -8,5 +8,5 @@ namespace Nova_DMS.Models.DTOs;
 public class UserAndRolesDTO
 {
     public User User { get; set; } = null!;
-    public IEnumerable<int> Roles { get; set; } = new List<int>();
+    public IEnumerable<dynamic> Roles { get; set; } = new List<dynamic>();
 }

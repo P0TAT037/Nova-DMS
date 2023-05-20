@@ -73,10 +73,10 @@ public class NodeController : ControllerBase
     [HttpPut]
     [Route("move")]
     [AuthorizeAdminOrOwner]
-    public async Task<IActionResult> MoveNode(int nodeId, string newDir) {
+    public async Task<IActionResult> MoveNode(int FileId, string newDir) {
         try
         {
-            await _db.ExecuteAsync("dbo.MoveNode",  param: new { nodeId, newDir }, commandType: CommandType.StoredProcedure);
+            await _db.ExecuteAsync("dbo.MoveNode",  param: new { nodeId = FileId, newDir }, commandType: CommandType.StoredProcedure);
             return Ok();
         }
         catch (Exception e)
