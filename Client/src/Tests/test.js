@@ -35,7 +35,7 @@ function Test(info){
           }
     }
     return(
-        console.log(usersArray,permusers),
+        console.log(allusers,permusers),
         <>
         <button onClick={() => send()}>bruh</button>
         </>

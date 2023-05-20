@@ -113,7 +113,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Route("changeperm")]
+    [Route("changePerm")]
     [AuthorizeAdminOrOwner]
     public async Task<IActionResult> EditPermission(int usrId, int FileId, bool? perm)
     {
@@ -138,7 +138,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Route("changeperm/{roleId}")]
+    [Route("changeRolePerm")]
     [AuthorizeAdminOrOwner]
     public async Task<IActionResult> EditRolePermission(int RoleId, int FileId, bool? perm)
     {
