@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Searchbyfilters } from "../Home-functions/Searchbyfilters";
 import data from '../Endpoint-url.json';
-const users= [];
+
+const usersArray = [];
 function Test(info){
     const [permusers,setPermusers] = useState([]);
     const [allusers,setAllusers] = useState([]);
@@ -14,7 +15,7 @@ function Test(info){
                 
             }
         }
-        xhttp.open("GET", data.url + `user/getFileUsers?usrId=0&FileId=5`, true);
+        xhttp.open("GET", data.url + `user/getFileUsers?usrId=0&FileId=12`, true);
         xhttp.setRequestHeader("Authorization", `Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJ1c2VybmFtZSI6ImFkbWluIiwibGV2ZWwiOiIyIiwicm9sZXMiOiIiLCJleHAiOjE2ODQ2MzI2NjR9.4Yw4dspiQ5AxB5eD3rqGOYBe0I3Q9-VUZIjyVK8B5mc`);
         xhttp.send();
         var xhttp2 = new XMLHttpRequest();
@@ -28,24 +29,20 @@ function Test(info){
         xhttp2.setRequestHeader("Authorization", `Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAiLCJ1c2VybmFtZSI6ImFkbWluIiwibGV2ZWwiOiIyIiwicm9sZXMiOiIiLCJleHAiOjE2ODQ2MzI2NjR9.4Yw4dspiQ5AxB5eD3rqGOYBe0I3Q9-VUZIjyVK8B5mc`);
         xhttp2.send();
         
-
-for (let i = 0; i < users.length; i++) {
-  const user = users[i];
-  const userObj = allusers.find(u => u.id === user.user_ID);
-  if (userObj) {
-    const { id, name } = userObj;
-    const { PERM } = user;
-    users.push({
-      id,
-      name,
-      PERM
-    });
-  }
-}
-
+    }
+    for (let i =0; i < allusers.length; i++){
+        console.log(allusers[i].user.id)
+        console.log(allusers[i].user.name)
+        console.log(permusers[i].perm)
+        usersArray.push({
+            id: allusers[i].user.id,
+            name: allusers[i].user.name,
+            PERM: permusers[i].perm,
+            Roles: allusers[i].roles
+          });
     }
     return(
-        console.log(users),
+        console.log(usersArray),
         <>
         <button onClick={() => send()}>bruh</button>
         </>
