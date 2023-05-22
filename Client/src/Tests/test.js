@@ -12,9 +12,9 @@ function Test(info){
         <>
       <body>
   <div>
-     <div class="wave"></div>
-     <div class="wave"></div>
-     <div class="wave"></div>
+     <div className="wave"></div>
+     <div className="wave"></div>
+     <div className="wave"></div>
   </div>
 </body>
         </>

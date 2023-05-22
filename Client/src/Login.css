@@ -67,3 +67,22 @@ body {
         transform: translateX(1);
     }
 }
+.img-logo{
+    opacity: 0;
+    width: 20vw;
+    position: absolute;
+    margin-top: 40vh;
+    margin-left: 40vw;
+    animation: image-onload 3s;
+}
+@keyframes image-onload{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
+}

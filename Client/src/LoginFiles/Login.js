@@ -40,11 +40,12 @@ function LoginPage({ onSignupClick }) {
   };
 
   return (
-    <div className='login-body'>
+    <>
+    <img src='.\Nova Logo.png' alt="logo" className='img-logo'></img>
   <div className='container-fluid login-container'>
   <div className='row row-login'>
-    <div className='col-10 m-5'>
-      <p className='p-login' style={{fontSize: 32 , textAlign : "center"}}>Login</p>
+    <div className='col-sm-10 col-md-10 col-10 m-5 '>
+      <p className='p-login' style={{fontSize: 32 , textAlign : "center"}}>LOGIN</p>
       <form className="form-group" onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -62,11 +63,14 @@ function LoginPage({ onSignupClick }) {
       <br />
       <div id="login conformation"></div>
       <p className='p-login'>Don't have an account?</p>
-      <button onClick={onSignupClick} className="btn btn-secondary">Sign Up</button>
+      <button onClick={onSignupClick} className="btn-signup">Sign Up</button>
     </div>
   </div>
+  <div className="wave"></div>
+     <div className="wave"></div>
+     <div className="wave"></div>
 </div>
-</div>
+</>
   );
 }
 
