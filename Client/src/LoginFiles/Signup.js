@@ -35,10 +35,9 @@ function SignupPage({ onLoginClick }) {
     };
   
     return (
-      <div className='login-body'>
       <div className='container-fluid login-container'>
-    <div className='row row-login'>
-      <div className='col-10 m-5'>
+    <div className='row row-signup'>
+      <div className='col-sm-10 col-md-10 col-10 m-5'>
       <p className='p-login' style={{fontSize: 32 , textAlign : "center"}}>Signup</p>
         <form onSubmit={handleSubmit}>
           <div className="input-group mb-3">
@@ -56,14 +55,14 @@ function SignupPage({ onLoginClick }) {
             </div>
             <input type="password" className="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon3" value={password} onChange={handlePasswordChange} />
           </div>
-          <button type="submit" className="btn btn-primary">Sign Up</button>
+          <button type="submit" className="btn-login">SignUp</button>
         </form>
         <br />
         <div id="login conformation"></div>
         <button onClick={onLoginClick} className="btn btn-secondary">Login</button>
       </div>
     </div>
-  </div>
+    
   </div>
     );
   }

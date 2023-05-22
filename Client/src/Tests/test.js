@@ -5,16 +5,22 @@ import data from '../Endpoint-url.json';
 
 function Test(info){
     
-    
-    
+    const [isawooged,setIsawooged] = useState(false)
+    const [hasRendered, setHasRendered] = useState(false);
+
+    const onAnimationEnd = () => {
+      setHasRendered(true);
+    };
     return(
         
         <>
       <body>
   <div>
-     <div className="wave"></div>
-     <div className="wave"></div>
-     <div className="wave"></div>
+    {isawooged === true &&(
+      <div className={`awooga-test${!hasRendered ? '' : 'animated'}`} onAnimationEnd={onAnimationEnd}>awooga</div>
+    )}
+     <button onClick={() => setIsawooged(true)}>awooga?</button>
+     <button onClick={() => setIsawooged(false)}>no awooga?</button>
   </div>
 </body>
         </>

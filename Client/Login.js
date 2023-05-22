@@ -50,7 +50,7 @@ function LoginPage(props) {
   <div className={`row row-login${!props.rendered ? '' : 'animated'}`} onAnimationEnd={onAnimationEnd}>
     <div className='col-sm-10 col-md-10 col-10 m-5 '>
       <p className='p-login' style={{fontSize: 32 , textAlign : "center"}}>LOGIN</p>
-      <form  onSubmit={handleSubmit}>
+      <form className="form-group" onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             
@@ -70,7 +70,9 @@ function LoginPage(props) {
       <button onClick={props.onSignupClick} className="btn-signup">Sign Up</button>
     </div>
   </div>
-  
+  <div className="wave"></div>
+     <div className="wave"></div>
+     <div className="wave"></div>
 </div>
 </>
   );
