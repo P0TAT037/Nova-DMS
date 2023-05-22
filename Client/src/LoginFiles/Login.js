@@ -57,7 +57,7 @@ function LoginPage({ onSignupClick }) {
           </div>
           <input type="password" className="form-control login-input-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" value={password} onChange={handlePasswordChange} />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn-login">Login</button>
       </form>
       <br />
       <div id="login conformation"></div>
