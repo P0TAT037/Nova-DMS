@@ -83,7 +83,6 @@ function Home() {
     }
     //Function that logs out
     const logout = () =>{
-        delete localStorage['token']; // you need to use cookies, not local storage
         hidarr = [{ name: "Root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
@@ -98,14 +97,16 @@ function Home() {
     //HTML Return
     return (
         console.log(filetree),
+        <>
         <div className="div-color">
         <div className="container-fluid">
-            
+        <div id="user-welcome" className="welcome-div" style={{position: "absolute", color:"white" ,marginTop:"39vh", marginLeft:"36vw", fontSize:"55px"}}>Welcome, {userinfo.username}</div>
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
 
                 
             <div className="row row-main">
+            
                 <div id="main-coloumn" className="col-12"> 
                 <div className="row m-1">
                     {/* Search Bar */}
@@ -197,6 +198,7 @@ function Home() {
             </div>
         </div>
         </div>
+        </>
     );
 }
 

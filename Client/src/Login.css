@@ -6,6 +6,8 @@ body {
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
     background-attachment: fixed;
+    overflow-y: hidden; 
+    overflow-x: hidden; 
 }
 
 @keyframes gradient {
@@ -81,6 +83,10 @@ body {
     position: absolute;
     margin-top: 40vh;
     margin-left: 40vw;
+}
+.welcome-div{
+    opacity: 0;
+    animation: image-onload 2.5s;
 }
 @keyframes image-onload{
     0%{
