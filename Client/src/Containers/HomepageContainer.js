@@ -10,15 +10,17 @@ import { Getmetadata } from "../Home-buttons/metadatafunc.js";
 import { ManageAdmins } from "../Home-buttons/AdminManagement.js";
 import { ManageRoles } from "../Home-buttons/RoleManagement.js";
 import { SearchFunction } from "../Home-functions/Search.js";
+import { useLocation } from 'react-router-dom';
 
 var hidarr = [{ name: "root", hid: "/" ,
 metadata:{
     type:"folder"
 }
 }];
-const token = localStorage.getItem('token');
 
 function Home() {
+    const location = useLocation();
+    const token =location.state?.param1;
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
     const [filetree, setFiletree] = useState([{ name: "root", hid: "/" ,metadata:{type:"folder"}}]);
@@ -27,6 +29,32 @@ function Home() {
     const [metadataclicked,setMetadataclicked] = useState(false);
     const [metadata,setMetadata] = useState();
     const [selectedhid, setSelectedhid] = useState("");
+
+
+    const Getfiles = (hid,name1, push,callback) => { //hideous, i know
+        if(push === "true"){
+            const obj = {hid: hid,name: name1};
+            hidarr.push(obj);
+        }
+        
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open(
+            "GET",
+            data.url + `node/getNodes?hierarchyId=${hid}`,
+            false
+        );
+        xmlhttp.setRequestHeader("Authorization", `Bearer ${token}`);
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                callback(JSON.parse(this.responseText))
+    
+            }
+        };
+        
+        xmlhttp.send();
+    };
+
+    
     // pls pls pls fix your horrifying names
     useEffect(() => {
         Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
@@ -158,28 +186,6 @@ function Home() {
     );
 }
 
-const Getfiles = (hid,name1, push,callback) => { //hideous, i know
-    if(push === "true"){
-        const obj = {hid: hid,name: name1};
-        hidarr.push(obj);
-    }
-    
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open(
-        "GET",
-        data.url + `node/getNodes?hierarchyId=${hid}`,
-        false
-    );
-    xmlhttp.setRequestHeader("Authorization", `Bearer ${token}`);
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            callback(JSON.parse(this.responseText))
-
-        }
-    };
-    
-    xmlhttp.send();
-};
 
 export { Home };
 

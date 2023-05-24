@@ -27,7 +27,10 @@ function LoginPage(props) {
         var loginrespone = JSON.parse(xhttp.responseText);
         var token = loginrespone.token
         localStorage.setItem('token', token);
-        navigate(`/home`);
+        
+        navigate(`/home`,{state: { 
+          param1: `${token}`, 
+        }});
 
       }
       else if (this.status === 400){
@@ -43,7 +46,6 @@ function LoginPage(props) {
   };
 
   return (
-    console.log(props),
     <>
     <img src='.\Nova Logo.png' alt="logo" className={`img-logo${!props.rendered ? '' : 'animated'}`} onAnimationEnd={() => props.onAnimation(true)}></img>
   <div className='container-fluid login-container'>
