@@ -7,7 +7,7 @@ function SearchFunction(props){
     return(
         <>
             <Searchinput token={props.token} onClick={handlelocationclick}/>
-            <div className="col-1"><button>search by filters</button></div>
+            <div className="col-1"><button className="filters-button"title="Search By Filters"></button></div>
         </>
         
     )

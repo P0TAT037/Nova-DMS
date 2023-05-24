@@ -26,14 +26,16 @@ function handleexitclick(){
 }
 return(
     <>
-        <div className="col-8"><input id="input-search" className="input-search" placeholder="search..."></input></div>
-        <div className="col-1"><button onClick={() => searchrequest()}>go</button></div>
+        <div className="col-9 "><input id="input-search" className="input-search" placeholder="search..."></input>
+        <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
+        </div>
+        
+        
         {ispressed === true &&(
             <div className="div-popup z-index-2" style={{width: "100vh" , height: "35vw", top: "15vh"}}> 
             <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
             {awooga.results.map((result) => (
                 <div key={result.id}>
-                    {console.log(result)}
                 {result.name}
                 <button onClick={() => gotolocation(result.hid)}>go to location</button>
                 <br></br>

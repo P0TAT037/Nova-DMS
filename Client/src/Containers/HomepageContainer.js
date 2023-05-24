@@ -12,7 +12,7 @@ import { ManageRoles } from "../Home-buttons/RoleManagement.js";
 import { SearchFunction } from "../Home-functions/Search.js";
 import { useLocation } from 'react-router-dom';
 
-var hidarr = [{ name: "root", hid: "/" ,
+var hidarr = [{ name: "Root", hid: "/" ,
 metadata:{
     type:"folder"
 }
@@ -23,7 +23,7 @@ function Home() {
     const token =location.state?.param1;
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
-    const [filetree, setFiletree] = useState([{ name: "root", hid: "/" ,metadata:{type:"folder"}}]);
+    const [filetree, setFiletree] = useState([{ name: "Root", hid: "/" ,metadata:{type:"folder"}}]);
     const [fileclicked,setFileclicked] = useState(false);
     const [clickedfileid,setclickedfileid] = useState();
     const [metadataclicked,setMetadataclicked] = useState(false);
@@ -57,7 +57,7 @@ function Home() {
     
     // pls pls pls fix your horrifying names
     useEffect(() => {
-        Getfiles("/", "root","false",(tree) => { setFiletree(tree) })
+        Getfiles("/", "Root","false",(tree) => { setFiletree(tree) })
     }, [])
     //function that returns to previous directory
     const goback = () => {
@@ -84,49 +84,46 @@ function Home() {
     //Function that logs out
     const logout = () =>{
         delete localStorage['token']; // you need to use cookies, not local storage
-        hidarr = [{ name: "root", hid: "/" ,metadata:{type:"folder"}}];
+        hidarr = [{ name: "Root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
     //function that goes to location of pressed file in search
     function handlelocationclick(location){
-        Getfiles(`${location}`, "root","false",(tree) => { setFiletree(tree) })
+        Getfiles(`${location}`, "Root","false",(tree) => { setFiletree(tree) })
     }
 
     //HTML Return
     return (
         console.log(filetree),
+        <div className="div-color">
         <div className="container-fluid">
+            
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
 
-                {/* Search Bar */}
+                
             <div className="row row-main">
-                <div id="main-coloumn" className="col-12 col-home-base"> 
+                <div id="main-coloumn" className="col-12"> 
                 <div className="row m-1">
-                <div className="row p-1" >
-                <div className="col-2"><img className="img-fluid" src={require('../image/logo-home.png')} alt="logo" /></div>
+                    {/* Search Bar */}
+                <div className="row p-1 search-row" >
+                <div className="col-2"><img className="img-fluid " style={{height: "6.5vh", width:"15vw"}} src={require('../image/home logo.png')} alt="logo" /></div>
                 <SearchFunction token={token} onClick={handlelocationclick}/>
                 </div>
 
                 {/* Welcome (Very Important) */}
                 <div className="row p-1" style={{color: "white"}}>
-                <div className="col-9 p-3" style={{ fontSize: 32}}>Welcome, {userinfo.username}</div> 
-                <div className="row row-main">
+                <div className="row directory-line mt-4">
 
                 {/* Directory Line */}
+                
                     {
                         hidarr.map((directory) => (
                         <div className="col-2" key={directory.hid}>
-                            <button onClick={() => DirButton(directory)}>{directory.name}</button>
+                            <button className="dir-button" onClick={() => DirButton(directory)}>{directory.name}</button>
                         </div>
                     ))} 
                 </div>
-
-                {/* Back Button */}
-                {hidarr.length !== 1 && (
-                    <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
-                )}
-
                 {/* Refresh Button */}
                 <div className="col-9"></div>
                 <div className="col-1">
@@ -141,6 +138,12 @@ function Home() {
                 <div className="col-1">
                     <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} location={hidarr} token={token}/>
                 </div>
+                {/* Back Button */}
+                {hidarr.length !== 1 && (
+                    <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
+                )}
+
+                
 
             </div>
                 {/* File tree Mapping */}
@@ -182,6 +185,7 @@ function Home() {
                 {/* Metadata bar */}
                 <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo}/>
             </div>
+        </div>
         </div>
     );
 }

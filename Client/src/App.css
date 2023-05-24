@@ -5,8 +5,15 @@
     src: url(./fonts/agency-fb_[allfont.net].ttf);
 }
 .row-main{
-  background-color: #1e1e1e;
+
   font-family: 'Agency FB', Arial;
+}
+.div-color{
+  background-color: #1e1e1e92;
+  height: 100vh;
+}
+.search-row{
+  border-bottom: 2px solid #000000;
 }
 .btn-folders{
   background-color: #292929c4;
@@ -81,10 +88,19 @@
   background-color: #1e1e1ed3;
   border: 1px solid #000000;
   color: aliceblue;
-  border-radius: 10px;
+  padding-left: 20px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-right-style: hidden;
   transition: 0.25s;
   width: 64vw;
   height: 6vh;
+}
+.input-search:hover{
+  border: 1px solid #242424;
+}
+.input-search:focus{
+  border: 1px solid #000000;
 }
 .input-search-aftermeta{
   background-color: #1e1e1ed3;
@@ -95,24 +111,7 @@
   width: 44vw;
   height: 6vh;
 }
-.input-search:focus{
-  border-color: #6c6c6c;
-  transition: 0.25s;
-}
-.btn-manage{
-  background-color: #292929c4;
-  color:aliceblue;
-  border-radius: 10px;
-  border: 2px solid #000000;
-  width: 22vw;
-  margin: 1vh;
-  height: 7vh;
-  transition: 0.25s;
-}
-.btn-manage:hover{
-  width: 23vw;
-  transition: 0.25s;
-}
+
 .div-popup{
   background-color: #1e1e1e;
   border-radius: 10px;

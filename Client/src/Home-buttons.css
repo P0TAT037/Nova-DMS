@@ -1,0 +1,46 @@
+.search-button{
+    height: 6.1vh;
+    width: 2.5vw;
+    border: 1px solid #000000;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/search-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 5px 9px;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+}
+
+.search-button:hover{
+    border: 1px solid #242424;
+}
+
+.filters-button{
+    height: 6.1vh;
+    width: 4vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/Filters-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 1.25vw 9px;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+}
+
+
+.dir-button{
+    border: 1px solid #00000000;
+    background-color: rgba(209, 21, 21, 0);
+    font-size: 25px;
+    color: rgb(202, 210, 217)
+}
+.dir-button:hover{
+    border: 1px solid #00000000;
+    background-color: rgba(209, 21, 21, 0);
+    font-size: 25px;
+    color: aliceblue;
+}
