@@ -27,7 +27,7 @@ function Home() {
     const [fileclicked,setFileclicked] = useState(false);
     const [clickedfileid,setclickedfileid] = useState();
     const [metadataclicked,setMetadataclicked] = useState(false);
-    const [metadata,setMetadata] = useState();
+    const [metadata,setMetadata] = useState([{}]);
     const [selectedhid, setSelectedhid] = useState("");
 
 
@@ -100,7 +100,7 @@ function Home() {
         <>
         <div className="div-color">
         <div className="container-fluid">
-        <div id="user-welcome" className="welcome-div" style={{position: "absolute", color:"white" ,marginTop:"39vh", marginLeft:"36vw", fontSize:"55px"}}>Welcome, {userinfo.username}</div>
+        <div id="user-welcome" className="welcome-div" style={{position: "absolute", color:"white" ,marginTop:"39vh", marginLeft:"35vw", fontSize:"55px"}}>Welcome, {userinfo.username}</div>
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
 
@@ -181,7 +181,7 @@ function Home() {
                     {/* Control Row */}
                     <div className="row p-1 row-bottom">
                     {/* Logout */}
-                        <div className="col logout-button" onClick={() => logout()}><button>Logout</button></div>
+                        <button className="col  logout-button" onClick={() => logout()}>Logout</button>
                     {/* Role management */}
                     {userinfo.level > 0 && (
                     <div className="col"><ManageRoles token={token}/></div>
