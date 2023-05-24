@@ -94,9 +94,8 @@ function ManageRoles(props){
     }
     
     return(
-        console.log(currentrole),
         <div>
-            <button onClick={handlebuttonclick}>R</button>
+            <button className="mangeroles-button" title="Mange Roles" onClick={handlebuttonclick}></button>
             {ispressed !== false &&(
             <div className="div-popup z-index-2" style={{top: "-70vh"}}>
                 <button  className="btn-popup-close" onClick={() => {setCurrentstate(0) ; handleexitclick()}}>X</button>

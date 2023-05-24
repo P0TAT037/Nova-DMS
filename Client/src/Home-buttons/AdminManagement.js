@@ -46,14 +46,13 @@ function ManageAdmins(info){
     
     return(
         <div>
-            <button onClick={handlebuttonclick}>A</button>
+            <button className="mangeadmin-button" onClick={handlebuttonclick}></button>
             {ispressed !== false &&(
                 <>  {
                 addpressed !== true &&(
                     <div className="div-popup z-index-2" style={{top: "-70vh", overflowY: "auto"}}>
                         <button  className="btn-popup-close" onClick={() => {handleexitclick() ;setAddpressed(false)}}>X</button>
-                        <br></br>
-                        Admins of this system:
+                        <p>Admins of this system:</p>
                         <br></br>
                         {users.map((user) => (
                             user.level === 1 &&(
@@ -64,7 +63,7 @@ function ManageAdmins(info){
                             </div>
                         )))
                             }
-                        <button style={{position:"relative", bottom:"-5vh"}} onClick={() => setAddpressed(true)}>Add Users</button></div>
+                        <button style={{position:"relative"}} onClick={() => setAddpressed(true)}>Add Users</button></div>
                 )
             }
             {addpressed !== false &&(

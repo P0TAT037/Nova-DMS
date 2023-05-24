@@ -9,14 +9,14 @@
   font-family: 'Agency FB', Arial;
 }
 .div-color{
-  background-color: #1e1e1e92;
+  background-color: #1e1e1e72;
   height: 100vh;
 }
 .search-row{
   border-bottom: 2px solid #000000;
 }
 .btn-folders{
-  background-color: #292929c4;
+  background-color: #29292993;
   color:aliceblue;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
@@ -26,12 +26,13 @@
   height: 8vh;
   margin-top: 8px;
   transition: 0.25s;
-  background-image: url('./image/folder-icon.png');
+  background-image: url('./image/Folder-icon-4.png');
+  background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
 }
 .btn-metadata{
   height: 8vh;
-  background-color: #292929c4;
+  background-color: #29292993;
   border: 2px solid #000000;
   color:aliceblue;
   border-top-right-radius: 15px;
@@ -113,14 +114,23 @@
 }
 
 .div-popup{
-  background-color: #1e1e1e;
+  background-color: #1e1e1e7f;
+  color: aliceblue;
   border-radius: 10px;
+  font-size: 22px;
   border: 2px solid #000000;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   position: absolute;
-  top: 25vh;
+  top: 23vh;
   left: 25vw;
-  height: 45vh;
-  width: 40vw;
+  height: 47vh;
+  width: 42vw;
+}
+.pop-input{
+  background-color: #2a2a2a8a;
+  border: 2px solid #1e1e1e;
+  border-radius: 5px;
 }
 .div-showfile-popup{
   background-color: #1e1e1e;

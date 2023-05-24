@@ -87,6 +87,9 @@ function Home() {
         hidarr = [{ name: "Root", hid: "/" ,metadata:{type:"folder"}}];
         navigate(`/`)
     }
+    const refresh = () =>{
+        Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })
+    }
     //function that goes to location of pressed file in search
     function handlelocationclick(location){
         Getfiles(`${location}`, "Root","false",(tree) => { setFiletree(tree) })
@@ -111,9 +114,8 @@ function Home() {
                 <SearchFunction token={token} onClick={handlelocationclick}/>
                 </div>
 
-                {/* Welcome (Very Important) */}
-                <div className="row p-1" style={{color: "white"}}>
-                <div className="row directory-line mt-4">
+                <div className="row p-1 search-row"  style={{color: "white"}}>
+                <div className="row directory-line mt-2">
 
                 {/* Directory Line */}
                 
@@ -121,13 +123,17 @@ function Home() {
                         hidarr.map((directory) => (
                         <div className="col-2" key={directory.hid}>
                             <button className="dir-button" onClick={() => DirButton(directory)}>{directory.name}</button>
+                            {hidarr.length !== 1 && (
+                                console.log(hidarr.indexOf(directory.hid)),
+                                <img src={require('../image/dir-arrow.png')} alt="arrowlol" style={{height: "2vh", width:"1.5vw",position:"absolute", top:"12.1vh"}}></img>
+                            )}
                         </div>
                     ))} 
                 </div>
                 {/* Refresh Button */}
                 <div className="col-9"></div>
                 <div className="col-1">
-                    <button onClick={() => Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })}>O</button>
+                    <button className="refresh-button" title="Refresh" style={{position: "absolute" ,top: "10.3vh"}} onClick={() => refresh()}>Refresh</button>
                 </div>
 
                 {/* New Folder Function */}
@@ -138,15 +144,18 @@ function Home() {
                 <div className="col-1">
                     <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} location={hidarr} token={token}/>
                 </div>
-                {/* Back Button */}
-                {hidarr.length !== 1 && (
-                    <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
-                )}
+                
 
                 
 
             </div>
+                
+                {/* Back Button */}
+                {hidarr.length !== 1 && (
+                    <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
+                )}
                 {/* File tree Mapping */}
+                <div className="row">
             {filetree.map((folder) => (
                 <div className="col-3" key={folder.hid}>
                         {folder.metadata.type === "folder" && (<div>
@@ -165,12 +174,13 @@ function Home() {
                         )}
                 </div>)
                 )
-            }
+            }</div>
             </div>
+          
                     {/* Control Row */}
-                    <div className="row row-bottom">
+                    <div className="row p-1 row-bottom">
                     {/* Logout */}
-                        <div className="col" onClick={() => logout()}><button>Logout</button></div>
+                        <div className="col logout-button" onClick={() => logout()}><button>Logout</button></div>
                     {/* Role management */}
                     {userinfo.level > 0 && (
                     <div className="col"><ManageRoles token={token}/></div>
