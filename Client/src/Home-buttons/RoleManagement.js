@@ -13,7 +13,7 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setRoles(JSON.parse(xhttp.responseText));
-                console.log(roles)
+                
             }
         }
         xhttp.open("GET",data.url + `role`, true);
@@ -25,7 +25,6 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setRoles(JSON.parse(xhttp.responseText));
-                console.log(roles)
             }
         }
         xhttp.open("GET",data.url + `role`, true);
@@ -34,7 +33,6 @@ function ManageRoles(props){
     }
     function Addrole(){
         var rolename = document.getElementById("role-name").value
-        console.log(rolename);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
@@ -133,7 +131,7 @@ function ManageRoles(props){
                         <br></br>
                         {users.map((user) => (
                             <div key={user.id}>{user.name}
-                            <button onClick={() => deleteuser(user.id)}>Remove user</button> {/*ill leave this here till users appear inside roles */}
+                            <button onClick={() => deleteuser(user.id)}>Remove user</button> 
                             </div>))}
                         <button onClick={() => {setCurrentstate(3); showusers()} }>Add users</button>
                     </div>
@@ -148,9 +146,15 @@ function ManageRoles(props){
                             users on this system:
                             <br></br>
                         {userstoadd.map((user) => (
-                            <div key={user.id}>{user.name}
-                            <button onClick={() => adduser(user.id)}>Add user</button> {/*ill leave this here till users appear inside roles */}
-                            </div>))}
+                            
+                                <div key={user.user.id}>{user.user.name} {/* dont forget, you can't add a user twice, fix this*/}
+                                <button onClick={() => adduser(user.user.id)}>Add user</button> 
+                            </div>
+                            ))}
+                            {
+                            /*<div key={user.user.id}>{user.user.name}
+                            <button onClick={() => adduser(user.user.id)}>Add user</button> 
+                        </div>*/}
                         </div>
                         </>
                     )
