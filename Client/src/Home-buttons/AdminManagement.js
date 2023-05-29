@@ -3,7 +3,7 @@ import data from "../Endpoint-url.json"
 function ManageAdmins(info){
     const [ispressed,setIspressed] = useState(false);
     const [addpressed,setAddpressed] = useState(false);
-    const [users,setUsers] = useState([{}])
+    const [users,setUsers] = useState([{roles:[], user:{}}])
     function handlebuttonclick(){
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
@@ -16,7 +16,6 @@ function ManageAdmins(info){
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
         
-        console.log(users)
     }
     function removeuser(userid){
         var xhttp = new XMLHttpRequest();
@@ -55,12 +54,12 @@ function ManageAdmins(info){
                         <p>Admins of this system:</p>
                         <br></br>
                         {users.map((user) => (
-                            user.level === 1 &&(
-                            <div key={user.id}>
+                            user.user.level === 1 &&(
+                                
+                            <div key={user.user.id}>
                             <br></br>
-                            {console.log(user)}
-                            {user.username}
-                            <button  className="btn-popup-close" onClick={() => {removeuser(user.id); handlebuttonclick()}}>Remove</button>
+                                {user.user.username}
+                            <button  className="btn-popup-close" onClick={() => {removeuser(user.user.id); handlebuttonclick()}}>Remove</button>
                             </div>
                         )))
                             }
@@ -74,11 +73,11 @@ function ManageAdmins(info){
                 <br></br>
                     Add Admins
                 {users.map((user) => (
-                            user.level < 1 &&(
-                            <div key={user.id}>
+                            user.user.level < 1 &&(
+                            <div key={user.user.id}>
                             <br></br>
-                            {user.username}
-                            <button  className="btn-popup-close" onClick={() => {adduser(user.id); handlebuttonclick()}}>Add</button>
+                            {user.user.username}
+                            <button  className="btn-popup-close" onClick={() => {adduser(user.user.id); handlebuttonclick()}}>Add</button>
                             </div>
                         )))
                             }
