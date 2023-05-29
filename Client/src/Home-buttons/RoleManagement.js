@@ -151,10 +151,6 @@ function ManageRoles(props){
                                 <button onClick={() => adduser(user.user.id)}>Add user</button> 
                             </div>
                             ))}
-                            {
-                            /*<div key={user.user.id}>{user.user.name}
-                            <button onClick={() => adduser(user.user.id)}>Add user</button> 
-                        </div>*/}
                         </div>
                         </>
                     )
