@@ -1,29 +1,32 @@
 import { useState } from "react";
 import { Searchbyfilters } from "../Home-functions/Searchbyfilters";
 import data from '../Endpoint-url.json';
-
+var ocr = [{
+  startlocx: "69px",
+  startlocy: "70px",
+  width: "450px",
+  height:"10px",
+  content: "This is line 1"
+},
+{
+  startlocx: "132px",
+  startlocy: "70px",
+  width: "450px",
+  height:"10px",
+  content: "This is line 2"
+}] 
 
 function Test(info){
     
-    const [isawooged,setIsawooged] = useState(false)
-    const [hasRendered, setHasRendered] = useState(false);
-
-    const onAnimationEnd = () => {
-      setHasRendered(true);
-    };
+    
     return(
         
-        <>
-      <body>
-  <div>
-    {isawooged === true &&(
-      <div className={`awooga-test${!hasRendered ? '' : 'animated'}`} onAnimationEnd={onAnimationEnd}>awooga</div>
-    )}
-     <button onClick={() => setIsawooged(true)}>awooga?</button>
-     <button onClick={() => setIsawooged(false)}>no awooga?</button>
-  </div>
-</body>
-        </>
+       <>
+       {ocr.map((line, index) =>
+       <div key={index} className="ocr-div" title={line.content} style={{top: `${line.startlocx}`, left: `${line.startlocy}` ,width: `${line.width}`, height: `${line.height}`}}></div>    
+       )}
+      <img width={"600px"} height={"600px"} src="ocr test.png"></img>
+       </>
         
     );
             }

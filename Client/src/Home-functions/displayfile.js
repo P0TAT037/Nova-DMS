@@ -5,8 +5,8 @@ function Showfile(props){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState === 4 && this.status === 200) {
-                console.log(this.responseText);
                 fileurl = this.responseText
+                console.log(fileurl)
                 document.getElementById("iframe").innerHTML=`<iframe src="${fileurl}" style="height:84vh;width:64vw;" title="description"></iframe>`
               }
             }

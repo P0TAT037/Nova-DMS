@@ -58,6 +58,7 @@ function ManageAdmins(info){
                             user.level === 1 &&(
                             <div key={user.id}>
                             <br></br>
+                            {console.log(user)}
                             {user.username}
                             <button  className="btn-popup-close" onClick={() => {removeuser(user.id); handlebuttonclick()}}>Remove</button>
                             </div>

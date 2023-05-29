@@ -319,22 +319,20 @@
 	}
 }
 
-.awooga-test {  
-  opacity: 1;
-  background-color: red;
-  animation: test 2s;
-  
+.ocr-div{
+  border: 2px solid rgb(79, 33, 134);
+  position: absolute;
+  transition: 0.5s;
 }
-.awooga-testanimated {  
-  opacity: 1;
-  background-color: red;
-  
+.ocr-div:hover{
+  border: 2px solid rgb(202, 0, 98);
+  transition: 0.5s;
 }
-@keyframes test{
-  0%{
-    transform: translateX(-50%);
-  }
-  100%{
-    transform: translateX(0%);
-  }
+.ocr-div[title]:hover::after{
+  content: attr(title);
+  border: 1px solid #1e1e1e;
+  background-color: #000000;
+  color: white;
+  position: absolute;
+  margin: 15px;
 }
