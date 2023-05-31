@@ -47,6 +47,8 @@ function Newfolderfunc(info){
           console.error('There was a problem with the fetch operation:', error);
         });
         alert("Folder Created.")
+        info.onComplete();
+        setIspressed(false);
     }
     
     return(
@@ -60,7 +62,6 @@ function Newfolderfunc(info){
                 <div>Description: <input className="pop-input" id="folder-desc" type="text"></input></div>
                 Content: 
                 <br></br>
-                
                 <textarea style={{height:"8vh", width:"34vw", fontSize:"medium",backgroundColor:"#2a2a2a8a"}} id="folder-content" type="text"></textarea>
                 <br></br>
                 <p>this folder will be created in:</p>

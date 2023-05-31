@@ -93,6 +93,9 @@ function Home() {
     function handlelocationclick(location){
         Getfiles(`${location}`, "Root","false",(tree) => { setFiletree(tree) })
     }
+    const handlecompeleted = () =>{
+        Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })
+    }
 
     //HTML Return
     return (
@@ -134,16 +137,16 @@ function Home() {
                 {/* Refresh Button */}
                 <div className="col-9"></div>
                 <div className="col-1">
-                    <button className="refresh-button" title="Refresh" style={{position: "absolute" ,top: "10.3vh"}} onClick={() => refresh()}>Refresh</button>
+                    <button className="refresh-button" title="Refresh" style={{position: "absolute" ,top: "10.5vh"}} onClick={() => refresh()}>Refresh</button>
                 </div>
 
                 {/* New Folder Function */}
                 <div className="col-1">
-                    <Newfolderfunc location={hidarr} token={token}/>
+                    <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted}/>
                 </div>
                 {/* New File Function */}
                 <div className="col-1">
-                    <Uploadfunc id={userinfo.id} name={userinfo.username} level={userinfo.level} location={hidarr} token={token}/>
+                    <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token}/>
                 </div>
                 
 

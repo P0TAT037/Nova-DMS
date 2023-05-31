@@ -69,6 +69,8 @@ function Uploadfunc(info){
             console.error('There was a problem with the fetch operation:', error);
           });
           alert("File Created.")
+          info.onComplete();
+          setIspressed(false);
         
     }
     

@@ -1,3 +1,4 @@
+// for this piece of shit component to suppoert refershing, i need to rewrite its entire logic..... i hate this job
 import { useState } from "react";
 import data from "../Endpoint-url.json"
 function ManageRoles(props){
@@ -6,28 +7,29 @@ function ManageRoles(props){
     const [userstoadd, setUserstoadd] =useState([]);
     const [roles,setRoles] = useState([]);
     const [currentrole,setCurrentrole] = useState();
-    const [currentstate,setCurrentstate] = useState(0); //change this goofy ahh name
+    const [currentstate,setCurrentstate] = useState(0); //no tis fine lmao
     function handlebuttonclick(){
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setRoles(JSON.parse(xhttp.responseText));
-                
             }
         }
         xhttp.open("GET",data.url + `role`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
-    function Refresh(){
+    const Refresh = () =>{
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setRoles(JSON.parse(xhttp.responseText));
+                showRoleusers(currentrole)
+               
             }
         }
-        xhttp.open("GET",data.url + `role`, true);
+        xhttp.open("GET",data.url + `role`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
@@ -37,6 +39,8 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 alert("role added")
+                Refresh(); 
+                setCurrentstate(0);
             }
         }
         xhttp.open("POST",data.url + `role?name=${rolename}`, true);
@@ -48,12 +52,18 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 alert("role deleted")
+                Refresh(); 
             }
         }
         xhttp.open("DELETE",data.url + `role?id=${roleid}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
 
+    }
+    function showRoleusers(roleid){
+        const found = roles.find(element => element.id === roleid);
+        setUsers(found.users);
+        console.log(users)
     }
     function showusers(){
         var xhttp = new XMLHttpRequest();
@@ -69,7 +79,9 @@ function ManageRoles(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("user added to role")
+                Refresh();
+                alert("user added to role");
+                setCurrentstate(2); //PIECE OF SHIT 
             }
         }
         xhttp.open("PUT", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
@@ -80,7 +92,9 @@ function ManageRoles(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("user deleted from role")
+                Refresh();
+                alert("user deleted from role");
+                setCurrentstate(0); //FUCK YOU JAVASCRIPT
             }
         }
         xhttp.open("DELETE", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
@@ -102,7 +116,7 @@ function ManageRoles(props){
                     <div>
                         Roles on this system
                         {roles.map((role)=>(
-                            <div key={role.id} ><button onClick={() => {setCurrentstate(2); setUsers(role.users); setCurrentrole(role.id);}}>{role.name}</button>
+                            <div key={role.id} ><button onClick={() => {setCurrentstate(2);  setCurrentrole(role.id); showRoleusers(role.id);}}>{role.name}</button>
                             <button onClick={() => {removerole(role.id); Refresh()}}>Remove</button>
                             </div>
                         ))}
@@ -118,7 +132,7 @@ function ManageRoles(props){
                         <br></br>
                         <input id="role-name" type="text"></input>
                         <br></br>
-                        <button onClick={() => {Addrole();  Refresh(); setCurrentstate(0);}}>Add</button>
+                        <button onClick={() => Addrole()}>Add</button>
                     </div>
                 ) 
                 }
@@ -131,7 +145,7 @@ function ManageRoles(props){
                         <br></br>
                         {users.map((user) => (
                             <div key={user.id}>{user.name}
-                            <button onClick={() => deleteuser(user.id)}>Remove user</button> 
+                            <button onClick={() => { deleteuser(user.id);}}>Remove user</button> 
                             </div>))}
                         <button onClick={() => {setCurrentstate(3); showusers()} }>Add users</button>
                     </div>
