@@ -69,6 +69,8 @@ function Uploadfunc(info){
             console.error('There was a problem with the fetch operation:', error);
           });
           alert("File Created.")
+          info.onComplete();
+          setIspressed(false);
         
     }
     
@@ -79,7 +81,7 @@ function Uploadfunc(info){
     return(
       console.log(perm),
         <div>
-            <button onClick={handlebuttonclick}>+</button>
+            <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
             <div className="div-popup z-index-2">
                 <input type="file" onChange={handleFileChange}></input>

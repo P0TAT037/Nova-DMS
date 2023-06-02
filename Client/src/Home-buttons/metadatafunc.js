@@ -5,6 +5,7 @@ import data from "../Endpoint-url.json"
 import { useState } from "react";
 function Getmetadata(props){
     var permusers =[]
+    
     if(props.clicked !== false){
     document.getElementById("main-coloumn").className="col-9 col-home-base";
     document.getElementById("input-search").className="input-search-aftermeta";
@@ -19,9 +20,11 @@ function Getmetadata(props){
     xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
     xhttp.send();
     }
-    var metadata = props.metadata
+    var metadata = props.metadata;
+    var datecreated = Date(props.metadata.created);
+    var dateupdated = Date(props.metadata.updated);
     return(
-        console.log(permusers),
+        console.log(datecreated),
         props.clicked !== false &&
         <div id="metadata-column" className="col-3 col-home-base">
             <div className="row">
@@ -33,10 +36,11 @@ function Getmetadata(props){
             <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
 
                 {/* Editing */}
+                <div className="col-2">
             {metadata.type !== "folder" &&(
-                <div className="col-2"><EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo}/></div>
+                <EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo}/>
                 )}   
-            
+            </div>
             
             
                 <div className="col-3">
@@ -44,14 +48,14 @@ function Getmetadata(props){
             document.getElementById("input-search").className="input-search"; }}>X</button>
             </div>
             </div>
-            <p>ID: {metadata.id}</p>
+            {}
             <p>Name: {metadata.name}</p>
             <p>Type: {metadata.type}</p>
             <p>Description: {metadata.description}</p>
             <p>Content: {metadata.content}</p>
             <p>Author: {metadata.author}</p>
-            <p>Created: {metadata.created}</p>
-            <p>Updated: {metadata.updated}</p>
+            <p>Created: {datecreated}</p>
+            <p>Updated: {dateupdated}</p>
             <p>Edited By: {metadata.editedBy}</p>
             <p>Version: {metadata.version}</p>
         

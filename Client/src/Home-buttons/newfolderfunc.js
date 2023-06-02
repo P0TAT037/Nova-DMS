@@ -47,38 +47,24 @@ function Newfolderfunc(info){
           console.error('There was a problem with the fetch operation:', error);
         });
         alert("Folder Created.")
+        info.onComplete();
+        setIspressed(false);
     }
-    function testfile(){
-      var foldername = document.getElementById("folder-name").value
-        var folderdesc = document.getElementById("folder-desc").value
-        var foldercontent = document.getElementById("folder-content").value
-      const formData = new FormData();
-        formData.append('Dir', `${location[location.length-1].hid}`);
-        formData.append('Name', `${foldername}`);
-        formData.append('Description', `${folderdesc}`);
-        formData.append('Type', 'folder');
-        formData.append('Content', `${foldercontent}`);
-        formData.append('DefaultPerm', '');
-        formData.append('file', ``);
-        for (var pair of formData.entries()) {
-          console.log(pair[0]+ ': ' + pair[1]); 
-      }
-    }
+    
     return(
         
         <div>
-            <button onClick={handlebuttonclick}>F</button>
+            <button className="newfol-button" style={{position: "absolute" ,top: "10.3vh", overflowY:"auto"}} title="New Folder" onClick={handlebuttonclick}>F</button>
             {ispressed !== false &&(
             <div className="div-popup z-index-2">
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
-                File Name: <input id ="folder-name" type="text"></input>
+                <div>Folder Name: <input className="pop-input" id ="folder-name" type="text"></input></div>
+                <div>Description: <input className="pop-input" id="folder-desc" type="text"></input></div>
+                Content: 
                 <br></br>
-                Description: <input id="folder-desc" type="text"></input>
+                <textarea style={{height:"8vh", width:"34vw", fontSize:"medium",backgroundColor:"#2a2a2a8a"}} id="folder-content" type="text"></textarea>
                 <br></br>
-                Content: <input id="folder-content" type="text"></input>
-                <br></br>
-                this folder will be created in:
-                <br></br>
+                <p>this folder will be created in:</p>
                 
                 {location.map((folder) => (
                     
@@ -88,7 +74,6 @@ function Newfolderfunc(info){
                 }
                 <br></br>
                 <button onClick={handlefoldersubmit}>Create Folder</button>
-                <button onClick={testfile}>Test file</button>
             </div>
         )}
         </div>

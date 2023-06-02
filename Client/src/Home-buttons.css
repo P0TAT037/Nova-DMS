@@ -1,0 +1,155 @@
+.search-button{
+    height: 6.1vh;
+    width: 2.5vw;
+    border: 1px solid #000000;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/search-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 5px 9px;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+}
+
+.search-button:hover{
+    border: 1px solid #242424;
+}
+
+.filters-button{
+    height: 6.1vh;
+    width: 4vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/Filters-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 1.25vw 9px;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+}
+
+
+.dir-button{
+    border: 1px solid #00000000;
+    background-color: rgba(209, 21, 21, 0);
+    font-size: 25px;
+    color: rgb(202, 210, 217);
+    transition: 0.25s;
+}
+.dir-button:hover{
+    border: 1px solid #00000000;
+    background-color: rgba(209, 21, 21, 0);
+    font-size: 25px;
+    color: aliceblue;
+}
+.refresh-button{
+    height: 4.5vh;
+    width: 2.3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/refresh-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+}
+.refresh-button:hover{
+    border: 1px solid #6000b4;
+    background-color: #3b0358d3;
+}
+.newfol-button{
+    height: 4.5vh;
+    width: 2.3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/newfol-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+}
+.newfol-button:hover{
+    border: 1px solid #6000b4;
+    background-color: #3b0358d3;
+}
+.newfile-button{
+    height: 4.5vh;
+    width: 2.3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/newfile-icon.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px; 
+    transition: 0.25s;
+}
+.newfile-button:hover{
+    border: 1px solid #6000b4;
+    background-color: #2f0245d3;
+}
+.mangeroles-button{
+    height: 4.5vh;
+    width: 2.3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/manageroles.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px; 
+    transition: 0.25s;
+}
+.mangeroles-button:hover{
+    border: 1px solid #6000b4;
+    background-color: #2f0245d3;
+}
+.mangeadmin-button{
+    height: 4.5vh;
+    width: 2.3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/manageadmin.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px; 
+    transition: 0.25s;
+}
+.mangeadmin-button:hover{
+    border: 1px solid #6000b4;
+    background-color: #2f0245d3;
+}
+.logout-button{
+    height: 4.5vh;
+    width: 3vw;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    background-color: #1e1e1ed3;
+    color: rgb(123, 123, 123);
+    background-image: url("./image/logout.png");
+    background-size: 1.5vw 3vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px; 
+    transition: 0.25s;
+}
+.logout:hover{
+    border: 1px solid #6000b4;
+    background-color: #2f0245d3;
+}

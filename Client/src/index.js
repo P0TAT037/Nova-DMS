@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './App.css';
 import './Login.css';
+import './Home-buttons.css'
 import App from'./Router/Router.js';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
