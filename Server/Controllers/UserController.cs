@@ -178,7 +178,7 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("getUserRoles")]
     [AuthorizeAdmin]
-    public async Task<IEnumerable<dynamic>> GetUserRoles(int usrId)
+    public async Task<IEnumerable<dynamic>?> GetUserRoles(int usrId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
