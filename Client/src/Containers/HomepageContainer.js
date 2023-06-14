@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import data from "../Endpoint-url.json"
 import Uploadfunc from "../Home-buttons/uploadfunc.js"
+import { truncate } from "../Home-functions/truncation";
 import Newfolderfunc from "../Home-buttons/newfolderfunc.js";
 import { parseJwt } from "../Home-functions/parsejwt.js";
 import { Showfile } from "../Home-functions/displayfile.js";
@@ -184,14 +185,14 @@ function Home() {
                 <div className="col-3" key={folder.hid}>
                         {folder.metadata.type === "folder" && (<div>
                         <button className="btn-folders" onClick={() => Getfiles(folder.hid,folder.name,"true",(tree) => { setFiletree(tree) })}>
-                            {folder.name}
+                            {truncate(folder.name,25)}
                         </button>
                         <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata); setSelectedhid(folder.hid)}}>...</button>
                         </div>)}
                         {folder.metadata.type !== "folder" &&(
                         <>
                             <button className="btn-files" onClick={() => {setFileclicked(true) ; setclickedfileid(folder.id)}}>
-                            {folder.name}
+                            {truncate(folder.name,25)}
                             </button> 
                             <button className="btn-metadata" onClick={() => {setMetadataclicked(true); setMetadata(folder.metadata); setSelectedhid(folder.hid)}}>...</button>
                         </>
