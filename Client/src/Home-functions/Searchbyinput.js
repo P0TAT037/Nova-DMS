@@ -2,7 +2,7 @@ import { useState } from "react";
 import data from "../Endpoint-url.json"
 function Searchinput(props){
     const [ispressed,setIspressed] = useState(false);
-    const [awooga,setAwooga] = useState({hits : 0, results : [{id: 20, name: "bruh"}]}) // this is a placeholder, and it worked.... and im not gonna change it back... sue me >:(
+    const [awooga,setAwooga] = useState({hits : 0, results : [{id: 20, name: "*"}]}) // this is a placeholder, and it worked.... and im not gonna change it back... sue me >:(
     
 function searchrequest(){
     setIspressed(true);
@@ -18,7 +18,21 @@ function searchrequest(){
         xhttp.send([]);
 }                  
 function gotolocation(hid){
-    props.onClick(hid)
+    var newhidarr = ["/"]
+    var element = "/"
+    var oldhid = hid.split("/");
+    oldhid.pop();
+    oldhid.pop();
+    for (let i = 0; i < oldhid.length; i++) {
+        if(oldhid[i] !== ""){
+            element += oldhid[i] + "/";
+            newhidarr.push(element)
+        }
+        
+    }
+    //console.log(newhidarr);
+
+    props.onClick(newhidarr)
     setIspressed(false)
 }
 function handleexitclick(){

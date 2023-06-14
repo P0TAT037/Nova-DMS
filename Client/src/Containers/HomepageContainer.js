@@ -92,7 +92,28 @@ function Home() {
     }
     //function that goes to location of pressed file in search
     function handlelocationclick(location){
-        Getfiles(`${location}`, "Root","false",(tree) => { setFiletree(tree) })
+        hidarr = [{ name: "Root", hid: "/" ,metadata:{type:"folder"}}];
+        for (let i = 0; i < location.length; i++) {
+            var xmlhttp2 = new XMLHttpRequest();
+            xmlhttp2.open(
+                "GET",
+                data.url + `node/getNodes?hierarchyId=${location[i]}`,
+                false
+            );
+            xmlhttp2.setRequestHeader("Authorization", `Bearer ${token}`);
+            xmlhttp2.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    var response = JSON.parse(this.responseText)
+                    
+                    var targetobject = response.find(node=> node.hid === location[i+1])
+                    Getfiles(`${location[i]}`, `${targetobject.name}`,"true",(tree) => { setFiletree(tree) })
+                }
+            };
+            
+            xmlhttp2.send();
+        }
+        //Getfiles(`${location}`, `${name}`,"true",(tree) => { setFiletree(tree) })
+        console.log(hidarr)
     }
     const handlecompeleted = () =>{
         Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })
