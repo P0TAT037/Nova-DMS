@@ -21,6 +21,7 @@ metadata:{
 function Home() {
     const location = useLocation();
     const token =location.state?.param1;
+    const Name =location.state?.param2;
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
     const [filetree, setFiletree] = useState([{ name: "Root", hid: "/" ,metadata:{type:"folder"}}]);
@@ -99,11 +100,11 @@ function Home() {
 
     //HTML Return
     return (
-        console.log(filetree),
+        console.log(filetree,Name),
         <>
         <div className="div-color">
         <div className="container-fluid">
-        <div id="user-welcome" className="welcome-div" style={{position: "absolute", color:"white" ,marginTop:"39vh", marginLeft:"35vw", fontSize:"55px"}}>Welcome, {userinfo.username}</div>
+        <div id="user-welcome" className="welcome-div" style={{position: "absolute", color:"white" ,marginTop:"39vh", marginLeft:"35vw", fontSize:"55px"}}>Welcome, {Name}</div>
                 {/* File Display */}
             <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token}/>
 

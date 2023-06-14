@@ -81,7 +81,7 @@ function ManageRoles(props){
             if (this.readyState === 4 && this.status === 200) {
                 Refresh();
                 alert("user added to role");
-                setCurrentstate(2); //PIECE OF SHIT 
+                setCurrentstate(0); //PIECE OF SHIT 
             }
         }
         xhttp.open("PUT", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
