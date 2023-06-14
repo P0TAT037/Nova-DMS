@@ -7,7 +7,7 @@ function ManageRoles(props){
     const [userstoadd, setUserstoadd] =useState([]);
     const [roles,setRoles] = useState([]);
     const [currentrole,setCurrentrole] = useState();
-    const [currentstate,setCurrentstate] = useState(0); //no tis fine lmao
+    const [currentstate,setCurrentstate] = useState(0); 
     function handlebuttonclick(){
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
