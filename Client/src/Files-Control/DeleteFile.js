@@ -14,6 +14,7 @@ function DeleteFile(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
+                props.onDelete();
                 alert("folder deleted");
             }
         }
@@ -26,6 +27,7 @@ function DeleteFile(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
+                props.onDelete();
                 alert("file deleted");
             }
         }
@@ -39,6 +41,7 @@ function DeleteFile(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 alert("file deleted");
+                props.onDelete();
             }
         }
         xhttp.open("DELETE",data.url + `node?id=${props.metadata.id}&versionId=${props.metadata.version}`, true);

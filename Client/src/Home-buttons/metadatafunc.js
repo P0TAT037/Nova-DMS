@@ -19,6 +19,12 @@ function Getmetadata(props){
     xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
     xhttp.send();
     }
+    function sendtocontainer() {
+        props.onComplete();
+        props.onClick(false); 
+        document.getElementById("main-coloumn").className="col-12 col-home-base";
+        document.getElementById("input-search").className="input-search"; 
+    }
     var metadata = props.metadata;
     var datecreated = Date(props.metadata.created);
     var dateupdated = Date(props.metadata.updated);
@@ -31,12 +37,12 @@ function Getmetadata(props){
             <div className="col-4"><FilePermissions metadata={props.metadata} token={props.token} allusers={allusers} id={props.metadata.id}/></div>
 
                 {/* File Deletion */}
-            <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
+            <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} onDelete={sendtocontainer}/></div>
 
                 {/* Editing */}
                 <div className="col-2">
             {metadata.type !== "folder" &&(
-                <EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo} />
+                <EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo} onUpdate={sendtocontainer} />
                 )}   
             </div>
             

@@ -52,6 +52,7 @@ function EditFile(props){
           })
           .then(data => {
             alert("File Updated.")
+            props.onUpdate();
             console.log(data);
           })
           .catch(error => {
