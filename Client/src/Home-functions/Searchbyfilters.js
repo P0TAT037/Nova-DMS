@@ -1,11 +1,16 @@
 import { useState } from "react";
 function Searchbyfilters(props){
     const [ispressed,setIspressed] = useState(false);
+    const [exit,setExit] = useState("")
     function handlebuttonclick(){
+      setExit("");
         setIspressed(true);
     }
     function handleexitclick(){
+      setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     function handleSearchClick() {
         const name = document.getElementById('nm').value;
@@ -57,7 +62,7 @@ function Searchbyfilters(props){
         <>
         <div className="col-1"><button onClick={handlebuttonclick} className="filters-button"title="Search By Filters"></button></div>
         {ispressed !== false &&(
-            <div style={{width: "40vw"}} className="div-popup z-index-2" >
+            <div style={{width: "40vw"}} className={`div-popup${exit} z-index-2`} >
                 <span>Search by filters</span>
                     <button className="btn-popup-close" onClick={handleexitclick}>X</button>
                     <br />

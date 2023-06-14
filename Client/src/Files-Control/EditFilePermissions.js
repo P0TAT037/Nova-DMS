@@ -6,9 +6,11 @@ function FilePermissions(props){
     const [permusers,setPermusers] = useState([{}]);
     const [mergedarray,setMergedarray] = useState([{}]);
     const [rolespressed,setRolespressed] = useState(false);
+    const [exit,setExit] = useState("")
     const [roles,setRoles] = useState([]);
     var xhttp = new XMLHttpRequest();
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -23,8 +25,12 @@ function FilePermissions(props){
 
     }
     function handleexitclick(){
-        setIspressed(false);
+        setExit("exit");
         setRolespressed(false);
+      setTimeout(function() {
+        setIspressed(false);
+      }, 350);
+        
     }
     useEffect(() => {
         xhttp.onreadystatechange = function() {
@@ -90,7 +96,7 @@ function FilePermissions(props){
             <button onClick={handlebuttonclick}>Edit Permissions</button>
             {ispressed !== false &&(
 
-            <div className="div-popup z-index-2" >
+            <div className={`div-popup${exit} z-index-2`} >
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
                 {rolespressed === false &&(
                     <>

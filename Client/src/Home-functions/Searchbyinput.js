@@ -3,8 +3,9 @@ import data from "../Endpoint-url.json"
 function Searchinput(props){
     const [ispressed,setIspressed] = useState(false);
     const [awooga,setAwooga] = useState({hits : 0, results : [{id: 20, name: "*"}]}) // this is a placeholder, and it worked.... and im not gonna change it back... sue me >:(
-    
+    const [exit,setExit] = useState("")
 function searchrequest(){
+    setExit("");
     setIspressed(true);
     var searchinput = document.getElementById("input-search").value;
     var xhttp = new XMLHttpRequest();
@@ -36,7 +37,10 @@ function gotolocation(hid){
     setIspressed(false)
 }
 function handleexitclick(){
-    setIspressed(false)
+    setExit("exit");
+      setTimeout(function() {
+        setIspressed(false);
+      }, 350);
 }
 return(
     <>
@@ -46,7 +50,7 @@ return(
         
         
         {ispressed === true &&(
-            <div className="div-popup z-index-2" style={{width: "100vh" , height: "35vw", top: "15vh"}}> 
+            <div className={`div-popup${exit} z-index-2`} style={{width: "100vh" , height: "35vw", top: "15vh"}}> 
             <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
             {awooga.results.map((result) => (
                 <div key={result.id}>

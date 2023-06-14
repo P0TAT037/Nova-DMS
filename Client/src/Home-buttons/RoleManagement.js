@@ -8,7 +8,9 @@ function ManageRoles(props){
     const [roles,setRoles] = useState([]);
     const [currentrole,setCurrentrole] = useState();
     const [currentstate,setCurrentstate] = useState(0); 
+    const [exit,setExit] = useState("")
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -102,14 +104,17 @@ function ManageRoles(props){
         xhttp.send();
     }
     function handleexitclick(){
+        setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     
     return(
         <div>
             <button className="mangeroles-button" title="Mange Roles" onClick={handlebuttonclick}></button>
             {ispressed !== false &&(
-            <div className="div-popup z-index-2" style={{top: "-70vh"}}>
+            <div className={`div-popup${exit} z-index-2`} style={{top: "-70vh"}}>
                 <button  className="btn-popup-close" onClick={() => {setCurrentstate(0) ; handleexitclick()}}>X</button>
                 {/* Show current roles */}
                 {currentstate === 0 &&(

@@ -6,12 +6,17 @@ function Uploadfunc(info){
     var defaultperm
     const formData = new FormData();
     const [ispressed,setIspressed] = useState(false);
+    const [exit,setExit] = useState("")
     var location = info.location
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
     }
     function handleexitclick(){
+      setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     
     function handleFileChange(event) {
@@ -76,7 +81,7 @@ function Uploadfunc(info){
         <div>
             <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
-            <div className="div-popup z-index-2">
+            <div className={`div-popup${exit} z-index-2`}>
                 <input type="file" onChange={handleFileChange}></input>
                 <button className="btn-popup-close" onClick={handleexitclick}>X</button>
                 <br></br>

@@ -3,13 +3,19 @@ import { getCurrentTime } from "../Home-functions/getTime";
 import data from "../Endpoint-url.json"
 function EditFile(props){
     const [ispressed,setIspressed] = useState(false);
+    const [exit,setExit] = useState("")
     var file;
     const formData = new FormData();
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
     }
     function handleexitclick(){
+      setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
+        
     }
     function handleFileChange(event) {
         file = event.target.files[0];
@@ -65,7 +71,7 @@ function EditFile(props){
         <div>
             <button onClick={handlebuttonclick}>Edit</button>
             {ispressed !== false &&(
-            <div className="div-popup z-index-2" >
+            <div className={`div-popup${exit} z-index-2`} >
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
                 Updated File:
                 <input type="file" onChange={handleFileChange}></input>

@@ -2,12 +2,17 @@ import { useState } from "react";
 import data from "../Endpoint-url.json"
 function Newfolderfunc(info){
     const [ispressed,setIspressed] = useState(false);
+    const [exit,setExit] = useState("")
     var location = info.location
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
     }
     function handleexitclick(){
+      setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     function handlefoldersubmit(){
         var foldername = document.getElementById("folder-name").value
@@ -56,7 +61,7 @@ function Newfolderfunc(info){
         <div>
             <button className="newfol-button" style={{position: "absolute" ,top: "10.3vh", overflowY:"auto"}} title="New Folder" onClick={handlebuttonclick}>F</button>
             {ispressed !== false &&(
-            <div className="div-popup z-index-2">
+            <div className={`div-popup${exit} z-index-2`}>
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
                 <div>Folder Name: <input className="pop-input" id ="folder-name" type="text"></input></div>
                 <div>Description: <input className="pop-input" id="folder-desc" type="text"></input></div>

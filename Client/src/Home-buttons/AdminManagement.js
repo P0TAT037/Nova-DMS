@@ -4,7 +4,9 @@ function ManageAdmins(info){
     const [ispressed,setIspressed] = useState(false);
     const [addpressed,setAddpressed] = useState(false);
     const [users,setUsers] = useState([{roles:[], user:{}}])
+    const [exit,setExit] = useState("")
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -40,7 +42,10 @@ function ManageAdmins(info){
         xhttp.send();
     }
     function handleexitclick(){
+        setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     
     return(
@@ -49,7 +54,7 @@ function ManageAdmins(info){
             {ispressed !== false &&(
                 <>  {
                 addpressed !== true &&(
-                    <div className="div-popup z-index-2" style={{top: "-70vh", overflowY: "auto"}}>
+                    <div className={`div-popup${exit} z-index-2`} style={{top: "-70vh", overflowY: "auto"}}>
                         <button  className="btn-popup-close" onClick={() => {handleexitclick() ;setAddpressed(false)}}>X</button>
                         <p>Admins of this system:</p>
                         <br></br>

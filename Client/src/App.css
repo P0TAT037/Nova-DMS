@@ -144,6 +144,34 @@
   width: 42vw;
   animation: popupload 0.35s ease-in-out 1;
 }
+.div-popupexit{
+  background-color: #1e1e1e7f;
+  color: aliceblue;
+  border-radius: 10px;
+  font-size: 22px;
+  border: 2px solid #000000;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: 23vh;
+  left: 25vw;
+  height: 47vh;
+  width: 42vw;
+  opacity: 0;
+  animation: popupunload 0.35s ease-in-out 1;
+}
+@keyframes popupunload{
+  0%{
+    opacity: 1;
+  }
+  25%{
+    opacity: 1;
+  }
+  100%{
+    height: 0vh;
+    opacity: 0;
+  }
+}
 @keyframes popupload{
   0%{
     opacity: 0;

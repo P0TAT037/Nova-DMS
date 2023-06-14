@@ -2,13 +2,18 @@ import { useState } from "react";
 import data from "../Endpoint-url.json"
 function DeleteFile(props){
     const [ispressed,setIspressed] = useState(false);
+    const [exit,setExit] = useState("")
     var metadata = props.metadata;
     var hid = props.hid
     function handlebuttonclick(){
+        setExit("");
         setIspressed(true);
     }
     function handleexitclick(){
+        setExit("exit");
+      setTimeout(function() {
         setIspressed(false);
+      }, 350);
     }
     function deletefolder(){
         var xhttp = new XMLHttpRequest();
@@ -53,7 +58,7 @@ function DeleteFile(props){
         <div>
             <button onClick={handlebuttonclick}>Delete</button>
             {ispressed !== false &&(
-            <div className="div-popup z-index-2" >
+            <div className={`div-popup${exit} z-index-2`} >
                 {metadata.type === "folder" &&(
                     <>
                     <div>Are you sure you want to delete this folder? This will delete all items inside it.</div>
