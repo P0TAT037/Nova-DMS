@@ -100,7 +100,6 @@ function Home() {
 
     //HTML Return
     return (
-        console.log(filetree,Name),
         <>
         <div className="div-color">
         <div className="container-fluid">
@@ -129,7 +128,6 @@ function Home() {
                         <div className="col-2" key={directory.hid}>
                             <button className="dir-button" onClick={() => DirButton(directory)}>{directory.name}</button>
                             {hidarr.length !== 1 && (
-                                console.log(hidarr.indexOf(directory.hid)),
                                 <img src={require('../image/dir-arrow.png')} alt="arrowlol" style={{height: "2vh", width:"1.5vw",position:"absolute", top:"12.1vh"}}></img>
                             )}
                         </div>

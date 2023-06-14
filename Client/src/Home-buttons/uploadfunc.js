@@ -7,12 +7,8 @@ function Uploadfunc(info){
     const formData = new FormData();
     const [ispressed,setIspressed] = useState(false);
     var location = info.location
-    console.log(location)
     function handlebuttonclick(){
         setIspressed(true);
-        
-        //console.log(info.level,info.dir,info.id)
-        
     }
     function handleexitclick(){
         setIspressed(false);
@@ -22,7 +18,6 @@ function Uploadfunc(info){
         file = event.target.files[0];
         document.getElementById("upload-file-name").value=file.name;
         formData.append("file", file);
-        console.log(file.type);
     }
     function handleuploadclick(){
         var filename = document.getElementById("upload-file-name").value
@@ -43,7 +38,6 @@ function Uploadfunc(info){
           'Authorization': `Bearer ${info.token}`,
         };
 
-        console.log(formData,filename,desc,content);
         formData.append('Dir', `${location[location.length-1].hid}`);
         formData.append('Name', `${filename}`);
         formData.append('Description', `${desc}`);
@@ -79,7 +73,6 @@ function Uploadfunc(info){
 
     
     return(
-      console.log(perm),
         <div>
             <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(

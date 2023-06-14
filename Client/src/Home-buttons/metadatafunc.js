@@ -4,15 +4,14 @@ import { FilePermissions } from "../Files-Control/EditFilePermissions";
 import data from "../Endpoint-url.json"
 import { useState } from "react";
 function Getmetadata(props){
-    var permusers =[]
-    
+    var allusers =[]
     if(props.clicked !== false){
     document.getElementById("main-coloumn").className="col-9 col-home-base";
     document.getElementById("input-search").className="input-search-aftermeta";
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            permusers = JSON.parse(xhttp.responseText);
+            allusers = JSON.parse(xhttp.responseText);
             
         }
     }
@@ -24,13 +23,12 @@ function Getmetadata(props){
     var datecreated = Date(props.metadata.created);
     var dateupdated = Date(props.metadata.updated);
     return(
-        console.log(datecreated),
         props.clicked !== false &&
         <div id="metadata-column" className="col-3 col-home-base">
             <div className="row">
 
                 {/* Permission Control */}
-            <div className="col-4"><FilePermissions metadata={props.metadata} token={props.token} /></div>
+            <div className="col-4"><FilePermissions metadata={props.metadata} token={props.token} allusers={allusers} id={props.metadata.id}/></div>
 
                 {/* File Deletion */}
             <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} /></div>
@@ -38,7 +36,7 @@ function Getmetadata(props){
                 {/* Editing */}
                 <div className="col-2">
             {metadata.type !== "folder" &&(
-                <EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo}/>
+                <EditFile metadata={props.metadata} token={props.token} userinfo={props.userinfo} />
                 )}   
             </div>
             

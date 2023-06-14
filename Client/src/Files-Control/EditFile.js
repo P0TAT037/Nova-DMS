@@ -11,7 +11,6 @@ function EditFile(props){
     function handleexitclick(){
         setIspressed(false);
     }
-    console.log(props.metadata.id);
     function handleFileChange(event) {
         file = event.target.files[0];
         document.getElementById("update-file-name").value=file.name;
