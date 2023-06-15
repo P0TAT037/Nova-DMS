@@ -53,7 +53,7 @@ function Getmetadata(props){
             </div>
             </div>
             {}
-            <p>Name: {metadata.name}</p>
+            <p>Name: {metadata.name} {metadata.id}</p>
             <p>Type: {metadata.type}</p>
             <p>Description: {metadata.description}</p>
             <p>Content: {metadata.content}</p>

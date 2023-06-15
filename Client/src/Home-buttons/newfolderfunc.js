@@ -62,23 +62,27 @@ function Newfolderfunc(info){
             <button className="newfol-button" style={{position: "absolute" ,top: "10.3vh", overflowY:"auto"}} title="New Folder" onClick={handlebuttonclick}>F</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`}>
+                <div className="div-popup-title">
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create New Folder</span>
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
-                <div>Folder Name: <input className="pop-input" id ="folder-name" type="text"></input></div>
-                <div>Description: <input className="pop-input" id="folder-desc" type="text"></input></div>
+                </div>
+                
+                <div style={{marginTop: "1vh"}}><span className="pop-span">Folder Name: </span><input className="pop-input" id ="folder-name" type="text" ></input></div>
+                <div><span className="pop-span">Description: </span><input className="pop-input" id="folder-desc" type="text" ></input></div>
                 Content: 
                 <br></br>
-                <textarea style={{height:"8vh", width:"34vw", fontSize:"medium",backgroundColor:"#2a2a2a8a"}} id="folder-content" type="text"></textarea>
+                <textarea className="popup-textarea" id="folder-content" type="text"></textarea>
                 <br></br>
-                <p>this folder will be created in:</p>
+                <span>This folder will be created in: </span>
                 
                 {location.map((folder) => (
                     
-                    folder.name + "/ "  
+                    folder.name + "/"  
                     
                 ))
                 }
                 <br></br>
-                <button onClick={handlefoldersubmit}>Create Folder</button>
+                <button onClick={handlefoldersubmit} className="pop-button" style={{marginLeft: "17.3vw"}}>Create Folder</button>
             </div>
         )}
         </div>

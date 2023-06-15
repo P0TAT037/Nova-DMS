@@ -12,6 +12,7 @@ function ManageAdmins(info){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setUsers(JSON.parse(xhttp.responseText));
+                console.log(users);
             }
         }
         xhttp.open("GET", data.url + `user/all`, true);
@@ -58,7 +59,8 @@ function ManageAdmins(info){
                         <button  className="btn-popup-close" onClick={() => {handleexitclick() ;setAddpressed(false)}}>X</button>
                         <p>Admins of this system:</p>
                         <br></br>
-                        {users.map((user) => (
+                            <>
+                            {users.map((user) => (
                             user.user.level === 1 &&(
                                 
                             <div key={user.user.id}>
@@ -68,6 +70,7 @@ function ManageAdmins(info){
                             </div>
                         )))
                             }
+                            </>
                         <button style={{position:"relative"}} onClick={() => setAddpressed(true)}>Add Users</button></div>
                 )
             }
