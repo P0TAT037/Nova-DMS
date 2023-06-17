@@ -16,7 +16,10 @@ function Test(info){
   }
     return(
       <>
-      {truncate("nooooo")}
+      <label for="file-upload" class="pop-file">
+      <input id="file-upload" type="file"/>
+        Choose file
+      </label>
       </>
     );
             }

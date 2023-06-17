@@ -89,6 +89,7 @@ function Home() {
         navigate(`/`)
     }
     const refresh = () =>{
+        
         Getfiles(hidarr[hidarr.length-1].hid,hidarr[hidarr.length-1].name,"false",(tree) => { setFiletree(tree) })
     }
     //function that goes to location of pressed file in search
@@ -122,6 +123,7 @@ function Home() {
 
     //HTML Return
     return (
+        console.log(filetree),
         <>
         <div className="div-color">
         <div className="container-fluid">

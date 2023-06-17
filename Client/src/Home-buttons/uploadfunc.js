@@ -23,11 +23,18 @@ function Uploadfunc(info){
         file = event.target.files[0];
         document.getElementById("upload-file-name").value=file.name;
         formData.append("file", file);
+        document.getElementById("upload-file-input").className = "pop-file-uploaded";
+        document.getElementById("upload-file-input").innerHTML = "Uploaded"
+        document.getElementById("afterupload").style.opacity= "1"
+        document.getElementById("afterupload").style.animation= "onload 0.7s ease-in-out "
+        document.getElementById("filename-selected").innerHTML = `You Selected ${file.name}` 
+        document.getElementById("filename-selected").className = "pop-span-uploaded"
     }
     function handleuploadclick(){
         var filename = document.getElementById("upload-file-name").value
         var desc = document.getElementById("upload-file-desc").value
         var content = document.getElementById("upload-file-content").value
+        
 
 
         perm = document.getElementsByName("perm")
@@ -82,14 +89,17 @@ function Uploadfunc(info){
             <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`}>
-                <input type="file" onChange={handleFileChange}></input>
+                <input type="file" id="file-upload" onChange={handleFileChange}></input>
                 <button className="btn-popup-close" onClick={handleexitclick}>X</button>
+                  <><label id="upload-file-input" htmlFor="file-upload" className="pop-file">Choose File</label></>
+                  <span id="filename-selected"></span>
                 <br></br>
-                File Name: <input id ="upload-file-name" type="text"></input>
+                <div id="afterupload" className="pop-fileselected">
+                File Name: <input id ="upload-file-name" className="pop-input" type="text"></input>
                 <br></br>
-                Description: <input id="upload-file-desc" type="text"></input>
+                Description: <input id="upload-file-desc" className="pop-input" type="text"></input>
                 <br></br>
-                Content: <input id="upload-file-content" type="text"></input>
+                Content: <input id="upload-file-content" className="pop-textarea" type="text"></input>
                 {info.level !== "0" &&(
                     <div>
                     <br></br>
@@ -104,8 +114,8 @@ function Uploadfunc(info){
                     <br></br>
                     </div>
                 )}
-                <button onClick={() => handleuploadclick()}>Upload</button>    
-                    
+                <button style={{marginLeft: "18vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
+                </div>      
             </div>
         )}
         </div>

@@ -71,7 +71,7 @@ function Newfolderfunc(info){
                 <div><span className="pop-span">Description: </span><input className="pop-input" id="folder-desc" type="text" ></input></div>
                 Content: 
                 <br></br>
-                <textarea className="popup-textarea" id="folder-content" type="text"></textarea>
+                <textarea className="pop-textarea" id="folder-content" type="text"></textarea>
                 <br></br>
                 <span>This folder will be created in: </span>
                 

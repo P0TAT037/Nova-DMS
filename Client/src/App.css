@@ -11,7 +11,7 @@
 
 }
 .div-color{
-  background-color: #1e1e1e72;
+  background-color: #1e1e1e60;
   height: 100vh;
 }
 .search-row{
@@ -163,7 +163,7 @@
   opacity: 0;
   animation: popupunload 0.35s ease-in-out 1;
 }
-.popup-textarea{
+.pop-textarea{
   height: 8vh; 
   width: 48vw;
   margin-left: 0.7vw;
@@ -171,6 +171,13 @@
   font-size: medium;
   background-color: #a4a3a38a;
   resize: none;
+  transition: 0.25s;
+}
+.pop-textarea:focus{
+  border: 2px solid #858585;
+}
+.popup-input:focus{
+  border: 2px solid #858585;
 }
 @keyframes popupunload{
   0%{
@@ -207,6 +214,10 @@
   border-radius: 15px;
   width: 48vw;
   margin-left: 0.7vw;
+  transition: 0.25s;
+}
+.pop-input:focus{
+  border: 2px solid #858585;
 }
 .pop-button{
   background-color: #000000b2;
@@ -224,6 +235,63 @@
   width: 15.3vw;
   border: 2px solid #646363;
 }
+input[type="file"] {
+  display: none;
+}
+.pop-file{
+  display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #fff;
+    width: 17vw;
+    text-align: center;
+    background-color: #2e2e2e;
+    margin-top: 1vh;
+    margin-left: 17vw;
+    border-radius: 4px;
+    border: none;
+    transition: all 0.3s ease;
+}
+.pop-file:hover{
+  background-color: #656565;
+}
+.pop-file-uploaded{
+  display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #fff;
+    width: 8vw;
+    text-align: center;
+    background-color: #2e2e2e;
+    margin-top: 1vh;
+    margin-left: 0.8vw;
+    border-radius: 4px;
+    border: none;
+    transition: all 0.3s ease;
+    animation: fileupload 0.5s ease-in-out 1;
+}
+@keyframes fileupload{
+  0%{
+    width: 17vw;
+    margin-left: 17vw;
+    color: #00000000;
+    background-color: #8600d4;
+  }
+  25%{
+    color: #00000000;
+  }
+  100%{
+    margin-left: 0.8vw;
+    width: 8vw;
+  }
+}
+.pop-file-uploaded:hover{
+  background-color: #707070;
+}
+.pop-span-uploaded{
+  margin-left: 1.5vw;
+  animation: onload 0.65s ease-in-out 1;
+}
 .div-showfile-popup{
   background-color: #1e1e1e;
   border-radius: 10px;
@@ -233,6 +301,13 @@
   left: 15vw;
   height: 90vh;
   width: 65vw;
+}
+.pop-fileselected{
+  opacity: 0;
+}
+.pop-select{
+  background-color: #f7f6f68a;
+  margin-left: 0.8vw;
 }
 .btn-popup-close{
   float: right;
