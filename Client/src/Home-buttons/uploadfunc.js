@@ -37,12 +37,7 @@ function Uploadfunc(info){
         
 
 
-        perm = document.getElementsByName("perm")
-        for(let i = 0; i < perm.length; i++) {
-          if (perm[i].checked){
-            defaultperm = perm[i].value
-          }
-        }
+        defaultperm = document.getElementById("perm").value
         
         const endpoint = data.url +'node';
         const headers = {
@@ -90,7 +85,10 @@ function Uploadfunc(info){
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`}>
                 <input type="file" id="file-upload" onChange={handleFileChange}></input>
-                <button className="btn-popup-close" onClick={handleexitclick}>X</button>
+                <div className="div-popup-title">
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
+                <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
+                </div>
                   <><label id="upload-file-input" htmlFor="file-upload" className="pop-file">Choose File</label></>
                   <span id="filename-selected"></span>
                 <br></br>
@@ -102,15 +100,11 @@ function Uploadfunc(info){
                 Content: <input id="upload-file-content" className="pop-textarea" type="text"></input>
                 {info.level !== "0" &&(
                     <div>
-                    <br></br>
-                    <input type="radio" id="rw-radio" name="perm" value="false"></input>
-                    <label htmlFor="age2">Users can Read Only </label>
-                    <br></br>
-                    <input type="radio" id="rw-radio" name="perm" value="true"></input>
-                    <label htmlFor="age3">Users can Read and Write </label>
-                    <br></br>
-                    <input type="radio" id="rw-radio" name="perm" value=""></input>
-                    <label htmlFor="age3">Only Me</label>
+                    <select className="pop-select" id="perm">
+                      <option value="true">Users can Read and Write</option>
+                      <option value="false">Users can Read only</option>
+                      <option value="">Only Me</option>
+                    </select>
                     <br></br>
                     </div>
                 )}

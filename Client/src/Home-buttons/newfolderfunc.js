@@ -69,11 +69,11 @@ function Newfolderfunc(info){
                 
                 <div style={{marginTop: "1vh"}}><span className="pop-span">Folder Name: </span><input className="pop-input" id ="folder-name" type="text" ></input></div>
                 <div><span className="pop-span">Description: </span><input className="pop-input" id="folder-desc" type="text" ></input></div>
-                Content: 
+                <span className="pop-span"> Content: </span>
                 <br></br>
                 <textarea className="pop-textarea" id="folder-content" type="text"></textarea>
                 <br></br>
-                <span>This folder will be created in: </span>
+                <span className="pop-span">This folder will be created in: </span>
                 
                 {location.map((folder) => (
                     
