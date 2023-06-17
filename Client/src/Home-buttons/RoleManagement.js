@@ -73,6 +73,7 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setUserstoadd(JSON.parse(xhttp.responseText));
+                console.log(userstoadd)
             }
         }
         xhttp.open("GET", data.url + `user/all`, true);
@@ -107,6 +108,7 @@ function ManageRoles(props){
     function handleexitclick(){
         setExit("exit");
       setTimeout(function() {
+        setCurrentstate(0);
         setIspressed(false);
       }, 350);
     }
@@ -118,7 +120,7 @@ function ManageRoles(props){
             <div className={`div-popup${exit} z-index-2`} style={{top: "-74.6vh"}}>
                 <div className="div-popup-title">
                  <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Role Management</span>
-                <button  className="btn-popup-close" onClick={() => {setCurrentstate(0); handleexitclick();}}>X</button>
+                <button  className="btn-popup-close" onClick={() =>  handleexitclick()}>X</button>
                 </div>
                 {/* Show current roles */}
                 {currentstate === 0 &&(
@@ -170,18 +172,22 @@ function ManageRoles(props){
                     currentstate === 3 &&(
                         <>
                         <button className="pop-back" onClick={() => setCurrentstate(2)}>Back</button>
-                        <div>
-                            <span className="pop-span">Users on this system:</span>
+                        <span className="pop-span"> Add non-admin users:</span>
+                        
                             <br></br>
                         {userstoadd.map((user) => (
-                            
+                            user.user.level < 1 &&(
+                                <>
                                 <div className="pop-row" style={{marginTop: "2vh"}} key={user.user.id}>{user.user.name} {/* dont forget, you can't add a user twice, fix this*/}
                                 <button style={{fontSize: "1.2rem" ,width: "5vw" , float: "right", height: "4.6vh"}} className="pop-button" onClick={() => adduser(user.user.id)}>Add</button> 
-
-                            </div>
+                                </div>
+                                </>
+                            )
+                                
+                            
                             
                             ))}
-                        </div>
+                        
                         </>
                     )
                 }
