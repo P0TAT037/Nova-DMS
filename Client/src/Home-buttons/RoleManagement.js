@@ -7,6 +7,7 @@ function ManageRoles(props){
     const [userstoadd, setUserstoadd] =useState([]);
     const [roles,setRoles] = useState([]);
     const [currentrole,setCurrentrole] = useState();
+    const [currentrolename, setCurrentrolename] = useState("");
     const [currentstate,setCurrentstate] = useState(0); 
     const [exit,setExit] = useState("")
     function handlebuttonclick(){
@@ -114,30 +115,35 @@ function ManageRoles(props){
         <div>
             <button className="mangeroles-button" title="Mange Roles" onClick={handlebuttonclick}></button>
             {ispressed !== false &&(
-            <div className={`div-popup${exit} z-index-2`} style={{top: "-70vh"}}>
-                <button  className="btn-popup-close" onClick={() => {setCurrentstate(0) ; handleexitclick()}}>X</button>
+            <div className={`div-popup${exit} z-index-2`} style={{top: "-74.6vh"}}>
+                <div className="div-popup-title">
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Role Management</span>
+                <button  className="btn-popup-close" onClick={() => {setCurrentstate(0); handleexitclick();}}>X</button>
+                </div>
                 {/* Show current roles */}
                 {currentstate === 0 &&(
                     <div>
-                        Roles on this system
                         {roles.map((role)=>(
-                            <div key={role.id} ><button onClick={() => {setCurrentstate(2);  setCurrentrole(role.id); showRoleusers(role.id);}}>{role.name}</button>
-                            <button onClick={() => {removerole(role.id); Refresh()}}>Remove</button>
+                            <div key={role.id} className="pop-row"><button className="pop-rowbutton" style={{textAlign: "left"}} onClick={() => {setCurrentstate(2);  setCurrentrole(role.id); showRoleusers(role.id); setCurrentrolename(role.name)}}><span>{role.name} </span><span style={{marginLeft: "2vw"}}>Total Users: {role.users.length}</span></button>
+                            
+                            {console.log(role)}
+                            <button className="pop-deletebutton" onClick={() => {removerole(role.id); Refresh()}}></button>
+                            <br></br>
                             </div>
                         ))}
-                        <button style={{position:"relative", bottom:"-5vh"}} onClick={() => setCurrentstate(1)}>Add New role</button>
+                        <button className="pop-button" style={{position:"relative", bottom:"-5vh" ,marginLeft:"18vw"}} onClick={() => setCurrentstate(1)}>Add New role</button>
                     </div>
                 )}
                 {/* Create Role */}
                 {
                    currentstate === 1 &&(
                     <div>
-                        <button onClick={() => setCurrentstate(0)}>Back</button>
-                        What would you like to name this role?
+                        <button className="pop-back" onClick={() => setCurrentstate(0)}>Back</button>
+                        <span className="pop-span">What would you like to name this role?</span>
                         <br></br>
-                        <input id="role-name" type="text"></input>
+                        <input id="role-name" className="pop-input" type="text" style={{marginLeft:"5vw",width: "40vw",animation: "slowappear 0.25s ease-in-out"}}></input>
                         <br></br>
-                        <button onClick={() => Addrole()}>Add</button>
+                        <button className="pop-button" style={{position:"relative", bottom:"-2vh" ,marginLeft:"18vw", animation: "slowappear 0.25s ease-in-out"}} onClick={() => Addrole()}>Add</button>
                     </div>
                 ) 
                 }
@@ -145,14 +151,17 @@ function ManageRoles(props){
                 {
                    currentstate === 2 &&(
                     <div>
-                        <button onClick={() => setCurrentstate(0)}>Back</button>
-                        Users on this role:
+                        <button className="pop-back" onClick={() => setCurrentstate(0)}>Back</button>
+                        <span className="pop-span">Users on {currentrolename}:</span>
                         <br></br>
                         {users.map((user) => (
-                            <div key={user.id}>{user.name}
-                            <button onClick={() => { deleteuser(user.id);}}>Remove user</button> 
+                            <div className="pop-row" key={user.id}><span className="pop-span">{user.name} </span>{user.level > 0 &&(
+                                <span style={{color: "black"}}>(is an admin)</span>
+                            )}
+                            <button  className="pop-deletebutton" onClick={() => { deleteuser(user.id);}}></button> 
                             </div>))}
-                        <button onClick={() => {setCurrentstate(3); showusers()} }>Add users</button>
+                            <br></br>
+                        <button style={{marginLeft: "18vw"}} className="pop-button" onClick={() => {setCurrentstate(3); showusers()} }>Add users</button>
                     </div>
                 ) 
                 }
@@ -160,15 +169,17 @@ function ManageRoles(props){
                 {
                     currentstate === 3 &&(
                         <>
-                        <button onClick={() => setCurrentstate(2)}>Back</button>
+                        <button className="pop-back" onClick={() => setCurrentstate(2)}>Back</button>
                         <div>
-                            users on this system:
+                            <span className="pop-span">Users on this system:</span>
                             <br></br>
                         {userstoadd.map((user) => (
                             
-                                <div key={user.user.id}>{user.user.name} {/* dont forget, you can't add a user twice, fix this*/}
-                                <button onClick={() => adduser(user.user.id)}>Add user</button> 
+                                <div className="pop-row" style={{marginTop: "2vh"}} key={user.user.id}>{user.user.name} {/* dont forget, you can't add a user twice, fix this*/}
+                                <button style={{fontSize: "1.2rem" ,width: "5vw" , float: "right", height: "4.6vh"}} className="pop-button" onClick={() => adduser(user.user.id)}>Add</button> 
+
                             </div>
+                            
                             ))}
                         </div>
                         </>

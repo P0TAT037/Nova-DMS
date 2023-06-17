@@ -270,6 +270,65 @@ input[type="file"] {
     transition: all 0.3s ease;
     animation: fileupload 0.5s ease-in-out 1;
 }
+.pop-row{
+  background-color: #6969694e;
+  border: 1px solid #5c5b5b;
+  border-radius: 10px;
+  margin-top: 0.5vh;
+  animation: rowspawn 0.3s ease-in-out;
+  margin-left: 0.7vw;
+  width: 48vw
+}
+@keyframes rowspawn{
+  0%{
+    width: 30vw;
+    transform: translateY(4vh);
+  }
+  75%{
+    transform: translateY(0.5vh);
+  }
+  100%{
+    transform: translateY(0vh);
+    width: 48vw;
+  }
+}
+@keyframes rowbuttonspawn{
+  0%{
+    width: 20vw;
+  }
+  100%{
+    width: 44vw;
+  }
+}
+.pop-rowbutton{
+  border: none;
+  border-radius: 15px;
+  color: whitesmoke;
+  background-color: #131313a2;
+  width: 44vw; 
+  animation: rowbuttonspawn 0.3s ease-in-out ;
+  transition: 0.25s;
+}
+.pop-rowbutton:hover{
+  background-color: #7070708a;
+}
+.pop-deletebutton{
+  background-image: url('./image/delete-icon.png');
+  background-size: 2vw 4vh;
+  background-repeat: no-repeat;
+  background-position: 0.5vw ;
+  border: 0.5px solid #1e1e1e;
+  background-color: #131313a2;
+  border-radius: 10px;
+  height: 5vh;
+  width: 3vw;
+  float: right;
+  margin-right: 0.15vw;
+  transition: 0.25s;
+}
+.pop-deletebutton:hover{
+  background-color: #7070708a;
+}
 @keyframes fileupload{
   0%{
     width: 17vw;
@@ -308,6 +367,28 @@ input[type="file"] {
 .pop-select{
   background-color: #f7f6f68a;
   margin-left: 0.8vw;
+}
+.pop-back{
+  background-image: url("./image/pop-back.png");
+  background-size: 1.5vw 3vh;
+  background-repeat: no-repeat;
+  background-position: 0.5vw ;
+  background-color: #1e1e1e00;
+  color: rgba(255, 255, 255, 0);
+  border: 2px solid #00000000;
+  transition: 0.15s;
+  animation: slowappear 0.35s ease-in-out;
+}
+@keyframes slowappear{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.pop-back:hover{
+  background-size: 1.7vw 3.4vh;
 }
 .btn-popup-close{
   float: right;

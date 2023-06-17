@@ -93,11 +93,11 @@ function Uploadfunc(info){
                   <span id="filename-selected"></span>
                 <br></br>
                 <div id="afterupload" className="pop-fileselected">
-                File Name: <input id ="upload-file-name" className="pop-input" type="text"></input>
+                <span className="pop-span">File Name: </span><input id ="upload-file-name" className="pop-input" type="text"></input>
                 <br></br>
-                Description: <input id="upload-file-desc" className="pop-input" type="text"></input>
+                <span className="pop-span">Description: </span><input id="upload-file-desc" className="pop-input" type="text"></input>
                 <br></br>
-                Content: <input id="upload-file-content" className="pop-textarea" type="text"></input>
+                <span className="pop-span">Content: </span><input id="upload-file-content" className="pop-textarea" type="text"></input>
                 {info.level !== "0" &&(
                     <div>
                     <select className="pop-select" id="perm">
