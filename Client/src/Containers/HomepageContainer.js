@@ -36,6 +36,7 @@ function Home() {
     const Name = location.state?.param2;
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
+    const [pageonload, setPageonload] = useState(true)
     const [filetree, setFiletree] = useState([{ name: "Root", hid: "/", metadata: { type: "folder" } }]);
     const [fileclicked, setFileclicked] = useState(false);
     const [clickedfileid, setclickedfileid] = useState();
@@ -43,7 +44,9 @@ function Home() {
     const [metadata, setMetadata] = useState([{}]);
     const [selectedhid, setSelectedhid] = useState("");
 
-
+    setTimeout(function() {
+        setPageonload(false)
+      }, 2500);
     const Getfiles = (hid, name1, push, callback) => { //hideous, i know
         if (push === "true") {
             const obj = { hid: hid, name: name1 };
@@ -138,7 +141,12 @@ function Home() {
         <>
             <div className="div-color">
                 <div className="container-fluid">
-                    <div id="user-welcome" className="welcome-div" style={{ position: "absolute", color: "white", marginTop: "39vh", marginLeft: "35vw", fontSize: "55px" }}>Welcome, {Name}</div>
+                    {pageonload === true &&(
+                        <>
+                         <div id="user-welcome" className="welcome-div" style={{ position: "absolute", color: "white", marginTop: "39vh", marginLeft: "35vw", fontSize: "55px" }}>Welcome, {Name}</div>
+                        </>
+                    )}
+                   
                     {/* File Display */}
                     <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token} />
 

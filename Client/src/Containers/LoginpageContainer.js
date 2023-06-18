@@ -23,9 +23,7 @@ function LoginPageContainer() {
       ) : (
         <LoginPage onSignupClick={handleSignupClick} onAnimation={handleanimationcomplete} rendered={loginrenderd} />
       )}
-      <div className="wave"></div>
-     <div className="wave"></div>
-     <div className="wave"></div>
+      
     </div>
   );
 }

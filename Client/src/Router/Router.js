@@ -13,6 +13,9 @@ function App() {
           <Route path='/test' element={<Test />}/>
           
         </Routes>
+        <div className="wave"></div>
+        <div className="wave"></div>
+        <div className="wave"></div>
       </div>
     );
   

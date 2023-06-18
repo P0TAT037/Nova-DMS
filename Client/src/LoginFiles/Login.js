@@ -54,16 +54,16 @@ function LoginPage(props) {
     <div className='col-sm-10 col-md-10 col-10 m-5 '>
       <p className='p-login' style={{fontSize: 32 , textAlign : "center"}}>LOGIN</p>
       <form  onSubmit={handleSubmit}>
-        <div className="input-group">
+        <div className="input-group mb-3">
           <div className="input-group-prepend">
             
           </div>
-          <input type="text" className="form-control login-input-username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value={username} onChange={handleUsernameChange} />
+          <input style={{borderRadius:"10px"}} type="text" className="form-control login-input-username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value={username} onChange={handleUsernameChange} />
         </div>
-        <div className="input-group">
+        <div className="input-group mb-3">
           <div className="input-group-prepend">
           </div>
-          <input type="password" className="form-control login-input-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" value={password} onChange={handlePasswordChange} />
+          <input style={{borderRadius:"10px"}} type="password" className="form-control login-input-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" value={password} onChange={handlePasswordChange} />
         </div>
         <button type="submit" className="btn-login">Login</button>
       </form>

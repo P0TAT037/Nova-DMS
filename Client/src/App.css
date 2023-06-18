@@ -13,6 +13,38 @@
 .div-color{
   background-color: #1e1e1e60;
   height: 100vh;
+  animation: explosion 2.75s ease-in-out;
+}
+@keyframes explosion{
+  0%{
+    width: 0vw;
+    height: 0vh;
+    
+  }
+  25%{
+    width: 0vw;
+    height: 0vh;
+  }
+  50%{
+    width: 0vw;
+    height: 0vh;
+    
+  }
+  75%{
+    width: 0vw;
+    height: 0vh;
+    border-radius: 400px;
+    background-color: #ff02b7a2;
+    
+  }
+  83%{
+    background-color: #85019f88;
+  }
+  100%{
+    border-radius: 0px;
+    width: 100vw;
+    height: 100vh;
+  }
 }
 .search-row{
   border-bottom: 2px solid #000000;
