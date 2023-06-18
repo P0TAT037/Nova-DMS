@@ -97,22 +97,25 @@ function FilePermissions(props){
             {ispressed !== false &&(
 
             <div className={`div-popup${exit} z-index-2`} >
+                <div className="div-popup-title">
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Edit "{props.metadata.name}" Permissions</span>
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
+                </div>
                 {rolespressed === false &&(
                     <>
                     {mergedarray.map((item)=>(
-                        item.level < 1 &&(<div key={item.id}>
-                            {item.name}
-                            <select id={item.id} defaultValue={`${item.perm}`}>
+                        item.level < 1 &&(<div className="pop-row" key={item.id}>
+                            <span className="pop-span">{item.name}</span>
+                            <button style={{float: "right", height:"1vh"}} onClick={()=> ChangePerm(item.id)}>Change</button>
+                            <select style={{float: "right", marginRight:" 15vw" , marginTop:"0.4vh"}} className="pop-select" id={item.id} defaultValue={`${item.perm}`}>
                               <option value="true">Read and Write</option>
                               <option value="false">Read only</option>
                               <option value="">Only User</option>
                               </select>
-                              <button onClick={()=> ChangePerm(item.id)}>Change</button>
                             </div>
                         )
                     ))}
-                    <button style={{position:"relative"}} onClick={() => setRolespressed(true)}>Change Roles Permissions</button>
+                    <button className="pop-button" style={{position:"relative" , marginLeft: "18vw", marginTop:"4vh"}} onClick={() => setRolespressed(true)}>Change Roles Permissions</button>
                     </>
                     )}
                 {rolespressed === true &&(

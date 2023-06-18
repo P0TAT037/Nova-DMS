@@ -23,7 +23,6 @@ function LoginPageContainer() {
       ) : (
         <LoginPage onSignupClick={handleSignupClick} onAnimation={handleanimationcomplete} rendered={loginrenderd} />
       )}
-      
     </div>
   );
 }

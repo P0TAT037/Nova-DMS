@@ -590,9 +590,9 @@ input[type="file"] {
 }
 
 .ocr-div{
-  border: 2px solid rgb(79, 33, 134);
+  border: 2.5px solid rgb(79, 33, 134);
   position: absolute;
-  transition: 0.5s;
+  transition: 2s;
 }
 .ocr-div:hover{
   border: 2px solid rgb(202, 0, 98);
