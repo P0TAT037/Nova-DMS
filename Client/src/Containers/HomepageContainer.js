@@ -14,6 +14,7 @@ import { SearchFunction } from "../Home-functions/Search.js";
 import { useLocation } from 'react-router-dom';
 import { Filetree } from "../Home-functions/Filetree";
 import { Directoryline } from "../Home-functions/Directoryline";
+import { Getversions } from "../Home-functions/getVersions";
 
 var hidarr = [{
     name: "Root", hid: "/",
@@ -42,6 +43,7 @@ function Home() {
     const [clickedfileid, setclickedfileid] = useState();
     const [metadataclicked, setMetadataclicked] = useState(false);
     const [metadata, setMetadata] = useState([{}]);
+    const [versionsclicked, setVersionsclicked] = useState(false);
     const [selectedhid, setSelectedhid] = useState("");
 
     setTimeout(function() {
@@ -96,6 +98,14 @@ function Home() {
     //Function that closes metadata bar
     const handlemetaClick = (state) => {
         setMetadataclicked(state)
+    }
+    //function that calls previous versions component
+    const handleversionsclick = (id) => {
+        console.log("caught id:",id);
+        setVersionsclicked(true)
+    }
+    const handleversionclose = (state) => {
+        setVersionsclicked(false)
     }
     //Function that logs out
     const logout = () => {
@@ -177,7 +187,9 @@ function Home() {
                                     <div className="col-1">
                                         <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
                                     </div>
-
+                                    {versionsclicked ? (<Getversions closeVersions={handleversionclose}/>) : (
+                                        <></>
+                                    )}
 
 
 
@@ -189,6 +201,7 @@ function Home() {
                                 )}
                                 {/* File tree Mapping */}
                                 <Filetree filetree={filetree} setFiletree={setFiletree} setFileclicked={setFileclicked} setclickedfileid={setclickedfileid} setMetadataclicked={setMetadataclicked} setMetadata={setMetadata} setSelectedhid={setSelectedhid} Getfiles={Getfiles}></Filetree>
+                                
                             </div>
 
                             {/* Control Row */}
@@ -207,7 +220,7 @@ function Home() {
                             </div>
                         </div>
                         {/* Metadata bar */}
-                        <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} />
+                        <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick}/>
                     </div>
                 </div>
             </div>

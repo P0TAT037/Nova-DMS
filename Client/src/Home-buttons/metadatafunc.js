@@ -1,13 +1,12 @@
 import { EditFile } from "../Files-Control/EditFile";
 import { DeleteFile } from "../Files-Control/DeleteFile";
 import { FilePermissions } from "../Files-Control/EditFilePermissions";
+import { convertdate } from "../Home-functions/convertdate";
 import data from "../Endpoint-url.json"
 import { useState } from "react";
 function Getmetadata(props){
     var allusers =[]
-    const [isloadingversions,setLoadingversions] = useState(true);
-    const [versions,setVersions] = useState([])
-    if(props.clicked !== false){
+    if(props.clicked === true){
     document.getElementById("main-coloumn").className="col-9 col-home-base";
     document.getElementById("input-search").className="input-search-aftermeta";
     var xhttp = new XMLHttpRequest();
@@ -20,16 +19,6 @@ function Getmetadata(props){
    xhttp.open("GET", data.url + `user/all`, false);
     xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
     xhttp.send();
-    var xhttp2 = new XMLHttpRequest();
-    xhttp2.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText)
-            
-        }
-    }
-   xhttp2.open("GET", data.url + `node/versions?id=${props.metadata.id}`, false);
-    xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
-    xhttp2.send();
     }
     function sendtocontainer() {
         props.onComplete();
@@ -38,8 +27,8 @@ function Getmetadata(props){
         document.getElementById("input-search").className="input-search"; 
     }
     var metadata = props.metadata;
-    var datecreated = Date(props.metadata.created);
-    var dateupdated = Date(props.metadata.updated);
+    var datecreated = convertdate(props.metadata.created);
+    var dateupdated = convertdate(props.metadata.updated);
     return(
         props.clicked !== false &&
         <div id="metadata-column" className="col-3 col-home-base">
@@ -48,8 +37,7 @@ function Getmetadata(props){
                 {/* Permission Control */}
             <div className="col-4"><FilePermissions metadata={props.metadata} token={props.token} allusers={allusers} id={props.metadata.id}/></div>
 
-                {/* File Deletion */}
-            <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} onDelete={sendtocontainer}/></div>
+                
 
                 {/* Editing */}
                 <div className="col-2">
@@ -73,20 +61,18 @@ function Getmetadata(props){
             <p>Created: {datecreated}</p>
             <p>Updated: {dateupdated}</p>
             <p>Edited By: {metadata.editedBy}</p>
-            {isloadingversions === false &&(
-                <>
-                <p>Version: {metadata.version}</p>
-                </>
-            )}
-            {isloadingversions === true &&(
-                <>
-                <p>Version: Loading...</p>
-                </>
-            )}
+            <p>Version: {metadata.version}</p>
             
-        
+        {/* File Deletion */}
+        <div className="row">
+        <div className="col-6"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} onDelete={sendtocontainer}/></div>
+        {metadata.type !== "folder" && (
+            <>
+            <div className="col-6"><button onClick={() => props.getversionsclicked(metadata.id)}>Get Previous Versions</button></div>
+            </>
+        )}
         </div>
-        
+        </div>
     )
 }
 
