@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom';
 import { Filetree } from "../Home-functions/Filetree";
 import { Directoryline } from "../Home-functions/Directoryline";
 import { Getversions } from "../Home-functions/getVersions";
+import { Movefile } from "../Home-buttons/Movefile";
 
 var hidarr = [{
     name: "Root", hid: "/",
@@ -22,14 +23,6 @@ var hidarr = [{
         type: "folder"
     }
 }];
-
-
-
-
-
-
-
-
 
 function Home() {
     const location = useLocation();
@@ -48,6 +41,9 @@ function Home() {
     const [versionfiletype,setVersionfiletype] = useState();
     const [versionid,setVersionID] = useState(null)
     const [selectedhid, setSelectedhid] = useState("");
+    const [movefile, setMovefile] = useState(false);
+    const [movefileid,setMovefileid] = useState();
+    const [movefilename, setMovefilename] = useState();
 
     setTimeout(function() {
         setPageonload(false)
@@ -124,6 +120,18 @@ function Home() {
     //function that closes version display
     const closedisplayversion = (state) => {
         setVersionID(state);
+    }
+    //function that moves file
+    const movefilepressed = (fileid,filename) =>{
+        setMetadataclicked(false);
+        setMovefile(true);
+        setMovefileid(fileid);
+        setMovefilename(filename);
+        document.getElementById("main-coloumn").className="col-12 col-home-base";
+        document.getElementById("input-search").className="input-search"; 
+    }
+    const cancelmovefile = () =>{
+        setMovefile(false);
     }
     //Function that logs out
     const logout = () => {
@@ -218,7 +226,9 @@ function Home() {
                                 )}
                                 {/* File tree Mapping */}
                                 <Filetree filetree={filetree} setFiletree={setFiletree} setFileclicked={setFileclicked} setclickedfileid={setclickedfileid} setMetadataclicked={setMetadataclicked} setMetadata={setMetadata} setSelectedhid={setSelectedhid} Getfiles={Getfiles}></Filetree>
-                                
+                                {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (
+                                        <></>
+                                    )}
                             </div>
 
                             {/* Control Row */}
@@ -237,7 +247,7 @@ function Home() {
                             </div>
                         </div>
                         {/* Metadata bar */}
-                        <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick}/>
+                        <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick} movefileclicked={movefilepressed}/>
                     </div>
                 </div>
             </div>
