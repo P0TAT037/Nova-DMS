@@ -44,6 +44,7 @@ function Home() {
     const [metadataclicked, setMetadataclicked] = useState(false);
     const [metadata, setMetadata] = useState([{}]);
     const [versionsclicked, setVersionsclicked] = useState(false);
+    const [idversion,setIdversion] = useState()
     const [selectedhid, setSelectedhid] = useState("");
 
     setTimeout(function() {
@@ -101,11 +102,13 @@ function Home() {
     }
     //function that calls previous versions component
     const handleversionsclick = (id) => {
-        console.log("caught id:",id);
-        setVersionsclicked(true)
+        setIdversion(id);
+        setVersionsclicked(true);
     }
     const handleversionclose = (state) => {
-        setVersionsclicked(false)
+        setTimeout(() => {
+            setVersionsclicked(false)
+        }, 300);
     }
     //Function that logs out
     const logout = () => {
@@ -187,7 +190,7 @@ function Home() {
                                     <div className="col-1">
                                         <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
                                     </div>
-                                    {versionsclicked ? (<Getversions closeVersions={handleversionclose}/>) : (
+                                    {versionsclicked ? (<Getversions closeVersions={handleversionclose} fileid={idversion} token={token}/>) : (
                                         <></>
                                     )}
 
