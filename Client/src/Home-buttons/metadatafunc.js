@@ -68,7 +68,7 @@ function Getmetadata(props){
         <div className="col-6"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} onDelete={sendtocontainer}/></div>
         {metadata.type !== "folder" && (
             <>
-            <div className="col-6"><button onClick={() => props.getversionsclicked(metadata.id)}>Get Previous Versions</button></div>
+            <div className="col-6"><button onClick={() => props.getversionsclicked(metadata.id, metadata.type)}>Get Previous Versions</button></div>
             </>
         )}
         </div>

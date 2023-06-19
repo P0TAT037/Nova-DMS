@@ -6,6 +6,7 @@ function Getversions(props){
     const [isloaded,setIsloaded] = useState(false);
     const [versions,setVersions] = useState([]);
         useEffect(() => {
+            setExit("");
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
               if (this.readyState === 4 && this.status === 200) {
@@ -22,6 +23,12 @@ function Getversions(props){
         setExit("exit");
         props.closeVersions();
       }
+    function getversion(){
+        var versionid = document.getElementById("versionslist").value
+        setExit("exit");
+        props.getVersion(versionid)
+    }
+    
     return(
         <>
                 <div style={{height: "25vh", marginTop: "15vh" , width:"50vw"}} className={`div-popup${exit} z-index-2`}>
@@ -40,13 +47,13 @@ function Getversions(props){
                     isloaded === true &&(
                         <>
                         <span style={{marginLeft:"1.3vw"}} className="pop-span">Choose a version:</span>
-                        <select style={{marginLeft:"13vw", width:"4vw"}} className="pop-select" id="versionslist">
+                        <select defaultValue={versions[0]} style={{marginLeft:"13vw", width:"4vw"}} className="pop-select" id="versionslist">
                             {versions.map((version , index) => (
-                                <option value={version}>{index + 1}</option>
+                                <option key={index} value={version}>{index + 1}</option>
                             ))}
                         </select>
                         <br></br>
-                        <button style={{marginLeft:"14vw" ,marginTop: "5vh",width:"22vw"}} className="pop-button">Get Version</button>
+                        <button style={{marginLeft:"14vw" ,marginTop: "5vh",width:"22vw"}} className="pop-button" onClick={() => getversion()} >Get Version</button>
                         </>
                     )
                 }

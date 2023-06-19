@@ -44,7 +44,9 @@ function Home() {
     const [metadataclicked, setMetadataclicked] = useState(false);
     const [metadata, setMetadata] = useState([{}]);
     const [versionsclicked, setVersionsclicked] = useState(false);
-    const [idversion,setIdversion] = useState()
+    const [idOfGetversion,setIdOfGetVersion] = useState()
+    const [versionfiletype,setVersionfiletype] = useState();
+    const [versionid,setVersionID] = useState(null)
     const [selectedhid, setSelectedhid] = useState("");
 
     setTimeout(function() {
@@ -101,14 +103,27 @@ function Home() {
         setMetadataclicked(state)
     }
     //function that calls previous versions component
-    const handleversionsclick = (id) => {
-        setIdversion(id);
+    const handleversionsclick = (id, filetype) => {
+        setIdOfGetVersion(id);
+        setVersionfiletype(filetype);
         setVersionsclicked(true);
     }
+    //function that closes versions window
     const handleversionclose = (state) => {
         setTimeout(() => {
             setVersionsclicked(false)
         }, 300);
+    }
+    //function that displays the version
+    const displayversion = (versionid) => {
+        setTimeout(() => {
+            setVersionsclicked(false)
+            setVersionID(versionid);
+        }, 300);
+    }
+    //function that closes version display
+    const closedisplayversion = (state) => {
+        setVersionID(state);
     }
     //Function that logs out
     const logout = () => {
@@ -150,7 +165,6 @@ function Home() {
 
     //HTML Return
     return (
-        console.log(filetree),
         <>
             <div className="div-color">
                 <div className="container-fluid">
@@ -161,7 +175,7 @@ function Home() {
                     )}
                    
                     {/* File Display */}
-                    <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token} />
+                    <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token} versionclicked={versionid} idOfGetversion={idOfGetversion} closeversiondisplay={closedisplayversion} filetype={versionfiletype} />
 
 
                     <div className="row row-main">
@@ -190,7 +204,7 @@ function Home() {
                                     <div className="col-1">
                                         <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
                                     </div>
-                                    {versionsclicked ? (<Getversions closeVersions={handleversionclose} fileid={idversion} token={token}/>) : (
+                                    {versionsclicked ? (<Getversions closeVersions={handleversionclose} fileid={idOfGetversion} token={token} getVersion={displayversion}/>) : (
                                         <></>
                                     )}
 
