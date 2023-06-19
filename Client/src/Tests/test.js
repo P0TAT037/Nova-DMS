@@ -21,7 +21,7 @@ function Test(info){
        <>
        {hlep.map((line, index) =>
        
-    <div key={index} className="ocr-div" title={hlep[hlep.length - (index + 1)].content} style={{position:"absolute", top: `${line.startlocy}px`, left: `${line.startlocx}px` ,width: `${line.width}px`, height: `${line.height - line.startlocy}px`}}> {console.log(index)}</div> 
+    <div key={index} className="ocr-div" title={hlep[hlep.length - (index + 1)].content} style={{position:"absolute", top: `${line.startlocy}px`, left: `${line.startlocx}px` ,width: `${line.width - line.startlocx}px`, height: `${line.height - line.startlocy}px`}}> {console.log(index)}</div> 
     
     )}
       <img width={"870px"} height={"697px"} src="test.jpg"></img>

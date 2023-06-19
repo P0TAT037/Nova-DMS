@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { getCurrentTime } from "../Home-functions/getTime";
+import { getCurrentTime } from "../Home-functions/getTime"; 
+import { truncate } from "../Home-functions/truncation";
 import data from "../Endpoint-url.json"
 function EditFile(props){
     const [ispressed,setIspressed] = useState(false);
@@ -20,6 +21,10 @@ function EditFile(props){
     function handleFileChange(event) {
         file = event.target.files[0];
         document.getElementById("update-file-name").value=file.name;
+        document.getElementById("filename-selected").innerHTML = `You Selected ${truncate(file.name, 45)}` 
+        document.getElementById("filename-selected").className = "pop-span-uploaded"
+        document.getElementById("upload-file-input").className = "pop-file-uploaded";
+        document.getElementById("upload-file-input").innerHTML = "Uploaded"
         console.log(file);
     }
     function updatefile(){
@@ -72,17 +77,21 @@ function EditFile(props){
             <button onClick={handlebuttonclick}>Edit</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`} >
+              <div className="div-popup-title">
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
-                Updated File:
-                <input type="file" onChange={handleFileChange}></input>
+                </div>
+                <><label id="upload-file-input" htmlFor="file-update" className="pop-file">Choose File</label></>
+                <span id="filename-selected"></span>
+                <input type="file" id="file-update" onChange={handleFileChange}></input>
                 <br></br>
-                New File Name: <input id ="update-file-name" type="text"></input>
+                <span className="pop-span">New File Name: </span><input className="pop-input" id ="update-file-name" type="text"></input>
                 <br></br>
-                New Description: <input id="update-file-desc" type="text"></input>
+                <span className="pop-span">New Description: </span><input className="pop-input" id="update-file-desc" type="text"></input>
                 <br></br>
-                New Content: <input id="update-file-content" type="text"></input>
+                <span className="pop-span">New Content:</span> <input className="pop-input" id="update-file-content" type="text"></input>
                 <br></br>
-                <button onClick={() => updatefile()}>Update</button>
+                <button style={{marginLeft: "18vw" , marginTop: "3vh"}} className="pop-button" onClick={() => updatefile()}>Update</button>
             </div>
         )}
         </div>

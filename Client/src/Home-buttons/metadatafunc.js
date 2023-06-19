@@ -5,6 +5,8 @@ import data from "../Endpoint-url.json"
 import { useState } from "react";
 function Getmetadata(props){
     var allusers =[]
+    const [isloadingversions,setLoadingversions] = useState(true);
+    const [versions,setVersions] = useState([])
     if(props.clicked !== false){
     document.getElementById("main-coloumn").className="col-9 col-home-base";
     document.getElementById("input-search").className="input-search-aftermeta";
@@ -18,6 +20,16 @@ function Getmetadata(props){
    xhttp.open("GET", data.url + `user/all`, false);
     xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
     xhttp.send();
+    var xhttp2 = new XMLHttpRequest();
+    xhttp2.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText)
+            
+        }
+    }
+   xhttp2.open("GET", data.url + `node/versions?id=${props.metadata.id}`, false);
+    xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
+    xhttp2.send();
     }
     function sendtocontainer() {
         props.onComplete();
@@ -53,7 +65,7 @@ function Getmetadata(props){
             </div>
             </div>
             {}
-            <p>Name: {metadata.name}</p>
+            <p>Name: {metadata.name} {metadata.id}</p>
             <p>Type: {metadata.type}</p>
             <p>Description: {metadata.description}</p>
             <p>Content: {metadata.content}</p>
@@ -61,7 +73,17 @@ function Getmetadata(props){
             <p>Created: {datecreated}</p>
             <p>Updated: {dateupdated}</p>
             <p>Edited By: {metadata.editedBy}</p>
-            <p>Version: {metadata.version}</p>
+            {isloadingversions === false &&(
+                <>
+                <p>Version: {metadata.version}</p>
+                </>
+            )}
+            {isloadingversions === true &&(
+                <>
+                <p>Version: Loading...</p>
+                </>
+            )}
+            
         
         </div>
         
