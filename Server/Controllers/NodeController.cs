@@ -52,13 +52,13 @@ public class NodeController : ControllerBase
         return await _minIoService.GetObjectURLAsync(id);
     }
 
-    
+
     [HttpGet]
     [Route("/{versionId}")]
     [AuthorizeNode]
-    public async Task<List<byte>> GetVersionAsync(string id, string versionId)
+    public async Task<IActionResult> GetVersionAsync(string id, string versionId)
     {
-        return await _minIoService.GetObjectAsync(id, versionId: versionId);
+        return File((await _minIoService.GetObjectAsync(id, versionId: versionId)).ToArray(), "application/octet-stream");
     }
 
     [HttpGet]
@@ -73,10 +73,11 @@ public class NodeController : ControllerBase
     [HttpPut]
     [Route("move")]
     [AuthorizeAdminOrOwner]
-    public async Task<IActionResult> MoveNode(int FileId, string newDir) {
+    public async Task<IActionResult> MoveNode(int FileId, string newDir)
+    {
         try
         {
-            await _db.ExecuteAsync("dbo.MoveNode",  param: new { nodeId = FileId, newDir }, commandType: CommandType.StoredProcedure);
+            await _db.ExecuteAsync("dbo.MoveNode", param: new { nodeId = FileId, newDir }, commandType: CommandType.StoredProcedure);
             return Ok();
         }
         catch (Exception e)
@@ -108,7 +109,7 @@ public class NodeController : ControllerBase
         var results = await _db.QueryAsync<Node>("SELECT * from NOV.GetNodes(@userId, cast(@hierarchyId as hierarchyid))", param);
         var Ids = results.Select(r => r.Id).ToList();
         var metadata = await GetMetadataAsync(Ids);
-        for(int i = 0; i < results.Count(); i++)
+        for (int i = 0; i < results.Count(); i++)
         {
             results.ElementAt(i).Metadata = metadata.ElementAt(i);
         }
@@ -117,7 +118,7 @@ public class NodeController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UploadAsync([FromForm]NodeDataDTO nodeDataDTO, IFormFile? file)
+    public async Task<IActionResult> UploadAsync([FromForm] NodeDataDTO nodeDataDTO, IFormFile? file)
     {
         var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
@@ -130,7 +131,7 @@ public class NodeController : ControllerBase
                 param.Add("@Dir", nodeDataDTO.Dir);
                 param.Add("@isFolder", nodeDataDTO.Type == "folder");
                 param.Add("@return", direction: ParameterDirection.ReturnValue);
-               
+
                 await _db.ExecuteAsync("dbo.AddNode", param, commandType: CommandType.StoredProcedure);
                 int fileId = param.Get<int>("@return");
                 await _db.ExecuteAsync("Insert into NOV.Files_OWNERS values (@FileId, @UsrId)", param: new { FileId = fileId, UsrId = UserId });
@@ -140,16 +141,17 @@ public class NodeController : ControllerBase
                 param.Add("@id", UserId);
                 param.Add("@perm", nodeDataDTO.DefaultPerm);
                 _db.Execute("dbo.PermitNode", param, commandType: CommandType.StoredProcedure);
-                
+
                 if (!nodeDataDTO.Type.Equals("folder"))
                 {
                     var fs = file!.OpenReadStream();
                     await _minIoService.UploadObjectAsync(fileId.ToString(), nodeDataDTO.Type, fs);
                 }
 
-                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
-                
-                Metadata metadata = new Metadata { 
+                var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID = UserId });
+
+                Metadata metadata = new Metadata
+                {
                     Id = fileId,
                     Name = nodeDataDTO.Name,
                     Type = nodeDataDTO.Type,
@@ -172,15 +174,16 @@ public class NodeController : ControllerBase
                 return Ok(fileId);
             }
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             await Console.Out.WriteLineAsync(e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError);
-        }        
+        }
     }
 
     [HttpPut]
     [AuthorizeNode(perm: 1)]
-    public async Task<IActionResult> UpdateAsync(string id, [FromForm]Metadata metadata, IFormFile? file)
+    public async Task<IActionResult> UpdateAsync(string id, [FromForm] Metadata metadata, IFormFile? file)
     {
         var jwt = new JwtSecurityToken(HttpContext.Request.Headers.Authorization.ToString().Split(" ")[1]);
         var UserId = int.Parse(jwt.Claims.First(c => c.Type == "id").Value);
@@ -193,21 +196,21 @@ public class NodeController : ControllerBase
                 var fs = file!.OpenReadStream();
                 await _minIoService.UploadObjectAsync(fileId.ToString(), metadata.Type, fs);
             }
-            var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID= UserId });
+            var userName = await _db.QuerySingleAsync<string>("select NAME from NOV.USERS where ID = @ID", param: new { ID = UserId });
 
             metadata.EditedBy = userName;
             metadata.Updated = DateTime.Now;
-            metadata.Version = metadata.Version+1;
-            
-        try
-        {
-            await _db.ExecuteAsync("Update Nov.FILES set NAME = @name where ID = @FileId", new {name = metadata.Name, FileId = metadata.Id}).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            return StatusCode(500);
-        }
+            metadata.Version = metadata.Version + 1;
+
+            try
+            {
+                await _db.ExecuteAsync("Update Nov.FILES set NAME = @name where ID = @FileId", new { name = metadata.Name, FileId = metadata.Id }).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return StatusCode(500);
+            }
 
             var response = _elasticClient.IndexDocument(metadata);
             if (!response.IsValid)
@@ -217,9 +220,10 @@ public class NodeController : ControllerBase
             }
 
             return Ok(fileId);
-            
+
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             await Console.Out.WriteLineAsync(e.Message);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
@@ -227,7 +231,7 @@ public class NodeController : ControllerBase
 
     [HttpDelete]
     [AuthorizeAdmin]
-    public async Task<IActionResult> DeleteFileAsync(string id) 
+    public async Task<IActionResult> DeleteFileAsync(string id)
     {
         await _minIoService.RemoveObjectAsync(id);
         try
@@ -241,9 +245,9 @@ public class NodeController : ControllerBase
             System.Console.WriteLine(e);
             return StatusCode(500, "something wrong happened while trying to communicate with the db");
         }
-        
+
         return Ok();
-        
+
     }
 
     [HttpDelete]
@@ -253,10 +257,10 @@ public class NodeController : ControllerBase
     {
         var nodes = await GetNodesAsync(HID);
         var tmp = HID.Split('/');
-        var id = tmp[tmp.Length-2];
+        var id = tmp[tmp.Length - 2];
         await DeleteNodeFromDB(id);
 
-        foreach(var node in nodes)
+        foreach (var node in nodes)
         {
             await DeleteFileAsync(node.Id.ToString());
         }

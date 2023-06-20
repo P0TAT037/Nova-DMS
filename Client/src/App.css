@@ -11,8 +11,40 @@
 
 }
 .div-color{
-  background-color: #1e1e1e72;
+  background-color: #1e1e1e60;
   height: 100vh;
+  animation: explosion 2.75s ease-in-out;
+}
+@keyframes explosion{
+  0%{
+    width: 0vw;
+    height: 0vh;
+    
+  }
+  25%{
+    width: 0vw;
+    height: 0vh;
+  }
+  50%{
+    width: 0vw;
+    height: 0vh;
+    
+  }
+  75%{
+    width: 0vw;
+    height: 0vh;
+    border-radius: 400px;
+    background-color: #ff02b7a2;
+    
+  }
+  83%{
+    background-color: #85019f88;
+  }
+  100%{
+    border-radius: 0px;
+    width: 100vw;
+    height: 100vh;
+  }
 }
 .search-row{
   border-bottom: 2px solid #000000;
@@ -130,7 +162,7 @@
 }
 
 .div-popup{
-  background-color: #1e1e1e7f;
+  background-color: #2020207f;
   color: aliceblue;
   border-radius: 10px;
   font-size: 22px;
@@ -138,15 +170,218 @@
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   position: absolute;
-  top: 23vh;
-  left: 25vw;
-  height: 47vh;
-  width: 42vw;
+  top: 17vh;
+  left: 22vw;
+  height: 60vh;
+  width: 50vw;
+  animation: popupload 0.35s ease-in-out 1;
+}
+.div-popup-title{
+  border-bottom: 2px solid #00000084;
+}
+.div-popupexit{
+  background-color: #2020207f;
+  color: aliceblue;
+  border-radius: 10px;
+  font-size: 22px;
+  border: 2px solid #000000;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: 17vh;
+  left: 22vw;
+  height: 60vh;
+  width: 50vw;
+  opacity: 0;
+  animation: popupunload 0.35s ease-in-out 1;
+}
+.pop-textarea{
+  height: 8vh; 
+  width: 48vw;
+  margin-left: 0.7vw;
+  border: 2px solid #1e1e1e;
+  font-size: medium;
+  background-color: #a4a3a38a;
+  resize: none;
+  transition: 0.25s;
+}
+.pop-textarea:focus{
+  border: 2px solid #858585;
+}
+.popup-input:focus{
+  border: 2px solid #858585;
+}
+@keyframes popupunload{
+  0%{
+    opacity: 1;
+  }
+  25%{
+    opacity: 1;
+  }
+  100%{
+    height: 0vh;
+    opacity: 0;
+    background-color: #9b0039;
+  }
+}
+@keyframes popupload{
+  0%{
+    opacity: 0;
+    height: 0vh;
+    width: 38vw;
+    background-color: #5f009b;
+  }
+  50%{
+    opacity: 1;
+    width: 49.6vw;
+    
+  }
+  100%{
+    width: 50vw;
+  }
 }
 .pop-input{
-  background-color: #2a2a2a8a;
+  background-color: #afafaf8a;
   border: 2px solid #1e1e1e;
-  border-radius: 5px;
+  border-radius: 15px;
+  width: 48vw;
+  margin-left: 0.7vw;
+  transition: 0.25s;
+}
+.pop-input:focus{
+  border: 2px solid #858585;
+}
+.pop-button{
+  background-color: #000000b2;
+  border: 2px solid #1e1e1e;
+  border-radius: 12px;
+  color: rgb(215, 215, 215);
+  width: 15vw;
+  transition: 0.25s;
+}
+.pop-span{
+  margin-left: 0.7vw;
+}
+.pop-button:hover{
+  color: white;
+  width: 15.3vw;
+  border: 2px solid #646363;
+}
+input[type="file"] {
+  display: none;
+}
+.pop-file{
+  display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #fff;
+    width: 17vw;
+    text-align: center;
+    background-color: #2e2e2e;
+    margin-top: 1vh;
+    margin-left: 17vw;
+    border-radius: 4px;
+    border: none;
+    transition: all 0.3s ease;
+}
+.pop-file:hover{
+  background-color: #656565;
+}
+.pop-file-uploaded{
+  display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #fff;
+    width: 8vw;
+    text-align: center;
+    background-color: #2e2e2e;
+    margin-top: 1vh;
+    margin-left: 0.8vw;
+    border-radius: 4px;
+    border: none;
+    transition: all 0.3s ease;
+    animation: fileupload 0.5s ease-in-out 1;
+}
+.pop-row{
+  background-color: #6969694e;
+  border: 1px solid #5c5b5b;
+  border-radius: 10px;
+  margin-top: 0.5vh;
+  animation: rowspawn 0.3s ease-in-out;
+  margin-left: 0.7vw;
+  width: 48vw
+}
+@keyframes rowspawn{
+  0%{
+    width: 30vw;
+    transform: translateY(4vh);
+  }
+  75%{
+    transform: translateY(0.5vh);
+  }
+  100%{
+    transform: translateY(0vh);
+    width: 48vw;
+  }
+}
+@keyframes rowbuttonspawn{
+  0%{
+    width: 20vw;
+  }
+  100%{
+    width: 44vw;
+  }
+}
+.pop-rowbutton{
+  border: none;
+  border-radius: 15px;
+  color: whitesmoke;
+  background-color: #131313a2;
+  width: 44vw; 
+  animation: rowbuttonspawn 0.3s ease-in-out ;
+  transition: 0.25s;
+}
+.pop-rowbutton:hover{
+  background-color: #7070708a;
+}
+.pop-deletebutton{
+  background-image: url('./image/delete-icon.png');
+  background-size: 2vw 4vh;
+  background-repeat: no-repeat;
+  background-position: 0.5vw ;
+  border: 0.5px solid #1e1e1e;
+  background-color: #131313a2;
+  border-radius: 10px;
+  height: 5vh;
+  width: 3vw;
+  float: right;
+  margin-right: 0.15vw;
+  transition: 0.25s;
+}
+.pop-deletebutton:hover{
+  background-color: #7070708a;
+}
+@keyframes fileupload{
+  0%{
+    width: 17vw;
+    margin-left: 17vw;
+    color: #00000000;
+    background-color: #8600d4;
+  }
+  25%{
+    color: #00000000;
+  }
+  100%{
+    margin-left: 0.8vw;
+    width: 8vw;
+  }
+}
+.pop-file-uploaded:hover{
+  background-color: #707070;
+}
+.pop-span-uploaded{
+  margin-left: 1.5vw;
+  animation: onload 0.65s ease-in-out 1;
 }
 .div-showfile-popup{
   background-color: #1e1e1e;
@@ -158,12 +393,47 @@
   height: 90vh;
   width: 65vw;
 }
+.pop-fileselected{
+  opacity: 0;
+}
+.pop-select{
+  background-color: #f7f6f68a;
+  margin-left: 0.8vw;
+}
+.pop-back{
+  background-image: url("./image/pop-back.png");
+  background-size: 1.5vw 3vh;
+  background-repeat: no-repeat;
+  background-position: 0.5vw ;
+  background-color: #1e1e1e00;
+  color: rgba(255, 255, 255, 0);
+  border: 2px solid #00000000;
+  transition: 0.15s;
+  animation: slowappear 0.35s ease-in-out;
+}
+@keyframes slowappear{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.pop-back:hover{
+  background-size: 1.7vw 3.4vh;
+}
 .btn-popup-close{
   float: right;
-  background-color: #1e1e1ed3;
+  height: 4.5vh;
+  background-color: #1e1e1e00;
   color: white;
-  border: 2px solid #000000;
+  border: 2px solid #00000000;
   border-radius: 10px;
+  transition: 0.25s;
+}
+.btn-popup-close:hover{
+  color: rgb(142, 3, 3);
+  transition: 0.25s;
 }
 .row-bottom{
   position: fixed;
@@ -320,9 +590,9 @@
 }
 
 .ocr-div{
-  border: 2px solid rgb(79, 33, 134);
+  border: 2.5px solid rgb(79, 33, 134);
   position: absolute;
-  transition: 0.5s;
+  transition: 2s;
 }
 .ocr-div:hover{
   border: 2px solid rgb(202, 0, 98);

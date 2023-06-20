@@ -26,10 +26,11 @@ function LoginPage(props) {
       if (this.readyState === 4 && this.status === 200) {
         var loginrespone = JSON.parse(xhttp.responseText);
         var token = loginrespone.token
-        localStorage.setItem('token', token);
+        var name= loginrespone.name;
         
         navigate(`/home`,{state: { 
           param1: `${token}`, 
+          param2: `${name}`
         }});
 
       }
@@ -57,12 +58,12 @@ function LoginPage(props) {
           <div className="input-group-prepend">
             
           </div>
-          <input type="text" className="form-control login-input-username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value={username} onChange={handleUsernameChange} />
+          <input style={{borderRadius:"10px"}} type="text" className="form-control login-input-username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value={username} onChange={handleUsernameChange} />
         </div>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
           </div>
-          <input type="password" className="form-control login-input-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" value={password} onChange={handlePasswordChange} />
+          <input style={{borderRadius:"10px"}} type="password" className="form-control login-input-password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon2" value={password} onChange={handlePasswordChange} />
         </div>
         <button type="submit" className="btn-login">Login</button>
       </form>
