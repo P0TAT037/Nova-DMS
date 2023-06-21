@@ -77,7 +77,8 @@ public class OcrController: ControllerBase
 
                 // var base64String = Convert.ToBase64String(fileBytes);
                 var result = await client.PostAsync(_config["OCR:Uri"]+_config["OCR:EnhanceImage"], formData);
-                return Ok(result.Content.ReadAsByteArrayAsync().Result);
+                // Console.WriteLine();
+                return File(result.Content.ReadAsStreamAsync().Result, "image/png");
             }
             
         }

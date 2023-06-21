@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+import base64
 
 def removeShadows(img):
     rgb_planes = cv2.split(img)
@@ -53,10 +54,11 @@ def rotateImage(image):
     newImage = cv2.warpAffine(newImage, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
     return newImage
 
-def enhance(img_bytes):
+def enhance_img(img_bytes):
     nparr = np.fromstring(img_bytes, np.uint8)
     img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    newImage = img_np.copy()
-    newImage = removeShadows(newImage)
-    newImage = rotateImage(newImage)
-    return newImage
+    newImg = img_np.copy()
+    newImg = removeShadows(newImg)
+    newImg = rotateImage(newImg)
+    encoded_img= cv2.imencode('.png', newImg)[1].tobytes()
+    return encoded_img
