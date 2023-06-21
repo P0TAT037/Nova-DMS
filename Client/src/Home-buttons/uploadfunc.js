@@ -39,7 +39,7 @@ function Uploadfunc(info){
 
         defaultperm = document.getElementById("perm").value
         
-        const endpoint = data.url +'node';
+        const endpoint = process.env.REACT_APP_ENDPOINT_URL +'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,

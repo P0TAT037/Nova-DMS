@@ -19,7 +19,7 @@ function Newfolderfunc(info){
         var folderdesc = document.getElementById("folder-desc").value
         var foldercontent = document.getElementById("folder-content").value
         
-        const endpoint = data.url + 'node';
+        const endpoint = process.env.REACT_APP_ENDPOINT_URL + 'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,

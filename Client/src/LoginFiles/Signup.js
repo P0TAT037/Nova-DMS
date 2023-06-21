@@ -30,7 +30,7 @@ function SignupPage({ onLoginClick }) {
           document.getElementById("login conformation").innerHTML="This account is already used, please type in a different account."
         }
       };
-      xhttp.open("POST", data.url + `auth/signup?name=${name}&username=${username}&password=${password}`, true);
+      xhttp.open("POST", process.env.REACT_APP_ENDPOINT_URL + `auth/signup?name=${name}&username=${username}&password=${password}`, true);
       xhttp.send();
     };
   

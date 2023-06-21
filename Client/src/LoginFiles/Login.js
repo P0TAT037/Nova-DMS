@@ -41,7 +41,7 @@ function LoginPage(props) {
         document.getElementById("login conformation").innerHTML="An error has occured, client cannot connect to server"
       }
     };
-    xhttp.open("GET", data.url+ `auth/login/?username=`+username +`&password=` + password, true);
+    xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL+ `auth/login/?username=`+username +`&password=` + password, true);
     xhttp.send();
     
   };

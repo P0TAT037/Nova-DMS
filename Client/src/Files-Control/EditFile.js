@@ -20,19 +20,25 @@ function EditFile(props){
     }
     function handleFileChange(event) {
         file = event.target.files[0];
+        if (file.type !== props.metadata.type){
+          alert("noononononononooooo");
+          return;
+        }
+        
         document.getElementById("update-file-name").value=file.name;
         document.getElementById("filename-selected").innerHTML = `You Selected ${truncate(file.name, 45)}` 
         document.getElementById("filename-selected").className = "pop-span-uploaded"
         document.getElementById("upload-file-input").className = "pop-file-uploaded";
         document.getElementById("upload-file-input").innerHTML = "Uploaded"
         console.log(file);
+      
     }
     function updatefile(){
         var filename = document.getElementById("update-file-name").value
         var desc = document.getElementById("update-file-desc").value
         var content = document.getElementById("update-file-content").value
         let time = getCurrentTime();
-        const endpoint = data.url +`node?id=${props.metadata.id}`;
+        const endpoint = process.env.REACT_APP_ENDPOINT_URL +`node?id=${props.metadata.id}`;
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${props.token}`,

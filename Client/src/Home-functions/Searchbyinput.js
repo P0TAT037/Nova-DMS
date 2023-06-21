@@ -14,7 +14,7 @@ function searchrequest(){
                 setAwooga(JSON.parse(xhttp.responseText));
             }
         }
-        xhttp.open("POST",data.url + `search?searchText=${searchinput}`, true);
+        xhttp.open("POST",process.env.REACT_APP_ENDPOINT_URL + `search?searchText=${searchinput}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send([]);
 }                  

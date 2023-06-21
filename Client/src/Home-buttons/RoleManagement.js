@@ -19,7 +19,7 @@ function ManageRoles(props){
                 setRoles(JSON.parse(xhttp.responseText));
             }
         }
-        xhttp.open("GET",data.url + `role`, true);
+        xhttp.open("GET",process.env.REACT_APP_ENDPOINT_URL + `role`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
@@ -32,7 +32,7 @@ function ManageRoles(props){
                
             }
         }
-        xhttp.open("GET",data.url + `role`, false);
+        xhttp.open("GET",process.env.REACT_APP_ENDPOINT_URL + `role`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
@@ -46,7 +46,7 @@ function ManageRoles(props){
                 setCurrentstate(0);
             }
         }
-        xhttp.open("POST",data.url + `role?name=${rolename}`, true);
+        xhttp.open("POST",process.env.REACT_APP_ENDPOINT_URL + `role?name=${rolename}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
@@ -58,7 +58,7 @@ function ManageRoles(props){
                 Refresh(); 
             }
         }
-        xhttp.open("DELETE",data.url + `role?id=${roleid}`, true);
+        xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL + `role?id=${roleid}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
 
@@ -76,7 +76,7 @@ function ManageRoles(props){
                 console.log(userstoadd)
             }
         }
-        xhttp.open("GET", data.url + `user/all`, true);
+        xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/all`, true);
         xhttp.send();
     }
     function adduser(userid){
@@ -88,7 +88,7 @@ function ManageRoles(props){
                 setCurrentstate(0); //PIECE OF SHIT 
             }
         }
-        xhttp.open("PUT", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
+        xhttp.open("PUT", process.env.REACT_APP_ENDPOINT_URL + `user?usrId=${userid}&roleId=${currentrole}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }
@@ -101,7 +101,7 @@ function ManageRoles(props){
                 setCurrentstate(0); //FUCK YOU JAVASCRIPT
             }
         }
-        xhttp.open("DELETE", data.url + `user?usrId=${userid}&roleId=${currentrole}`, true);
+        xhttp.open("DELETE", process.env.REACT_APP_ENDPOINT_URL + `user?usrId=${userid}&roleId=${currentrole}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
     }

@@ -11,7 +11,7 @@ function Showfile(props){
                 document.getElementById("iframe").innerHTML=`<iframe src="${fileurl}" style="height:84vh;width:64vw;" title="description"></iframe>`
               }
             }
-            xhttp.open("GET", data.url +`node?id=${props.fileid}` , true);
+            xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL +`node?id=${props.fileid}` , true);
             xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp.send();
           }
@@ -27,7 +27,7 @@ function Showfile(props){
                document.getElementById("iframeversion").innerHTML=`<iframe src="${url}" style="height:84vh;width:64vw;" title="description"></iframe>`
               }
             }
-            xhttp2.open("GET", data.url +`${props.versionclicked}?id=${props.idOfGetversion}` , true);
+            xhttp2.open("GET", process.env.REACT_APP_ENDPOINT_URL +`${props.versionclicked}?id=${props.idOfGetversion}` , true);
             xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp2.send();
             setTimeout(() => {

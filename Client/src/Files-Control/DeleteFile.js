@@ -23,7 +23,7 @@ function DeleteFile(props){
                 alert("folder deleted");
             }
         }
-        xhttp.open("DELETE",data.url + `node/deleteFolder?HID=${hid}`, true);
+        xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL + `node/deleteFolder?HID=${hid}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
         handleexitclick();
@@ -36,7 +36,7 @@ function DeleteFile(props){
                 alert("file deleted");
             }
         }
-        xhttp.open("DELETE",data.url + `node?id=${props.metadata.id}`, true);
+        xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL + `node?id=${props.metadata.id}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
         handleexitclick();
@@ -49,7 +49,7 @@ function DeleteFile(props){
                 props.onDelete();
             }
         }
-        xhttp.open("DELETE",data.url + `node?id=${props.metadata.id}&versionId=${props.metadata.version}`, true);
+        xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL + `node?id=${props.metadata.id}&versionId=${props.metadata.version}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
         handleexitclick();

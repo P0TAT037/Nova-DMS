@@ -15,7 +15,7 @@ function ManageAdmins(info){
                 console.log(users);
             }
         }
-        xhttp.open("GET", data.url + `user/all`, true);
+        xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/all`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
         
@@ -27,7 +27,7 @@ function ManageAdmins(info){
                 alert("User Yeeted from admin");
             }
         }
-        xhttp.open("DELETE",data.url +`user/admin?usrId=${userid}`, false);
+        xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL +`user/admin?usrId=${userid}`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
     }
@@ -38,7 +38,7 @@ function ManageAdmins(info){
                 alert("User added to admin");
             }
         }
-        xhttp.open("PUT",data.url + `user/admin?usrId=${userid}`, false);
+        xhttp.open("PUT",process.env.REACT_APP_ENDPOINT_URL + `user/admin?usrId=${userid}`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${info.token}`);
         xhttp.send();
     }

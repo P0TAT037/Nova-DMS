@@ -19,7 +19,7 @@ function FilePermissions(props){
                 console.log(roles);
             }
         }
-        xhttp.open("GET",data.url + `role`, true);
+        xhttp.open("GET",process.env.REACT_APP_ENDPOINT_URL + `role`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send();
 
@@ -49,7 +49,7 @@ function FilePermissions(props){
                   setMergedarray(updatedUsers);
             }
         }
-       xhttp.open("GET", data.url + `user/getFileUsers?FileId=${props.id}`, false);
+       xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/getFileUsers?FileId=${props.id}`, false);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send()
         
@@ -68,7 +68,7 @@ function FilePermissions(props){
                 
             }
         }
-       xhttp2.open("GET", data.url + `user/changePerm?usrId=${userid}&FileId=${props.id}&perm=${newperm}`, true);
+       xhttp2.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/changePerm?usrId=${userid}&FileId=${props.id}&perm=${newperm}`, true);
         xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp2.send();
         }
@@ -86,7 +86,7 @@ function FilePermissions(props){
                 
             }
         }
-        xhttp2.open("GET", data.url + `user/changeRolePerm?RoleId=${roleid}&FileId=${props.id}&perm=${newperm}`, true);
+        xhttp2.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/changeRolePerm?RoleId=${roleid}&FileId=${props.id}&perm=${newperm}`, true);
         xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp2.send();
         }
