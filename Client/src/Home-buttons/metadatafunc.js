@@ -16,7 +16,7 @@ function Getmetadata(props){
             
         }
     }
-   xhttp.open("GET", data.url + `user/all`, false);
+   xhttp.open("GET", process.env.REACT_APP_ENDPOINT_URL + `user/all`, false);
     xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
     xhttp.send();
     }

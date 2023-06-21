@@ -1,12 +1,15 @@
 import { useState } from "react";
-import data from "../Endpoint-url.json"
+import { truncate } from "../Home-functions/truncation";
+import { OcrWindow } from "./Ocr";
 function Uploadfunc(info){
     var file;
-    var perm
     var defaultperm
     const formData = new FormData();
+    const [imagefile, setImagefile] = useState();
     const [ispressed,setIspressed] = useState(false);
-    const [exit,setExit] = useState("")
+    const [isimage,setIsimage] = useState(false);
+    const [exit,setExit] = useState("");
+    const [ocrclicked, setOcrclicked] = useState(false)
     var location = info.location
     function handlebuttonclick(){
         setExit("");
@@ -16,19 +19,32 @@ function Uploadfunc(info){
       setExit("exit");
       setTimeout(function() {
         setIspressed(false);
+        setIsimage(false);
       }, 350);
     }
     
     function handleFileChange(event) {
         file = event.target.files[0];
+        setImagefile(file);
         document.getElementById("upload-file-name").value=file.name;
+        if (file.type.includes("image")){
+          setIsimage(true)
+        }
         formData.append("file", file);
         document.getElementById("upload-file-input").className = "pop-file-uploaded";
         document.getElementById("upload-file-input").innerHTML = "Uploaded"
         document.getElementById("afterupload").style.opacity= "1"
         document.getElementById("afterupload").style.animation= "onload 0.7s ease-in-out "
-        document.getElementById("filename-selected").innerHTML = `You Selected ${file.name}` 
+        document.getElementById("filename-selected").innerHTML = `You Selected ${truncate(file.name, 45)}` 
         document.getElementById("filename-selected").className = "pop-span-uploaded"
+    }
+    function handleOcrClick(){
+      setOcrclicked(true);
+      setIspressed(false);
+    }
+    function handleOcrClose(){
+      setOcrclicked(false);
+      setIspressed(true);
     }
     function handleuploadclick(){
         var filename = document.getElementById("upload-file-name").value
@@ -39,7 +55,7 @@ function Uploadfunc(info){
 
         defaultperm = document.getElementById("perm").value
         
-        const endpoint = data.url +'node';
+        const endpoint = process.env.REACT_APP_ENDPOINT_URL +'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,
@@ -80,7 +96,7 @@ function Uploadfunc(info){
 
     
     return(
-        <div>
+        <>
             <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`}>
@@ -108,11 +124,32 @@ function Uploadfunc(info){
                     <br></br>
                     </div>
                 )}
-                <button style={{marginLeft: "18vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
+                {
+                  isimage ===true && (
+                    <>
+                    <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleOcrClick()}>Use OCR</button>
+                    <button style={{marginLeft: "8vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
+                    </>
+                  )
+                }
+                {
+                  isimage ===false && (
+                    <>
+                    <button style={{marginLeft: "18vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
+                    </>
+                  )
+                }
+                
+                
                 </div>      
             </div>
         )}
-        </div>
+        {ocrclicked === true &&(
+          <>
+          <OcrWindow closewindow={handleOcrClose} image={imagefile}></OcrWindow>
+          </>
+        )}
+        </>
         
     );
 }

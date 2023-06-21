@@ -14,7 +14,7 @@ function Getversions(props){
                 setIsloaded(true);
               }
             };
-            xhttp.open('GET', data.url + `node/versions?id=${props.fileid}`, true);
+            xhttp.open('GET', process.env.REACT_APP_ENDPOINT_URL + `node/versions?id=${props.fileid}`, true);
             xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp.send();
           }, []);

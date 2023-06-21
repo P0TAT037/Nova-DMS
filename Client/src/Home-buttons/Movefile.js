@@ -11,7 +11,7 @@ function Movefile(props) {
                 alert("does")
               }
             }
-            xhttp.open("PUT", data.url +`node/move?FileId=${props.id}&newDir=${location[location.length-1].hid}` , true);
+            xhttp.open("PUT", process.env.REACT_APP_ENDPOINT_URL +`node/move?FileId=${props.id}&newDir=${location[location.length-1].hid}` , true);
             xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp.send();
     }

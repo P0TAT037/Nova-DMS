@@ -57,7 +57,7 @@ function Home() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open(
             "GET",
-            data.url + `node/getNodes?hierarchyId=${hid}`,
+            process.env.REACT_APP_ENDPOINT_URL + `node/getNodes?hierarchyId=${hid}`,
             false
         );
         xmlhttp.setRequestHeader("Authorization", `Bearer ${token}`);
@@ -149,7 +149,7 @@ function Home() {
             var xmlhttp2 = new XMLHttpRequest();
             xmlhttp2.open(
                 "GET",
-                data.url + `node/getNodes?hierarchyId=${location[i]}`,
+                process.env.REACT_APP_ENDPOINT_URL + `node/getNodes?hierarchyId=${location[i]}`,
                 false
             );
             xmlhttp2.setRequestHeader("Authorization", `Bearer ${token}`);
@@ -173,6 +173,7 @@ function Home() {
 
     //HTML Return
     return (
+        
         <>
             <div className="div-color">
                 <div className="container-fluid">

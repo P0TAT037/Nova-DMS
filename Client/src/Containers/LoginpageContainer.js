@@ -17,6 +17,7 @@ function LoginPageContainer() {
   }
 
   return (
+    console.log(process.env),
     <div>
       {showSignup ? (
         <SignupPage onLoginClick={handleLoginClick} />
