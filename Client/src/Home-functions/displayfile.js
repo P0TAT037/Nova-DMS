@@ -24,16 +24,12 @@ function Showfile(props){
                 const blob = new Blob([rawfile], { type: `${props.filetype}` }); 
                 const url = URL.createObjectURL(blob);
                 console.log(url);
-               document.getElementById("iframeversion").innerHTML=`<iframe src="${url}" style="height:84vh;width:64vw;" title="description"></iframe>`
+                document.getElementById("iframeversion").innerHTML=`<iframe src="${url}" style="height:84vh;width:64vw;" title="description"></iframe>`
               }
             }
             xhttp2.open("GET", process.env.REACT_APP_ENDPOINT_URL +`${props.versionclicked}?id=${props.idOfGetversion}` , true);
             xhttp2.setRequestHeader("Authorization", `Bearer ${props.token}`);
             xhttp2.send();
-            setTimeout(() => {
-              
-          }, 150);
-            
           }
     return(
       <>

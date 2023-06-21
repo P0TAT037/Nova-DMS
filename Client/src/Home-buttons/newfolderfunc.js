@@ -1,5 +1,4 @@
 import { useState } from "react";
-import data from "../Endpoint-url.json"
 function Newfolderfunc(info){
     const [ispressed,setIspressed] = useState(false);
     const [exit,setExit] = useState("")

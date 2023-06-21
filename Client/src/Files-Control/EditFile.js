@@ -48,7 +48,7 @@ function EditFile(props){
         formData.append('Created', `${props.metadata.created}`);
         formData.append('Author', `${props.metadata.author}`);
         formData.append('Name', `${filename}`);
-        formData.append('Version', `1`);
+        formData.append('Version', `${props.metadata.version}`);
         formData.append('Content', `${content}`);
         formData.append('Type', `${file.type}`);
         formData.append('Updated', `${time}`);
