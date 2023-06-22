@@ -56,9 +56,9 @@
   border-bottom-left-radius: 15px;
   border: 2px solid #000000;
   border-right-style: hidden;
-  width: 13.5vw;
+  width: 88vw;
+  margin-left: -0.5vw;
   height: 8vh;
-  margin-top: 8px;
   transition: 0.25s;
   background-image: url('./image/Folder-icon-4.png');
   background-size: 3.5vw 7vh;
@@ -142,7 +142,7 @@
   border-bottom-left-radius: 15px;
   border-right-style: hidden;
   transition: 0.25s;
-  width: 64vw;
+  width: 77vw;
   height: 6vh;
 }
 .input-search:hover{
@@ -178,6 +178,9 @@
 }
 .div-popup-title{
   border-bottom: 2px solid #00000084;
+}
+.div-menu{
+  border-right: 2px solid black;
 }
 .div-popupexit{
   background-color: #2020207f;

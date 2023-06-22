@@ -188,12 +188,32 @@ function Home() {
 
 
                     <div className="row row-main">
-
-                        <div id="main-coloumn" className="col-12">
-                            <div className="row m-1">
+                        {/*Menu Bar*/}
+                    
+                    
+                        {/* New Folder Function */}
+                        <div className="col-1 div-menu">
+                        <img style={{width:"3.5vw" , marginLeft:"1.5vw"}} src={require('../image/home-logo.png')} alt="logo" />
+                            <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
+                       
+                        {/* New File Function */}
+                        
+                            <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
+                        {/* Role management */}
+                        {userinfo.level > 0 && (
+                            <ManageRoles token={token} />
+                        )}
+                        {/* Admin Management */}
+                        {userinfo.level === '2' && (
+                            <ManageAdmins token={token} />
+                        )}
+                        {/* Logout */}
+                        <button className="logout-button" onClick={() => logout()}>Logout</button>{/* honestly i dont care at this point */}
+                        </div>
+                        <div id="main-coloumn" className="col-11">
+                            
                                 {/* Search Bar */}
                                 <div className="row p-1 search-row" >
-                                    <div className="col-2"><img className="img-fluid " style={{ height: "6.5vh", width: "15vw" }} src={require('../image/home logo.png')} alt="logo" /></div>
                                     <SearchFunction token={token} onClick={handlelocationclick} />
                                 </div>
 
@@ -201,18 +221,12 @@ function Home() {
                                     <Directoryline DirButton={DirButton} hidarr={hidarr}></Directoryline>
                                     {/* Refresh Button */}
                                     <div className="col-9"></div>
+                                    {/*
                                     <div className="col-1">
-                                        <button className="refresh-button" title="Refresh" style={{ position: "absolute", top: "10.5vh" }} onClick={() => refresh()}>Refresh</button>
-                                    </div>
+                                        <button className="refresh-button" title="Refresh" onClick={() => refresh()}>Refresh</button>
+                                    </div> */}
+                                    
 
-                                    {/* New Folder Function */}
-                                    <div className="col-1">
-                                        <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
-                                    </div>
-                                    {/* New File Function */}
-                                    <div className="col-1">
-                                        <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
-                                    </div>
                                     {versionsclicked ? (<Getversions closeVersions={handleversionclose} fileid={idOfGetversion} token={token} getVersion={displayversion}/>) : (
                                         <></>
                                     )}
@@ -230,22 +244,12 @@ function Home() {
                                 {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (
                                         <></>
                                     )}
-                            </div>
+                           
 
                             {/* Control Row */}
-                            <div className="row p-1 row-bottom">
-                                {/* Logout */}
-                                <button className="col  logout-button" onClick={() => logout()}>Logout</button>
-                                {/* Role management */}
-                                {userinfo.level > 0 && (
-                                    <div className="col"><ManageRoles token={token} /></div>
-                                )}
-                                {/* Admin Management */}
-                                {userinfo.level === '2' && (
-                                    <div className="col"><ManageAdmins token={token} /></div>
-                                )}
+                            
+                                
 
-                            </div>
                         </div>
                         {/* Metadata bar */}
                         <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick} movefileclicked={movefilepressed}/>

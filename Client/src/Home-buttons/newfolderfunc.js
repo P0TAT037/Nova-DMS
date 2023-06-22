@@ -58,7 +58,7 @@ function Newfolderfunc(info){
     return(
         
         <div>
-            <button className="newfol-button" style={{position: "absolute" ,top: "10.3vh", overflowY:"auto"}} title="New Folder" onClick={handlebuttonclick}>F</button>
+            <button className="newfol-button" title="New Folder" onClick={handlebuttonclick}>F</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`}>
                 <div className="div-popup-title">

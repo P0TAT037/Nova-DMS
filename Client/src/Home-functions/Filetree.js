@@ -1,8 +1,8 @@
 import { truncate } from "../Home-functions/truncation";
 function Filetree(props) {
-    return (<div className="row">
-        {props.filetree.map(folder => <div className="col-3" key={folder.hid}>
-            {folder.metadata.type === "folder" && <div>
+    return (<>
+        {props.filetree.map(folder => <div  key={folder.hid}>
+            {folder.metadata.type === "folder" && <>
                 <button className="btn-folders" onClick={() => props.Getfiles(folder.hid, folder.name, "true", tree => {
                     props.setFiletree(tree);
                 })}>
@@ -13,7 +13,7 @@ function Filetree(props) {
                     props.setMetadata(folder.metadata);
                     props.setSelectedhid(folder.hid);
                 }}>...</button>
-            </div>}
+            </>}
             {folder.metadata.type !== "folder" && <>
                 <button className="btn-files" onClick={() => {
                     props.setFileclicked(true);
@@ -27,6 +27,6 @@ function Filetree(props) {
                     props.setSelectedhid(folder.hid);
                 }}>...</button>
             </>}
-        </div>)}</div>);
+        </div>)}</>);
 }
 export {Filetree}; 

@@ -44,7 +44,7 @@ function handleexitclick(){
 }
 return(
     <>
-        <div className="col-9 "><input id="input-search" className="input-search" placeholder="search..."></input>
+        <div className="col-11 "><input id="input-search" className="input-search" placeholder="search..."></input>
         <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
         </div>
         

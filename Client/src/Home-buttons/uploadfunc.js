@@ -107,7 +107,7 @@ function Uploadfunc(info){
     
     return(
         <>
-            <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
+            <button className="newfile-button" onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
             <div style={{opacity: `${isinvisible}`}} className={`div-popup${exit} z-index-2`}>
                 <input type="file" id="file-upload" onChange={handleFileChange}></input>
