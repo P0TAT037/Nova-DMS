@@ -9,7 +9,8 @@ function Uploadfunc(info){
     const [ispressed,setIspressed] = useState(false);
     const [isimage,setIsimage] = useState(false);
     const [exit,setExit] = useState("");
-    const [ocrclicked, setOcrclicked] = useState(false)
+    const [ocrclicked, setOcrclicked] = useState(false);
+    const [isinvisible,setIsinvisible] = useState(1)
     var location = info.location
     function handlebuttonclick(){
         setExit("");
@@ -40,11 +41,18 @@ function Uploadfunc(info){
     }
     function handleOcrClick(){
       setOcrclicked(true);
-      setIspressed(false);
+      setIsinvisible(0);
     }
     function handleOcrClose(){
       setOcrclicked(false);
-      setIspressed(true);
+      setIsinvisible(1);
+    }
+    function handleOcrContent(content){
+      setOcrclicked(false);
+        setIsinvisible(1);
+      setTimeout(function() {
+        document.getElementById("upload-file-content").value = content
+      }, 300);
     }
     function handleuploadclick(){
         var filename = document.getElementById("upload-file-name").value
@@ -99,7 +107,7 @@ function Uploadfunc(info){
         <>
             <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
-            <div className={`div-popup${exit} z-index-2`}>
+            <div style={{opacity: `${isinvisible}`}} className={`div-popup${exit} z-index-2`}>
                 <input type="file" id="file-upload" onChange={handleFileChange}></input>
                 <div className="div-popup-title">
                  <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
@@ -146,7 +154,7 @@ function Uploadfunc(info){
         )}
         {ocrclicked === true &&(
           <>
-          <OcrWindow closewindow={handleOcrClose} image={imagefile}></OcrWindow>
+          <OcrWindow closewindow={handleOcrClose} useOcrcontent={handleOcrContent} token={info.token} image={imagefile}></OcrWindow>
           </>
         )}
         </>
