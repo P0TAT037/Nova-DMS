@@ -12,14 +12,10 @@ def getText(img):
 
     line_img_array, coordinates=segment_into_lines(img)
 
-
-    #Creating lists to store the line indexes,words list.
     full_index_indicator=[]
     all_words_list=[]
-    #Variable to count the total no of lines in page.
     len_line_arr=0
 
-    #Segment the lines into words and store as arrays.
     for idx,im in enumerate(line_img_array):
         line_indicator,word_array=segment_into_words(im,idx)
         for k in range(len(word_array)):
