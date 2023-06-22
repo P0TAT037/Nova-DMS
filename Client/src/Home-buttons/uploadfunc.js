@@ -31,7 +31,6 @@ function Uploadfunc(info){
         if (file.type.includes("image")){
           setIsimage(true)
         }
-        formData.append("file", file);
         document.getElementById("upload-file-input").className = "pop-file-uploaded";
         document.getElementById("upload-file-input").innerHTML = "Uploaded"
         document.getElementById("afterupload").style.opacity= "1"
@@ -51,13 +50,13 @@ function Uploadfunc(info){
       setOcrclicked(false);
         setIsinvisible(1);
       setTimeout(function() {
-        document.getElementById("upload-file-content").value = content
+        document.getElementById("upload-file-content").textContent = content
       }, 300);
     }
     function handleuploadclick(){
-        var filename = document.getElementById("upload-file-name").value
-        var desc = document.getElementById("upload-file-desc").value
-        var content = document.getElementById("upload-file-content").value
+        var filename = document.getElementById("upload-file-name").value;
+        var desc = document.getElementById("upload-file-desc").value;
+        var content = document.getElementById("upload-file-content").value;
         
 
 
@@ -68,13 +67,16 @@ function Uploadfunc(info){
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,
         };
-
+        formData.append("file", imagefile);
         formData.append('Dir', `${location[location.length-1].hid}`);
         formData.append('Name', `${filename}`);
         formData.append('Description', `${desc}`);
-        formData.append('Type', `${file.type}`);
+        formData.append('Type', `${imagefile.type}`);
         formData.append('Content', `${content}`);
         formData.append('DefaultPerm', `${defaultperm}`);
+        for (let pair of formData.entries()) {
+          console.log(pair[0] , pair[1]);
+        }
         fetch(endpoint, {
             method: 'POST',
             headers: headers,
@@ -121,7 +123,7 @@ function Uploadfunc(info){
                 <br></br>
                 <span className="pop-span">Description: </span><input id="upload-file-desc" className="pop-input" type="text"></input>
                 <br></br>
-                <span className="pop-span">Content: </span><input id="upload-file-content" className="pop-textarea" type="text"></input>
+                <span className="pop-span">Content: </span><textarea id="upload-file-content" className="pop-textarea" type="text"></textarea>
                 {info.level !== "0" &&(
                     <div>
                     <select className="pop-select" id="perm">
