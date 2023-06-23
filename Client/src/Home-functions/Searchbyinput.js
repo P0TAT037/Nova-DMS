@@ -59,6 +59,7 @@ return(
         <div className="col-11 ">
         <input id="input-search" className="input-search" placeholder="search..." onChange={handleInputChange}></input>
         <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
+        <button className="filters-button" onClick={() => props.switchsearch(2)}></button>
         </div>
     </>
 )

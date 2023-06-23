@@ -58,9 +58,13 @@ function Uploadfunc(info){
         var desc = document.getElementById("upload-file-desc").value;
         var content = document.getElementById("upload-file-content").value;
         
-
-
-        defaultperm = document.getElementById("perm").value
+        if(document.getElementById("perm")){
+          defaultperm = document.getElementById("perm").value
+        }
+        else{
+          defaultperm= true;
+        }
+        
         
         const endpoint = process.env.REACT_APP_ENDPOINT_URL +'node';
         const headers = {

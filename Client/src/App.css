@@ -5,7 +5,6 @@
     src: url(./fonts/agency-fb_[allfont.net].ttf);
 }
 .row-main{
-  overflow: hidden;
   font-family: 'Agency FB', Arial;
   animation: onload 3.5s;
 
