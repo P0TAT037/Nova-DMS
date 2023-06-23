@@ -98,7 +98,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("admin")]
-    public async Task<IActionResult> GetAdmins(int usrId)
+    public async Task<IActionResult> GetAdmins()
     {
 
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
