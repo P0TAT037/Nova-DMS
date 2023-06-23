@@ -31,8 +31,10 @@ function Home() {
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
     const [pageonload, setPageonload] = useState(true)
+    const [view,setView] = useState(0);
     const [filetree, setFiletree] = useState([{ name: "Root", hid: "/", metadata: { type: "folder" } }]);
     const [fileclicked, setFileclicked] = useState(false);
+    const [filename,setFilename] = useState("")
     const [clickedfileid, setclickedfileid] = useState();
     const [metadataclicked, setMetadataclicked] = useState(false);
     const [metadata, setMetadata] = useState([{}]);
@@ -90,8 +92,8 @@ function Home() {
         Getfiles(DirGet.hid, DirGet.name, "false", (tree) => { setFiletree(tree) })
 
     }
-    //Function that closes file display popup
-    const handlefileClick = (state) => {
+    //Function that opens file display popup
+    const handlefileClick = (state,name) => {
         setFileclicked(state)
     }
     //Function that closes metadata bar
@@ -242,10 +244,19 @@ function Home() {
                                 )}
                                     <Directoryline DirButton={DirButton} hidarr={hidarr}></Directoryline>
                                     {/* Refresh Button */}
-                                    {/*
-                                    <div className="col-1">
+                                    <div className="col-2">
+                                    {view === 0 && (
+                                            <>
+                                            <button className="tileview-button" title="Change to Tile view" onClick={() => setView(1)}>Refresh</button>
+                                            </>
+                                        )}
+                                        {view === 1 && (
+                                            <>
+                                            <button className="gridview-button" title="Change to Grid view" onClick={() => setView(0)}>Refresh</button>
+                                            </>
+                                        )}
                                         <button className="refresh-button" title="Refresh" onClick={() => refresh()}>Refresh</button>
-                                    </div> */}
+                                    </div> 
                                     
 
                                     {versionsclicked ? (<Getversions closeVersions={handleversionclose} fileid={idOfGetversion} token={token} getVersion={displayversion}/>) : (
@@ -258,7 +269,7 @@ function Home() {
 
                                 
                                 {/* File tree Mapping */}
-                                <Filetree filetree={filetree} setFiletree={setFiletree} setFileclicked={setFileclicked} setclickedfileid={setclickedfileid} setMetadataclicked={setMetadataclicked} setMetadata={setMetadata} setSelectedhid={setSelectedhid} Getfiles={Getfiles}></Filetree>
+                                <Filetree filetree={filetree} setFiletree={setFiletree} setFileclicked={setFileclicked} setclickedfileid={setclickedfileid} setMetadataclicked={setMetadataclicked} setMetadata={setMetadata} setSelectedhid={setSelectedhid} Getfiles={Getfiles} fileview={view}></Filetree>
                                 {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (
                                         <></>
                                     )}

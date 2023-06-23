@@ -39,6 +39,7 @@
     font-size: 25px;
     color: rgb(202, 210, 217);
     transition: 0.25s;
+    padding-left: 1vw;
 }
 .dir-button:hover{
     border: 1px solid #00000000;
@@ -49,9 +50,9 @@
 .refresh-button{
     height: 4.5vh;
     width: 2.3vw;
-    border: 1px solid #000000;
+    border: 1px solid #00000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: #1e1e1e00;
     color: rgb(123, 123, 123);
     background-image: url("./image/refresh-icon.png");
     background-size: 1.5vw 3vh;
@@ -59,10 +60,50 @@
     background-repeat: no-repeat;
     text-indent: -9999px;    
     transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+    margin-top: 3px;
 }
 .refresh-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #3b0358d3;
+    background-size: 1.6vw 3.4vh;
+}
+.gridview-button{
+    height: 5vh;
+    width: 3vw;
+    margin-top: 1px;
+    border: 1px solid #00000000;
+    border-radius: 15px;
+    background-color: #1e1e1e00;
+    background-image: url("./image/grid-icon.png");
+    background-size: 2.3vw 5vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+}
+.gridview-button:hover{
+    background-size: 2.6vw 5.2vh;
+}
+.tileview-button{
+    height: 5vh;
+    width: 3vw;
+    margin-top: 1px;
+    border: 1px solid #00000000;
+    border-radius: 15px;
+    background-color: #1e1e1e00;
+    background-image: url("./image/tile-icon.png");
+    background-size: 2.3vw 5vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+}
+.tileview-button:hover{
+    background-size: 2.6vw 5.2vh;
 }
 .newfol-button{
     margin-top: 3vh;

@@ -109,6 +109,43 @@
 .btn-files:hover{
   border-color: #393838;
 }
+.btn-folders-simple{
+  background-color: #29292993;
+  color:aliceblue;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border: 2px solid #000000;
+  border-right-style: hidden;
+  width: 13.5vw;
+  height: 8vh;
+  margin-top: 8px;
+  transition: 0.25s;
+  background-image: url('./image/Folder-icon-4.png');
+  background-size: 3.5vw 7vh;
+  background-repeat: no-repeat;
+}
+.btn-folders-simple:hover{
+  border-color: #393838;
+}
+.btn-files-simple{
+  background-color: #292929c4;
+  color:aliceblue;
+  border: 2px solid #000000;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-right-style: hidden;
+  width: 13.5vw;
+  height: 8vh;
+  margin-top: 8px;
+  transition: 0.25s;
+  background-size: 3.3vw 6.7vh;
+  background-position: 0.2vw ;
+  background-image: url('./image/file-icon.png');
+  background-repeat: no-repeat;
+}
+.btn-file-simple:hover{
+  border-color: #393838;
+}
 .btn-back{
   background-color: #29292900;
   color:aliceblue;
@@ -428,7 +465,7 @@ input[type="file"] {
   animation: onload 0.65s ease-in-out 1;
 }
 .div-showfile-popup{
-  background-color: #1e1e1e;
+  background-color: #2d2d2dd6;
   border-radius: 10px;
   border: 2px solid #000000;
   position: absolute;

@@ -35,7 +35,11 @@ function Showfile(props){
       <>
         {props.clicked !== false && (<>
         <div className="div-showfile-popup z-index-2" >
-            <button className="btn-popup-close" onClick={() => props.onClick(false)}>X</button>
+        <div className="div-popup-title">
+                 <span className="pop-span" style={{fontSize:"1.2rem" , marginLeft:"1.3vw" , color: "white"}}> File name</span>
+                 <button className="btn-popup-close" onClick={() => props.onClick(false)}>X</button>
+                </div>
+            
             <div id="iframe"></div>
         </div>
         </>)}

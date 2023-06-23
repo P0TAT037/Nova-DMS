@@ -12,6 +12,7 @@ function searchrequest(){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setAwooga(JSON.parse(xhttp.responseText));
+                console.log(awooga)
             }
         }
         xhttp.open("POST",process.env.REACT_APP_ENDPOINT_URL + `search?searchText=${searchinput}`, true);
@@ -48,22 +49,6 @@ return(
         <input id="input-search" className="input-search-aftermeta" placeholder="search..."></input>
         <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
         </div>
-        
-        
-        {ispressed === true &&(
-            <div className={`div-popup${exit} z-index-2`} style={{width: "100vh" , height: "35vw", top: "15vh"}}> 
-            <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
-            {awooga.results.map((result) => (
-                <div key={result.id}>
-                {result.name}
-                <button onClick={() => gotolocation(result.hid)}>go to location</button>
-                <br></br>
-                </div>
-            ))}
-            
-            </div>
-            
-        )}
     </>
 )
 }
