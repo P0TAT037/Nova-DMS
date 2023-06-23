@@ -34,7 +34,7 @@ function Home() {
     const [view,setView] = useState(0);
     const [filetree, setFiletree] = useState([{ name: "Root", hid: "/", metadata: { type: "folder" } }]);
     const [fileclicked, setFileclicked] = useState(false);
-    const [filename,setFilename] = useState("")
+    const [searched,setSearched] = useState(false)
     const [clickedfileid, setclickedfileid] = useState();
     const [metadataclicked, setMetadataclicked] = useState(false);
     const [metadata, setMetadata] = useState([{}]);
@@ -93,7 +93,7 @@ function Home() {
 
     }
     //Function that opens file display popup
-    const handlefileClick = (state,name) => {
+    const handlefileClick = (state) => {
         setFileclicked(state)
     }
     //Function that closes metadata bar
@@ -135,6 +135,17 @@ function Home() {
     const cancelmovefile = () =>{
         setMovefile(false);
     }
+    //function that goes back from search
+    function gobacksearch() {
+        Getfiles("/", "Root", "false", (tree) => { setFiletree(tree) });
+        setSearched(false);
+        hidarr = [{
+            name: "Root", hid: "/",
+            metadata: {
+                type: "folder"
+            }
+        }];
+    }
     //Function that logs out
     const logout = () => {
         hidarr = [{ name: "Root", hid: "/", metadata: { type: "folder" } }];
@@ -146,28 +157,9 @@ function Home() {
     }
     //function that goes to location of pressed file in search
     function handlelocationclick(location) {
-        hidarr = [{ name: "Root", hid: "/", metadata: { type: "folder" } }];
-        for (let i = 0; i < location.length; i++) {
-            var xmlhttp2 = new XMLHttpRequest();
-            xmlhttp2.open(
-                "GET",
-                process.env.REACT_APP_ENDPOINT_URL + `node/getNodes?hierarchyId=${location[i]}`,
-                false
-            );
-            xmlhttp2.setRequestHeader("Authorization", `Bearer ${token}`);
-            xmlhttp2.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    var response = JSON.parse(this.responseText)
-
-                    var targetobject = response.find(node => node.hid === location[i + 1])
-                    Getfiles(`${location[i]}`, `${targetobject.name}`, "true", (tree) => { setFiletree(tree) })
-                }
-            };
-
-            xmlhttp2.send();
-        }
-        //Getfiles(`${location}`, `${name}`,"true",(tree) => { setFiletree(tree) })
-        console.log(hidarr)
+        console.log(location)
+        setFiletree(location.results)
+        setSearched(true);
     }
     const handlecompeleted = () => {
         Getfiles(hidarr[hidarr.length - 1].hid, hidarr[hidarr.length - 1].name, "false", (tree) => { setFiletree(tree) })
@@ -231,8 +223,9 @@ function Home() {
 
                                 <div className="row p-1 search-row" style={{ color: "white" }}>
                                     {/* Back Button */}
-                                    
-                                {hidarr.length !== 1 && (
+                                {searched !== true && (
+                                    <>
+                                    {hidarr.length !== 1 && (
                                     <div className="col-md-auto g-0 col-back-button">
                                     <button className="btn-back" onClick={() => goback()}></button>
                                     </div>
@@ -242,7 +235,15 @@ function Home() {
                                     <button className="btn-back-placeholder" ></button>
                                     </div>
                                 )}
-                                    <Directoryline DirButton={DirButton} hidarr={hidarr}></Directoryline>
+                                    </>
+                                )}
+                                {searched === true &&(<>
+                                    <div className="col-md-auto g-0 col-back-button">
+                                    <button className="btn-back" onClick={() => gobacksearch()}></button>
+                                    </div>
+                                </>)}
+                                
+                                    <Directoryline DirButton={DirButton} searched={searched} hidarr={hidarr}></Directoryline>
                                     {/* Refresh Button */}
                                     <div className="col-2">
                                     {view === 0 && (
