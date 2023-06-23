@@ -10,6 +10,13 @@
   animation: onload 3.5s;
 
 }
+.container-getfiles {
+  display: flex;
+  align-items: center;
+}
+.span-getfiles{
+  margin-left: 8vw;
+}
 .div-color{
   background-color: #1e1e1e60;
   height: 100vh;
@@ -50,16 +57,15 @@
   border-bottom: 2px solid #000000;
 }
 .btn-folders{
-  background-color: #29292993;
+  background-color: #3434343c;
   color:aliceblue;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border: 2px solid #000000;
+  border: 1px solid #000000;
   border-right-style: hidden;
-  width: 88vw;
+  width: 89.3vw;
   margin-left: -0.5vw;
   height: 8vh;
   transition: 0.25s;
+  margin-top: 0.5vh;
   background-image: url('./image/Folder-icon-4.png');
   background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
@@ -80,19 +86,17 @@
   border-color: #393838;
 }
 .btn-files{
-  background-color: #292929c4;
+  background-color: #3434343c;
   color:aliceblue;
-  border: 2px solid #000000;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  border: 1px solid #000000;
   border-right-style: hidden;
-  width: 13.5vw;
+  width: 89.3vw;
+  margin-left: -0.5vw;
   height: 8vh;
-  margin-top: 8px;
   transition: 0.25s;
-  background-size: 3.3vw 6.7vh;
-  background-position: 0.2vw ;
+  margin-top: 0.5vh;
   background-image: url('./image/file-icon.png');
+  background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
 }
 .btn-files:hover{
@@ -118,6 +122,8 @@
   border: 1px solid #000000;
   height: 100vh;
   animation: righttoleft 0.5s;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
 }
 @keyframes righttoleft {
@@ -134,16 +140,19 @@
   height: 10vh;
 }
 .input-search{
-  background-color: #1e1e1ed3;
+  background-color: #383838d3;
   border: 1px solid #000000;
   color: aliceblue;
   padding-left: 20px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-right-style: hidden;
+  border: 1px solid black;
   transition: 0.25s;
-  width: 77vw;
-  height: 6vh;
+  width: 16vw;
+  height: 5vh;
+}
+.span-metadata{
+  margin-top: 1vw;
+  font-size: 1.25rem;
+  background-color: #2222225d;
 }
 .input-search:hover{
   border: 1px solid #242424;

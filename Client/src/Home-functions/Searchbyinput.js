@@ -44,7 +44,11 @@ function handleexitclick(){
 }
 return(
     <>
-        <div className="col-11 "><input id="input-search" className="input-search" placeholder="search..."></input>
+        <div className="col-11 ">
+        <span style={{color : "white"}} className="pop-span">Name: </span><input id="input-search" className="input-search" placeholder="search..."></input>
+        <span style={{color : "white"}} className="pop-span">Description: </span><input id="input-search" className="input-search" placeholder="search..."></input>
+        <span style={{color : "white"}} className="pop-span">Content: </span><input id="input-search" className="input-search" placeholder="search..."></input>
+        <span style={{color : "white"}} className="pop-span">Author: </span><input id="input-search" className="input-search" placeholder="search..."></input>
         <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
         </div>
         

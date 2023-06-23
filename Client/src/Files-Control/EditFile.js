@@ -80,7 +80,7 @@ function EditFile(props){
     
     return(
         <div>
-            <button onClick={handlebuttonclick}>Edit</button>
+            <button onClick={handlebuttonclick} className="metadata-nav-button">Edit</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`} >
               <div className="div-popup-title">

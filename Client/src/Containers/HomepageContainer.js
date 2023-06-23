@@ -97,6 +97,7 @@ function Home() {
     //Function that closes metadata bar
     const handlemetaClick = (state) => {
         setMetadataclicked(state)
+        
     }
     //function that calls previous versions component
     const handleversionsclick = (id, filetype) => {
@@ -127,8 +128,7 @@ function Home() {
         setMovefile(true);
         setMovefileid(fileid);
         setMovefilename(filename);
-        document.getElementById("main-coloumn").className="col-12 col-home-base";
-        document.getElementById("input-search").className="input-search"; 
+        
     }
     const cancelmovefile = () =>{
         setMovefile(false);
@@ -173,7 +173,7 @@ function Home() {
 
     //HTML Return
     return (
-        
+        console.log(filetree),
         <>
             <div className="div-color">
                 <div className="container-fluid">
@@ -193,22 +193,27 @@ function Home() {
                     
                         {/* New Folder Function */}
                         <div className="col-1 div-menu">
-                        <img style={{width:"3.5vw" , marginLeft:"1.5vw"}} src={require('../image/home-logo.png')} alt="logo" />
+                        <img style={{width:"3.5vw" ,marginTop:"1.5vh", marginLeft:"1.5vw"}} src={require('../image/home-logo.png')} alt="logo" />
                             <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
-                       
+                             <span className="span-menu">New Folder</span>
                         {/* New File Function */}
                         
                             <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
+                            <span style={{ marginLeft:"1.8vw"}} className="span-menu">New File</span>
                         {/* Role management */}
                         {userinfo.level > 0 && (
                             <ManageRoles token={token} />
                         )}
+                            <span style={{marginLeft:"0.9vw"}} className="span-menu">Manage Roles</span>
                         {/* Admin Management */}
                         {userinfo.level === '2' && (
                             <ManageAdmins token={token} />
                         )}
+                            <span style={{marginLeft:"0.8vw"}} className="span-menu">Manage Admins </span>
                         {/* Logout */}
                         <button className="logout-button" onClick={() => logout()}>Logout</button>{/* honestly i dont care at this point */}
+                        <span style={{marginLeft:"2vw"}} className="span-menu">Logout</span>
+                        <br></br><br></br><br></br><br></br><br></br>
                         </div>
                         <div id="main-coloumn" className="col-11">
                             

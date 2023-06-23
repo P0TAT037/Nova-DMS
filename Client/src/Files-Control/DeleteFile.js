@@ -56,7 +56,7 @@ function DeleteFile(props){
     }
     return(
         <div>
-            <button onClick={handlebuttonclick}>Delete</button>
+            <button onClick={handlebuttonclick} className="metadata-nav-button">Delete</button>
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`} style={{height: "20vh", marginTop: "15vh"}} >
                 <div className="div-popup-title">

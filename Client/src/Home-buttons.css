@@ -1,10 +1,10 @@
 .search-button{
-    height: 6.1vh;
+    height: 5vh;
     width: 2.5vw;
     border: 1px solid #000000;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: #393939d3;
     color: rgb(123, 123, 123);
     background-image: url("./image/search-icon.png");
     background-size: 1.5vw 3vh;
@@ -24,7 +24,7 @@
     border-radius: 15px;
     background-color: #1e1e1ed3;
     color: rgb(123, 123, 123);
-    background-image: url("./image/Filters-icon.png");
+    background-image: url("./image/search-icon.png");
     background-size: 1.5vw 3vh;
     background-position: 1.25vw 9px;
     background-repeat: no-repeat;
@@ -64,15 +64,17 @@
     background-color: #3b0358d3;
 }
 .newfol-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(209, 209, 209, 0.204);
     color: rgb(123, 123, 123);
     background-image: url("./image/newfol-icon.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 8vw 14vh;
+    background-position: -1.6vw -1.6vh ;
     background-repeat: no-repeat;
     text-indent: -9999px;    
     transition: 0.25s;
@@ -82,15 +84,17 @@
     background-color: #3b0358d3;
 }
 .newfile-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(209, 209, 209, 0.204);
     color: rgb(123, 123, 123);
     background-image: url("./image/newfile-icon.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 1vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
@@ -100,15 +104,17 @@
     background-color: #2f0245d3;
 }
 .mangeroles-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(209, 209, 209, 0.204);
     color: rgb(123, 123, 123);
     background-image: url("./image/manageroles.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 1vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
@@ -118,15 +124,17 @@
     background-color: #2f0245d3;
 }
 .mangeadmin-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(209, 209, 209, 0.204);
     color: rgb(123, 123, 123);
     background-image: url("./image/manageadmin.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 0.7vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
@@ -136,15 +144,17 @@
     background-color: #2f0245d3;
 }
 .logout-button{
-    height: 4.5vh;
-    width: 3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(209, 209, 209, 0.204);
     color: rgb(123, 123, 123);
     background-image: url("./image/logout.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 1vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
@@ -152,4 +162,16 @@
 .logout:hover{
     border: 1px solid #6000b4;
     background-color: #2f0245d3;
+}
+.span-menu{
+    color: aliceblue;
+    margin-left: 1.4vw;
+    padding-bottom: 1vh;
+    font-size: 1.1rem;
+}
+.metadata-nav-button{
+    background-color: #242424;
+    color: white;
+    border: 1px solid #000000;
+    border-radius: 10px;
 }
