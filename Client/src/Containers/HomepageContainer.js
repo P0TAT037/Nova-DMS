@@ -228,9 +228,20 @@ function Home() {
                                 </div>
 
                                 <div className="row p-1 search-row" style={{ color: "white" }}>
+                                    {/* Back Button */}
+                                    
+                                {hidarr.length !== 1 && (
+                                    <div className="col-md-auto g-0 col-back-button">
+                                    <button className="btn-back" onClick={() => goback()}></button>
+                                    </div>
+                                )}
+                                {hidarr.length === 1 && (
+                                    <div className="col-md-auto g-0 col-back-button">
+                                    <button className="btn-back-placeholder" ></button>
+                                    </div>
+                                )}
                                     <Directoryline DirButton={DirButton} hidarr={hidarr}></Directoryline>
                                     {/* Refresh Button */}
-                                    <div className="col-9"></div>
                                     {/*
                                     <div className="col-1">
                                         <button className="refresh-button" title="Refresh" onClick={() => refresh()}>Refresh</button>
@@ -245,10 +256,7 @@ function Home() {
 
                                 </div>
 
-                                {/* Back Button */}
-                                {hidarr.length !== 1 && (
-                                    <div className="row" ><div className="col-1"><button className="btn-back" onClick={() => goback()}></button></div></div>
-                                )}
+                                
                                 {/* File tree Mapping */}
                                 <Filetree filetree={filetree} setFiletree={setFiletree} setFileclicked={setFileclicked} setclickedfileid={setclickedfileid} setMetadataclicked={setMetadataclicked} setMetadata={setMetadata} setSelectedhid={setSelectedhid} Getfiles={Getfiles}></Filetree>
                                 {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (

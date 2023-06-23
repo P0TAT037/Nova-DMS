@@ -1,6 +1,6 @@
 import { truncate } from "../Home-functions/truncation";
 function Directoryline(props) {
-    return (<div className="row directory-line mt-2">
+    return (<>
         {props.hidarr.map(directory => <div className="col-2" key={directory.hid}>
             <button className="dir-button" onClick={() => props.DirButton(directory)}>{truncate(directory.name, 10)}</button>
             {props.hidarr.length !== 1 && <img src={require('../image/dir-arrow.png')} alt="arrowlol" style={{
@@ -10,6 +10,6 @@ function Directoryline(props) {
                 top: "12.1vh"
             }}></img>}
         </div>)}
-    </div>);
+    </>);
 }
 export {Directoryline};

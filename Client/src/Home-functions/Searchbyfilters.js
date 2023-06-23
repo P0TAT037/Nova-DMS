@@ -60,7 +60,7 @@ function Searchbyfilters(props){
     }
     return(
         <>
-        <div className="col-1"><button onClick={handlebuttonclick} className="filters-button"title="Search By Filters"></button></div>
+        <div className="col-1"><button onClick={handlebuttonclick} className="filters-button"title="Search By Filters">Advanced Search</button></div>
         {ispressed !== false &&(
             <div style={{width: "50vw"}} className={`div-popup${exit} z-index-2`} >
                 <span>Search by filters</span>

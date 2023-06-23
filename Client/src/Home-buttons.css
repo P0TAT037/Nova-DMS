@@ -1,11 +1,12 @@
 .search-button{
-    height: 5vh;
+    height: 6vh;
     width: 2.5vw;
     border: 1px solid #000000;
+    border-left: none;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: #393939d3;
-    color: rgb(123, 123, 123);
+    background-color: #2b2b2b96;
     background-image: url("./image/search-icon.png");
     background-size: 1.5vw 3vh;
     background-position: 5px 9px;
@@ -104,8 +105,8 @@
 .newfile-button:hover{
     border: 1px solid #43017c;
     background-color: #0e014b5f;
-    background-size: 4.5vw 9vh;
-    background-position: 0.2vw 0.3vh ;
+    background-size: 4vw 8vh;
+    background-position: 0.4vw 0.5vh ;
 }
 .mangeroles-button{
     margin-top: 3vh;
@@ -126,8 +127,8 @@
 .mangeroles-button:hover{
     border: 1px solid #43017c;
     background-color: #0e014b5f;
-    background-size: 4.5vw 9vh;
-    background-position: 0.2vw 0.3vh ;
+    background-size: 4vw 8vh;
+    background-position: 0.45vw 0.5vh ;
 }
 .mangeadmin-button{
     margin-top: 3vh;
@@ -148,8 +149,8 @@
 .mangeadmin-button:hover{
     border: 1px solid #43017c;
     background-color: #0e014b5f;
-    background-size: 4.5vw 9vh;
-    background-position: 0.2vw 0.3vh ;
+    background-size: 4vw 8vh;
+    background-position: 0.45vw 0.65vh ;
 }
 .logout-button{
     margin-top: 3vh;
@@ -170,8 +171,8 @@
 .logout-button:hover{
     border: 1px solid #43017c;
     background-color: #0e014b5f;
-    background-size: 4.5vw 9vh;
-    background-position: 0.2vw 0.3vh ;
+    background-size: 4vw 8vh;
+    background-position: 0.35vw 0.6vh ;
 }
 .span-menu{
     color: aliceblue;

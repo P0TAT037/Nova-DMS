@@ -15,7 +15,9 @@
   align-items: center;
 }
 .span-getfiles{
-  margin-left: 8vw;
+  margin-left: 3vw;
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 .div-color{
   background-color: #1e1e1e60;
@@ -58,15 +60,18 @@
 }
 .btn-folders{
   background-color: #3434343c;
+  cursor: pointer;
   color:aliceblue;
-  border: 1px solid #000000;
+  border: 2px solid #000000;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border-right-style: hidden;
   width: 89.3vw;
   margin-left: -0.5vw;
   height: 8vh;
   transition: 0.25s;
-  margin-top: 0.5vh;
-  background-image: url('./image/Folder-icon-4.png');
+  margin-top: 1vh;
+  background-image: url('./image/folder-icon.png');
   background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
 }
@@ -88,13 +93,15 @@
 .btn-files{
   background-color: #3434343c;
   color:aliceblue;
-  border: 1px solid #000000;
+  border: 2px solid #000000;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border-right-style: hidden;
   width: 89.3vw;
   margin-left: -0.5vw;
   height: 8vh;
   transition: 0.25s;
-  margin-top: 0.5vh;
+  margin-top: 1vh;
   background-image: url('./image/file-icon.png');
   background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
@@ -103,18 +110,32 @@
   border-color: #393838;
 }
 .btn-back{
-  background-color: #292929c4;
+  background-color: #29292900;
   color:aliceblue;
   border-radius: 15px;
-  border: 2px solid #000000;
-  width: 3vw;
-  height: 8vh;
+  border-style: none;
+  width: 2.5vw;
+  height: 4vh;
   margin-top: 8px;
   transition: 0.25s;
   background-image: url('./image/back-icon.png');
-  background-size: 2vw 4vh;
-  background-position: 0.4vw ;
+  background-size: 2.5vw 5vh;
+  background-position: 0vw -0.5vh;
   background-repeat: no-repeat;
+}
+.btn-back-placeholder{
+  background-color: #29292900;
+  background-image: url('./image/back-icon.png');
+  background-position: 0vw 0.3vh;
+  background-size: 2.5vw 5vh;
+  opacity: 0.3;
+  width: 2.5vw;
+  height: 5vh;
+  border-style: none;
+  cursor: default;
+}
+.col-back-button{
+  border-right: 2px solid #000000;
 }
 .col-home-base{
   color:aliceblue;
@@ -140,14 +161,18 @@
   height: 10vh;
 }
 .input-search{
-  background-color: #383838d3;
+  background-color: #2b2b2b96;
   border: 1px solid #000000;
   color: aliceblue;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
   padding-left: 20px;
+  margin-left: 0.7vw;
   border: 1px solid black;
   transition: 0.25s;
-  width: 16vw;
-  height: 5vh;
+  width: 76vw;
+  height: 6vh;
 }
 .span-metadata{
   margin-top: 1vw;
@@ -161,12 +186,16 @@
   border: 1px solid #000000;
 }
 .input-search-aftermeta{
-  background-color: #1e1e1ed3;
+  background-color: #2b2b2b96;
   border: 1px solid #000000;
   color: aliceblue;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+  padding-left: 20px;
+  border: 1px solid black;
   transition: 0.25s;
-  width: 44vw;
+  width: 63vw;
   height: 6vh;
 }
 
