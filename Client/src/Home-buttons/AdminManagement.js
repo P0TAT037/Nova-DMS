@@ -56,7 +56,7 @@ function ManageAdmins(info){
             {ispressed !== false &&(
                 <>  {
                 addpressed !== true &&(
-                    <div className={`div-popup${exit} z-index-2`} style={{top: "-74.6vh", overflowY: "auto"}}>
+                    <div className={`div-popup${exit} z-index-2`} style={{top: "18vh" , marginLeft: "3vw"}}>
                        <div className="div-popup-title">
                         <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Admin Management</span>
                         <button  className="btn-popup-close" onClick={() =>  handleexitclick()}>X</button>

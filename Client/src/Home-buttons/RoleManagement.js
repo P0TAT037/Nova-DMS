@@ -117,7 +117,7 @@ function ManageRoles(props){
         <div>
             <button className="mangeroles-button" title="Mange Roles" onClick={handlebuttonclick}></button>
             {ispressed !== false &&(
-            <div className={`div-popup${exit} z-index-2`} style={{top: "-74.6vh"}}>
+            <div className={`div-popup${exit} z-index-2`} style={{top: "18vh" , marginLeft: "3vw"}}>
                 <div className="div-popup-title">
                  <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Role Management</span>
                 <button  className="btn-popup-close" onClick={() =>  handleexitclick()}>X</button>

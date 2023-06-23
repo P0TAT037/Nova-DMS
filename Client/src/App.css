@@ -189,7 +189,10 @@
   border-bottom: 2px solid #00000084;
 }
 .div-menu{
+  background-color: #0000003b;
   border-right: 2px solid black;
+  height: 100vh;
+  
 }
 .div-popupexit{
   background-color: #2020207f;

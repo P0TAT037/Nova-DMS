@@ -179,7 +179,7 @@ function Home() {
                 <div className="container-fluid">
                     {pageonload === true &&(
                         <>
-                         <div id="user-welcome" className="welcome-div" style={{ position: "absolute", color: "white", marginTop: "39vh", marginLeft: "35vw", fontSize: "55px" }}>Welcome, {Name}</div>
+                         <div id="user-welcome" className="welcome-div" style={{ position: "absolute", color: "white", marginTop: "39vh", marginLeft: "37vw", fontSize: "55px" }}>Welcome, {Name}</div>
                         </>
                     )}
                    
@@ -192,7 +192,7 @@ function Home() {
                     
                     
                         {/* New Folder Function */}
-                        <div className="col-1 div-menu">
+                        <div className="col-1 div-menu pt-1">
                         <img style={{width:"3.5vw" ,marginTop:"1.5vh", marginLeft:"1.5vw"}} src={require('../image/home-logo.png')} alt="logo" />
                             <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
                              <span className="span-menu">New Folder</span>
@@ -202,20 +202,25 @@ function Home() {
                             <span style={{ marginLeft:"1.8vw"}} className="span-menu">New File</span>
                         {/* Role management */}
                         {userinfo.level > 0 && (
+                            <>
                             <ManageRoles token={token} />
-                        )}
                             <span style={{marginLeft:"0.9vw"}} className="span-menu">Manage Roles</span>
+                            </>
+                        )}
+                            
                         {/* Admin Management */}
                         {userinfo.level === '2' && (
+                            <>
                             <ManageAdmins token={token} />
-                        )}
                             <span style={{marginLeft:"0.8vw"}} className="span-menu">Manage Admins </span>
+                            </>
+                        )}
+                            
                         {/* Logout */}
                         <button className="logout-button" onClick={() => logout()}>Logout</button>{/* honestly i dont care at this point */}
                         <span style={{marginLeft:"2vw"}} className="span-menu">Logout</span>
-                        <br></br><br></br><br></br><br></br><br></br>
                         </div>
-                        <div id="main-coloumn" className="col-11">
+                        <div id="main-coloumn" className="col-11 pt-2">
                             
                                 {/* Search Bar */}
                                 <div className="row p-1 search-row" >
