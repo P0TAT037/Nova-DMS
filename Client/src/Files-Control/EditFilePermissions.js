@@ -93,7 +93,7 @@ function FilePermissions(props){
     }
     return(
         <div>
-            <button onClick={handlebuttonclick}>Edit Permissions</button>
+            <button onClick={handlebuttonclick} className="metadata-nav-button">Edit Permissions</button>
             {ispressed !== false &&(
 
             <div className={`div-popup${exit} z-index-2`} >

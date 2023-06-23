@@ -5,10 +5,18 @@
     src: url(./fonts/agency-fb_[allfont.net].ttf);
 }
 .row-main{
-  overflow: hidden;
   font-family: 'Agency FB', Arial;
   animation: onload 3.5s;
 
+}
+.container-getfiles {
+  display: flex;
+  align-items: center;
+}
+.span-getfiles{
+  margin-left: 3vw;
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 .div-color{
   background-color: #1e1e1e60;
@@ -50,17 +58,19 @@
   border-bottom: 2px solid #000000;
 }
 .btn-folders{
-  background-color: #29292993;
+  background-color: #3434343c;
+  cursor: pointer;
   color:aliceblue;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
   border: 2px solid #000000;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border-right-style: hidden;
-  width: 13.5vw;
+  width: 89.3vw;
+  margin-left: -0.5vw;
   height: 8vh;
-  margin-top: 8px;
   transition: 0.25s;
-  background-image: url('./image/Folder-icon-4.png');
+  margin-top: 1vh;
+  background-image: url('./image/folder-icon.png');
   background-size: 3.5vw 7vh;
   background-repeat: no-repeat;
 }
@@ -80,6 +90,43 @@
   border-color: #393838;
 }
 .btn-files{
+  background-color: #3434343c;
+  color:aliceblue;
+  border: 2px solid #000000;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right-style: hidden;
+  width: 89.3vw;
+  margin-left: -0.5vw;
+  height: 8vh;
+  transition: 0.25s;
+  margin-top: 1vh;
+  background-image: url('./image/file-icon.png');
+  background-size: 3.5vw 7vh;
+  background-repeat: no-repeat;
+}
+.btn-files:hover{
+  border-color: #393838;
+}
+.btn-folders-simple{
+  background-color: #29292993;
+  color:aliceblue;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border: 2px solid #000000;
+  border-right-style: hidden;
+  width: 13.5vw;
+  height: 8vh;
+  margin-top: 8px;
+  transition: 0.25s;
+  background-image: url('./image/Folder-icon-4.png');
+  background-size: 3.5vw 7vh;
+  background-repeat: no-repeat;
+}
+.btn-folders-simple:hover{
+  border-color: #393838;
+}
+.btn-files-simple{
   background-color: #292929c4;
   color:aliceblue;
   border: 2px solid #000000;
@@ -95,22 +142,36 @@
   background-image: url('./image/file-icon.png');
   background-repeat: no-repeat;
 }
-.btn-files:hover{
+.btn-file-simple:hover{
   border-color: #393838;
 }
 .btn-back{
-  background-color: #292929c4;
+  background-color: #29292900;
   color:aliceblue;
   border-radius: 15px;
-  border: 2px solid #000000;
-  width: 3vw;
-  height: 8vh;
+  border-style: none;
+  width: 2.5vw;
+  height: 4vh;
   margin-top: 8px;
   transition: 0.25s;
   background-image: url('./image/back-icon.png');
-  background-size: 2vw 4vh;
-  background-position: 0.4vw ;
+  background-size: 2.5vw 5vh;
+  background-position: 0vw -0.5vh;
   background-repeat: no-repeat;
+}
+.btn-back-placeholder{
+  background-color: #29292900;
+  background-image: url('./image/back-icon.png');
+  background-position: 0vw 0.3vh;
+  background-size: 2.5vw 5vh;
+  opacity: 0.3;
+  width: 2.5vw;
+  height: 5vh;
+  border-style: none;
+  cursor: default;
+}
+.col-back-button{
+  border-right: 2px solid #000000;
 }
 .col-home-base{
   color:aliceblue;
@@ -118,6 +179,8 @@
   border: 1px solid #000000;
   height: 100vh;
   animation: righttoleft 0.5s;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
 }
 @keyframes righttoleft {
@@ -134,16 +197,23 @@
   height: 10vh;
 }
 .input-search{
-  background-color: #1e1e1ed3;
+  background-color: #2b2b2b96;
   border: 1px solid #000000;
   color: aliceblue;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
   padding-left: 20px;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-  border-right-style: hidden;
+  margin-left: 0.7vw;
+  border: 1px solid black;
   transition: 0.25s;
-  width: 64vw;
+  width: 76vw;
   height: 6vh;
+}
+.span-metadata{
+  margin-top: 1vw;
+  font-size: 1.25rem;
+  background-color: #2222225d;
 }
 .input-search:hover{
   border: 1px solid #242424;
@@ -152,12 +222,16 @@
   border: 1px solid #000000;
 }
 .input-search-aftermeta{
-  background-color: #1e1e1ed3;
+  background-color: #2b2b2b96;
   border: 1px solid #000000;
   color: aliceblue;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+  padding-left: 20px;
+  border: 1px solid black;
   transition: 0.25s;
-  width: 44vw;
+  width: 63vw;
   height: 6vh;
 }
 
@@ -178,6 +252,12 @@
 }
 .div-popup-title{
   border-bottom: 2px solid #00000084;
+}
+.div-menu{
+  background-color: #0000003b;
+  border-right: 2px solid black;
+  height: 100vh;
+  
 }
 .div-popupexit{
   background-color: #2020207f;
@@ -384,7 +464,7 @@ input[type="file"] {
   animation: onload 0.65s ease-in-out 1;
 }
 .div-showfile-popup{
-  background-color: #1e1e1e;
+  background-color: #2d2d2dd6;
   border-radius: 10px;
   border: 2px solid #000000;
   position: absolute;
@@ -605,7 +685,7 @@ input[type="file"] {
 
 .ocr-div{
   border: 2.5px solid rgb(79, 33, 134);
-  position: absolute;
+  position: fixed;
   transition: 2s;
 }
 .ocr-div:hover{

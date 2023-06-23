@@ -1,11 +1,12 @@
 .search-button{
-    height: 6.1vh;
+    height: 6vh;
     width: 2.5vw;
     border: 1px solid #000000;
+    border-left: none;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #1e1e1ed3;
-    color: rgb(123, 123, 123);
+    background-color: #393939d3;
+    background-color: #2b2b2b96;
     background-image: url("./image/search-icon.png");
     background-size: 1.5vw 3vh;
     background-position: 5px 9px;
@@ -24,7 +25,7 @@
     border-radius: 15px;
     background-color: #1e1e1ed3;
     color: rgb(123, 123, 123);
-    background-image: url("./image/Filters-icon.png");
+    background-image: url("./image/search-icon.png");
     background-size: 1.5vw 3vh;
     background-position: 1.25vw 9px;
     background-repeat: no-repeat;
@@ -38,6 +39,7 @@
     font-size: 25px;
     color: rgb(202, 210, 217);
     transition: 0.25s;
+    padding-left: 1vw;
 }
 .dir-button:hover{
     border: 1px solid #00000000;
@@ -48,9 +50,9 @@
 .refresh-button{
     height: 4.5vh;
     width: 2.3vw;
-    border: 1px solid #000000;
+    border: 1px solid #00000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: #1e1e1e00;
     color: rgb(123, 123, 123);
     background-image: url("./image/refresh-icon.png");
     background-size: 1.5vw 3vh;
@@ -58,98 +60,170 @@
     background-repeat: no-repeat;
     text-indent: -9999px;    
     transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+    margin-top: 3px;
 }
 .refresh-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #3b0358d3;
+    background-size: 1.6vw 3.4vh;
+}
+.gridview-button{
+    height: 5vh;
+    width: 3vw;
+    margin-top: 1px;
+    border: 1px solid #00000000;
+    border-radius: 15px;
+    background-color: #1e1e1e00;
+    background-image: url("./image/grid-icon.png");
+    background-size: 2.3vw 5vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+}
+.gridview-button:hover{
+    background-size: 2.6vw 5.2vh;
+}
+.tileview-button{
+    height: 5vh;
+    width: 3vw;
+    margin-top: 1px;
+    border: 1px solid #00000000;
+    border-radius: 15px;
+    background-color: #1e1e1e00;
+    background-image: url("./image/tile-icon.png");
+    background-size: 2.3vw 5vh;
+    background-position: 0.36vw ;
+    background-repeat: no-repeat;
+    text-indent: -9999px;    
+    transition: 0.25s;
+    float: right;
+    margin-left: 10px;
+}
+.tileview-button:hover{
+    background-size: 2.6vw 5.2vh;
 }
 .newfol-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(68, 68, 68, 0.326);
     color: rgb(123, 123, 123);
-    background-image: url("./image/newfol-icon.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-image: url("./image/newfolder-test.png");
+    background-size: 4vw 8vh;
+    background-position: 0.4vw 0.6vh ;
     background-repeat: no-repeat;
     text-indent: -9999px;    
     transition: 0.25s;
 }
 .newfol-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #3b0358d3;
+    border: 1px solid #43017c;
+    background-color: #0e014b5f;
+    background-size: 4.5vw 9vh;
+    background-position: 0.2vw 0.3vh ;
 }
 .newfile-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(68, 68, 68, 0.326);
     color: rgb(123, 123, 123);
     background-image: url("./image/newfile-icon.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 0.6vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
 }
 .newfile-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #2f0245d3;
+    border: 1px solid #43017c;
+    background-color: #0e014b5f;
+    background-size: 4vw 8vh;
+    background-position: 0.4vw 0.5vh ;
 }
 .mangeroles-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(68, 68, 68, 0.326);
     color: rgb(123, 123, 123);
     background-image: url("./image/manageroles.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 0.67vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
 }
 .mangeroles-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #2f0245d3;
+    border: 1px solid #43017c;
+    background-color: #0e014b5f;
+    background-size: 4vw 8vh;
+    background-position: 0.45vw 0.5vh ;
 }
 .mangeadmin-button{
-    height: 4.5vh;
-    width: 2.3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(68, 68, 68, 0.326);
     color: rgb(123, 123, 123);
     background-image: url("./image/manageadmin.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 0.65vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
 }
 .mangeadmin-button:hover{
-    border: 1px solid #6000b4;
-    background-color: #2f0245d3;
+    border: 1px solid #43017c;
+    background-color: #0e014b5f;
+    background-size: 4vw 8vh;
+    background-position: 0.45vw 0.65vh ;
 }
 .logout-button{
-    height: 4.5vh;
-    width: 3vw;
+    margin-top: 3vh;
+    margin-left: 0.9vw;
+    height: 10vh;
+    width: 5vw;
     border: 1px solid #000000;
     border-radius: 15px;
-    background-color: #1e1e1ed3;
+    background-color: rgba(68, 68, 68, 0.326);
     color: rgb(123, 123, 123);
     background-image: url("./image/logout.png");
-    background-size: 1.5vw 3vh;
-    background-position: 0.36vw ;
+    background-size: 3.5vw 7vh;
+    background-position: 0.6vw ;
     background-repeat: no-repeat;
     text-indent: -9999px; 
     transition: 0.25s;
 }
-.logout:hover{
-    border: 1px solid #6000b4;
-    background-color: #2f0245d3;
+.logout-button:hover{
+    border: 1px solid #43017c;
+    background-color: #0e014b5f;
+    background-size: 4vw 8vh;
+    background-position: 0.35vw 0.6vh ;
+}
+.span-menu{
+    color: aliceblue;
+    margin-left: 1.4vw;
+    padding-bottom: 1vh;
+    font-size: 1.1rem;
+}
+.metadata-nav-button{
+    background-color: #242424;
+    color: white;
+    border: 1px solid #000000;
+    border-radius: 10px;
 }

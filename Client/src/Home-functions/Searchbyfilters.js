@@ -1,7 +1,19 @@
 import { useState } from "react";
 function Searchbyfilters(props){
     const [ispressed,setIspressed] = useState(false);
-    const [exit,setExit] = useState("")
+    const [exit,setExit] = useState("");
+    const [awooga,setAwooga] = useState({hits : 0, results : [{id: 2000, name: "*" ,metadata: {
+      author: "newuser",
+content: "dean office content",
+created: "2023-06-19T23:27:42.4108378-08:00",
+description: "Dean office desc",
+editedBy: "newuser",
+id: 121,
+name: "Dean office",
+type: "folder",
+updated: "2023-06-19T23:27:42.4108385-08:00",
+version: 1
+}}]}) 
     function handlebuttonclick(){
       setExit("");
         setIspressed(true);
@@ -17,19 +29,12 @@ function Searchbyfilters(props){
         const description = document.getElementById('Des').value;
         const content = document.getElementById('con').value;
         const author = document.getElementById('auth').value;
-        const editedBy = document.getElementById('eb').value;
-        const createdDate = document.getElementById('cd').value;
-        const updatedDate = document.getElementById('ud').value;
 
         const requestBody = {
-            // Only include properties with non-empty values
             ...(name && { name }),
             ...(description && { description }),
             ...(content && { content }),
             ...(author && { author }),
-            ...(editedBy && { editedBy }),
-            ...(createdDate && { createdDate }),
-            ...(updatedDate && { updatedDate }),
           };
           console.log(JSON.stringify(requestBody));
           const headers = {
@@ -50,6 +55,8 @@ function Searchbyfilters(props){
             return response.json();
           })
           .then(data => {
+            setAwooga(data);
+            props.onClick(awooga)
             console.log(data);
           })
           .catch(error => {
@@ -60,37 +67,12 @@ function Searchbyfilters(props){
     }
     return(
         <>
-        <div className="col-1"><button onClick={handlebuttonclick} className="filters-button"title="Search By Filters"></button></div>
-        {ispressed !== false &&(
-            <div style={{width: "50vw"}} className={`div-popup${exit} z-index-2`} >
-                <span>Search by filters</span>
-                    <button className="btn-popup-close" onClick={handleexitclick}>X</button>
-                    <br />
-                    <label htmlFor="nm">File Name:</label>
-                    <input type="text" id="nm" />
-                    <br />
-                    <label htmlFor="Des">File Description:</label>
-                    <input type="text" id="Des" />
-                    <br />
-                    <label htmlFor="con">File Content:</label>
-                    <input type="text" id="con" />
-                    <br />
-                    <label htmlFor="auth">Author:</label>
-                    <input type="text" id="auth" />
-                    <br />
-                    <label htmlFor="eb">Edited By:</label>
-                    <input type="text" id="eb" />
-                    <br />
-                    <label htmlFor="cd">Created Date:</label>
-                    <input type="text" id="cd" />
-                    <br />
-                    <label htmlFor="ud">Updated Date:</label>
-                    <input type="text" id="ud" />
-                    <br />
-                    <button id="Search-button" onClick={handleSearchClick}>Search</button>
-                
-            </div>
-        )}
+        <span className="col-2" style={{color:"white"}}>Name: <input style={{width:"10vw"}} id="nm" className="input-search" placeholder="search..." ></input></span>
+        <span className="col-3" style={{color:"white"}} >Description: <input style={{width:"10vw"}} id="Des" className="input-search" placeholder="search..." ></input></span>
+        <span className="col-3" style={{color:"white"}} > Content: <input  style={{width:"10vw"}} id="con" className="input-search" placeholder="search..." ></input></span>
+        <span className="col-3" style={{color:"white"}} >Author: <input style={{width:"10vw"}} id="auth" className="input-search" placeholder="search..."></input></span>
+        <button className="col-1" onClick={() => handleSearchClick()}>search</button>
+        <button style={{width:"4vw"}} onClick={() => props.switchsearch(1)} className=" filters-button"></button>
         </>
     );
 }

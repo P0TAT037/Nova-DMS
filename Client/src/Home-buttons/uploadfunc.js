@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { truncate } from "../Home-functions/truncation";
 import { OcrWindow } from "./Ocr";
+import { Imageenhancement } from "./ImageEnhancement";
 function Uploadfunc(info){
     var file;
     var defaultperm
@@ -9,7 +10,9 @@ function Uploadfunc(info){
     const [ispressed,setIspressed] = useState(false);
     const [isimage,setIsimage] = useState(false);
     const [exit,setExit] = useState("");
-    const [ocrclicked, setOcrclicked] = useState(false)
+    const [ocrclicked, setOcrclicked] = useState(false);
+    const [imageEclicked,setImageEclicked] = useState(false);
+    const [isinvisible,setIsinvisible] = useState(1);
     var location = info.location
     function handlebuttonclick(){
         setExit("");
@@ -30,7 +33,6 @@ function Uploadfunc(info){
         if (file.type.includes("image")){
           setIsimage(true)
         }
-        formData.append("file", file);
         document.getElementById("upload-file-input").className = "pop-file-uploaded";
         document.getElementById("upload-file-input").innerHTML = "Uploaded"
         document.getElementById("afterupload").style.opacity= "1"
@@ -40,33 +42,55 @@ function Uploadfunc(info){
     }
     function handleOcrClick(){
       setOcrclicked(true);
-      setIspressed(false);
+      setIsinvisible(0);
     }
     function handleOcrClose(){
       setOcrclicked(false);
-      setIspressed(true);
+      setIsinvisible(1);
+    }
+    function handleEncClick(){
+      setImageEclicked(true);
+      setIsinvisible(0);
+    }
+    function handleEncClose(){
+      setImageEclicked(false);
+      setIsinvisible(1);
+    }
+    function handleOcrContent(content){
+      setOcrclicked(false);
+        setIsinvisible(1);
+      setTimeout(function() {
+        document.getElementById("upload-file-content").textContent = content
+      }, 300);
     }
     function handleuploadclick(){
-        var filename = document.getElementById("upload-file-name").value
-        var desc = document.getElementById("upload-file-desc").value
-        var content = document.getElementById("upload-file-content").value
+        var filename = document.getElementById("upload-file-name").value;
+        var desc = document.getElementById("upload-file-desc").value;
+        var content = document.getElementById("upload-file-content").value;
         
-
-
-        defaultperm = document.getElementById("perm").value
+        if(document.getElementById("perm")){
+          defaultperm = document.getElementById("perm").value
+        }
+        else{
+          defaultperm= true;
+        }
+        
         
         const endpoint = process.env.REACT_APP_ENDPOINT_URL +'node';
         const headers = {
           'accept': '*/*',
           'Authorization': `Bearer ${info.token}`,
         };
-
+        formData.append("file", imagefile);
         formData.append('Dir', `${location[location.length-1].hid}`);
         formData.append('Name', `${filename}`);
         formData.append('Description', `${desc}`);
-        formData.append('Type', `${file.type}`);
+        formData.append('Type', `${imagefile.type}`);
         formData.append('Content', `${content}`);
         formData.append('DefaultPerm', `${defaultperm}`);
+        for (let pair of formData.entries()) {
+          console.log(pair[0] , pair[1]);
+        }
         fetch(endpoint, {
             method: 'POST',
             headers: headers,
@@ -97,9 +121,9 @@ function Uploadfunc(info){
     
     return(
         <>
-            <button className="newfile-button" style={{position: "absolute" ,top: "10.3vh"}} onClick={handlebuttonclick} title="Upload File">+</button>
+            <button className="newfile-button" onClick={handlebuttonclick} title="Upload File">+</button>
             {ispressed !== false &&(
-            <div className={`div-popup${exit} z-index-2`}>
+            <div style={{opacity: `${isinvisible}`}} className={`div-popup${exit} z-index-2`}>
                 <input type="file" id="file-upload" onChange={handleFileChange}></input>
                 <div className="div-popup-title">
                  <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
@@ -113,7 +137,7 @@ function Uploadfunc(info){
                 <br></br>
                 <span className="pop-span">Description: </span><input id="upload-file-desc" className="pop-input" type="text"></input>
                 <br></br>
-                <span className="pop-span">Content: </span><input id="upload-file-content" className="pop-textarea" type="text"></input>
+                <span className="pop-span">Content: </span><textarea id="upload-file-content" className="pop-textarea" type="text"></textarea>
                 {info.level !== "0" &&(
                     <div>
                     <select className="pop-select" id="perm">
@@ -128,6 +152,7 @@ function Uploadfunc(info){
                   isimage ===true && (
                     <>
                     <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleOcrClick()}>Use OCR</button>
+                    <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleEncClick()}>Use Image Enhancement</button>
                     <button style={{marginLeft: "8vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
                     </>
                   )
@@ -146,7 +171,12 @@ function Uploadfunc(info){
         )}
         {ocrclicked === true &&(
           <>
-          <OcrWindow closewindow={handleOcrClose} image={imagefile}></OcrWindow>
+          <OcrWindow closewindow={handleOcrClose} useOcrcontent={handleOcrContent} token={info.token} image={imagefile}></OcrWindow>
+          </>
+        )}
+        {imageEclicked === true &&(
+          <>
+          <Imageenhancement closewindow={handleEncClose} useOcrcontent={handleEncClick} token={info.token} image={imagefile}></Imageenhancement>
           </>
         )}
         </>

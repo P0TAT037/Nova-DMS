@@ -2,19 +2,36 @@ import { useState } from "react";
 import data from "../Endpoint-url.json"
 function Searchinput(props){
     const [ispressed,setIspressed] = useState(false);
-    const [awooga,setAwooga] = useState({hits : 0, results : [{id: 20, name: "*"}]}) // this is a placeholder, and it worked.... and im not gonna change it back... sue me >:(
+    const [awooga,setAwooga] = useState({hits : 0, results : [{id: 2000, name: "*" ,metadata: {
+        author: "newuser",
+content: "dean office content",
+created: "2023-06-19T23:27:42.4108378-08:00",
+description: "Dean office desc",
+editedBy: "newuser",
+id: 121,
+name: "Dean office",
+type: "folder",
+updated: "2023-06-19T23:27:42.4108385-08:00",
+version: 1
+}}]}) // this is a placeholder, and it worked.... and im not gonna change it back... sue me >:(
     const [exit,setExit] = useState("")
+    const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = event => {
+    setInputValue(event.target.value);
+  };
 function searchrequest(){
     setExit("");
     setIspressed(true);
-    var searchinput = document.getElementById("input-search").value;
     var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 setAwooga(JSON.parse(xhttp.responseText));
+                console.log(awooga)
+                props.onClick(awooga)
             }
         }
-        xhttp.open("POST",process.env.REACT_APP_ENDPOINT_URL + `search?searchText=${searchinput}`, true);
+        xhttp.open("POST",process.env.REACT_APP_ENDPOINT_URL + `search?searchText=${inputValue}`, true);
         xhttp.setRequestHeader("Authorization", `Bearer ${props.token}`);
         xhttp.send([]);
 }                  
@@ -33,36 +50,17 @@ function gotolocation(hid){
     }
     //console.log(newhidarr);
 
-    props.onClick(newhidarr)
+    
     setIspressed(false)
 }
-function handleexitclick(){
-    setExit("exit");
-      setTimeout(function() {
-        setIspressed(false);
-      }, 350);
-}
+
 return(
     <>
-        <div className="col-9 "><input id="input-search" className="input-search" placeholder="search..."></input>
+        <div className="col-11 ">
+        <input id="input-search" className="input-search" placeholder="search..." onChange={handleInputChange}></input>
         <button className="search-button" title="Search" onClick={() => searchrequest()}>.</button>
+        <button className="filters-button" onClick={() => props.switchsearch(2)}></button>
         </div>
-        
-        
-        {ispressed === true &&(
-            <div className={`div-popup${exit} z-index-2`} style={{width: "100vh" , height: "35vw", top: "15vh"}}> 
-            <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
-            {awooga.results.map((result) => (
-                <div key={result.id}>
-                {result.name}
-                <button onClick={() => gotolocation(result.hid)}>go to location</button>
-                <br></br>
-                </div>
-            ))}
-            
-            </div>
-            
-        )}
     </>
 )
 }
