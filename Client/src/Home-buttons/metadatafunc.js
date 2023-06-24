@@ -8,8 +8,14 @@ import { useState } from "react";
 function Getmetadata(props){
     var allusers =[]
     if(props.clicked === true){
-        document.getElementById("main-coloumn").className="col-9 col-home-base";
-        document.getElementById("input-search").className="input-search-aftermeta";
+        if (document.getElementById("input-search")){
+            document.getElementById("main-coloumn").className="col-9 col-home-base";
+            document.getElementById("input-search").className="input-search-aftermeta";
+        }
+        else if (!document.getElementById("input-search")) {
+            
+        }
+        
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -26,12 +32,17 @@ function Getmetadata(props){
         props.onClick(false); 
         document.getElementById("main-coloumn").className="col-11 col-home-base";
     }
+    function close(){
+        props.onClick(false); 
+        document.getElementById("main-coloumn").className="col-11 col-home-base"; 
+        document.getElementById("input-search").className="input-search";
+    }
     var metadata = props.metadata;
     var datecreated = convertdate(props.metadata.created);
     var dateupdated = convertdate(props.metadata.updated);
     return(
         props.clicked !== false &&
-        <div id="metadata-column" className="col-2 col-home-base z-index-2">
+        <div id="metadata-column" className="col-2 col-home-base">
             <div className="row">
 
                 {/* Permission Control */}
@@ -48,7 +59,7 @@ function Getmetadata(props){
             
             
                 <div className="col-4">
-            <button className="btn-popup-close" onClick={() => {props.onClick(false); document.getElementById("main-coloumn").className="col-11 col-home-base"; document.getElementById("input-search").className="input-search"; }}>X</button>
+            <button className="btn-popup-close" onClick={() => close()}>X</button>
             </div>
             </div>
             {}

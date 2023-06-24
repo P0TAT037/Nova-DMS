@@ -64,7 +64,7 @@ public class SearchController : ControllerBase
 
     private async Task<string> GetHid(int id)
     {
-        return await _db.QueryFirstAsync<string>("Select DIR.ToString() from Nov.Files where Id = @id", new { id }).ConfigureAwait(false);
+        return await _db.QueryFirstOrDefaultAsync<string>("Select DIR.ToString() from Nov.Files where Id = @id", new { id }).ConfigureAwait(false);
     }
 
     [HttpPost]
@@ -98,10 +98,14 @@ public class SearchController : ControllerBase
 
         foreach (var searchField in searchFields)
         {
-            boolQueryDescriptor.Must(m => m.Match(match => match
+            if((searchField.Value) != string.Empty)
+            {
+                boolQueryDescriptor.Must(m => m.Match(match => match
                 .Field(searchField.Key)
-                .Query(searchField.Value)
-            ));
+                .Query(searchField.Value).Operator(Operator.And)
+                ));
+            }
+            
         }
 
         return boolQueryDescriptor;

@@ -84,7 +84,7 @@ function EditFile(props){
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`} >
               <div className="div-popup-title">
-                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
+                <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Create a file</span>
                 <button  className="btn-popup-close" onClick={handleexitclick}>X</button>
                 </div>
                 <><label id="upload-file-input" htmlFor="file-update" className="pop-file">Choose File</label></>

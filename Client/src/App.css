@@ -210,6 +210,19 @@
   width: 76vw;
   height: 6vh;
 }
+.input-search-small{
+  background-color: #2b2b2b96;
+  border: 1px solid #000000;
+  color: aliceblue;
+  border-radius: 10px;
+  border-right: none;
+  padding-left: 20px;
+  margin-left: 0.7vw;
+  border: 1px solid black;
+  transition: 0.25s;
+  width: 76vw;
+  height: 6vh;
+}
 .span-metadata{
   margin-top: 1vw;
   font-size: 1.25rem;
@@ -245,9 +258,10 @@
   backdrop-filter: blur(5px);
   position: absolute;
   top: 17vh;
-  left: 22vw;
+  right: 25vw;
   height: 60vh;
   width: 50vw;
+  z-index: 2;
   animation: popupload 0.35s ease-in-out 1;
 }
 .div-popup-title{
@@ -264,12 +278,13 @@
   color: aliceblue;
   border-radius: 10px;
   font-size: 22px;
+  z-index: 2;
   border: 2px solid #000000;
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   position: absolute;
   top: 17vh;
-  left: 22vw;
+  right: 25vw;
   height: 60vh;
   width: 50vw;
   opacity: 0;
@@ -529,6 +544,7 @@ input[type="file"] {
   backdrop-filter: blur(5px);
   position: absolute;
   width: 80vw;
+  z-index: 2;
   height: 87vh;
   top: 5vh;
   left: 9vw;

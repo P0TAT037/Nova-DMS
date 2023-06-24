@@ -169,7 +169,7 @@ function Home() {
     return (
         console.log(filetree),
         <>
-            <div className="div-color">
+            <div className="div-color z-index-1">
                 <div className="container-fluid">
                     {pageonload === true &&(
                         <>
@@ -177,8 +177,7 @@ function Home() {
                         </>
                     )}
                    
-                    {/* File Display */}
-                    <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token} versionclicked={versionid} idOfGetversion={idOfGetversion} closeversiondisplay={closedisplayversion} filetype={versionfiletype} />
+                   
 
 
                     <div className="row row-main">
@@ -191,7 +190,8 @@ function Home() {
                             <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
                              <span className="span-menu">New Folder</span>
                         {/* New File Function */}
-                        
+                         {/* File Display */}
+                    <Showfile clicked={fileclicked} onClick={handlefileClick} fileid={clickedfileid} token={token} versionclicked={versionid} idOfGetversion={idOfGetversion} closeversiondisplay={closedisplayversion} filetype={versionfiletype} />
                             <Uploadfunc id={userinfo.id} name={userinfo.username} onComplete={handlecompeleted} level={userinfo.level} location={hidarr} token={token} />
                             <span style={{ marginLeft:"1.8vw"}} className="span-menu">New File</span>
                         {/* Role management */}

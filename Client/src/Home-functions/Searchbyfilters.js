@@ -67,12 +67,12 @@ version: 1
     }
     return(
         <>
-        <span className="col-2" style={{color:"white"}}>Name: <input style={{width:"10vw"}} id="nm" className="input-search" placeholder="search..." ></input></span>
-        <span className="col-3" style={{color:"white"}} >Description: <input style={{width:"10vw"}} id="Des" className="input-search" placeholder="search..." ></input></span>
-        <span className="col-3" style={{color:"white"}} > Content: <input  style={{width:"10vw"}} id="con" className="input-search" placeholder="search..." ></input></span>
-        <span className="col-3" style={{color:"white"}} >Author: <input style={{width:"10vw"}} id="auth" className="input-search" placeholder="search..."></input></span>
-        <button className="col-1" onClick={() => handleSearchClick()}>search</button>
-        <button style={{width:"4vw"}} onClick={() => props.switchsearch(1)} className=" filters-button"></button>
+        <span className="col-2" style={{color:"white"}}>Name: <input style={{width:"10vw"}} id="nm" className="input-search-small" placeholder="search..." ></input></span>
+        <span className="col-3" style={{color:"white"}} >Description: <input style={{width:"10vw"}} id="Des" className="input-search-small" placeholder="search..." ></input></span>
+        <span className="col-2" style={{color:"white"}} > Content: <input  style={{width:"10vw"}} id="con" className="input-search-small" placeholder="search..." ></input></span>
+        <span className="col-2" style={{color:"white"}} >Author: <input style={{width:"10vw"}} id="auth" className="input-search-small" placeholder="search..."></input></span>
+        <button style={{width:"2vw", borderRadius:"10px"}} className="col-1 search-button" onClick={() => handleSearchClick()} ></button>
+        <button style={{width:"10vw" , marginLeft:"3vw"}} onClick={() => props.switchsearch(1)} className="col-2 pop-button">Back to normal seach</button>
         </>
     );
 }

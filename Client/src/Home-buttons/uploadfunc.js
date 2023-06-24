@@ -56,6 +56,12 @@ function Uploadfunc(info){
       setImageEclicked(false);
       setIsinvisible(1);
     }
+    function resultenc(image){
+      setImagefile(image);
+      setImageEclicked(false);
+      setIsinvisible(1);
+
+    }
     function handleOcrContent(content){
       setOcrclicked(false);
         setIsinvisible(1);
@@ -138,7 +144,6 @@ function Uploadfunc(info){
                 <span className="pop-span">Description: </span><input id="upload-file-desc" className="pop-input" type="text"></input>
                 <br></br>
                 <span className="pop-span">Content: </span><textarea id="upload-file-content" className="pop-textarea" type="text"></textarea>
-                {info.level !== "0" &&(
                     <div>
                     <select className="pop-select" id="perm">
                       <option value="true">Users can Read and Write</option>
@@ -147,13 +152,12 @@ function Uploadfunc(info){
                     </select>
                     <br></br>
                     </div>
-                )}
                 {
                   isimage ===true && (
                     <>
-                    <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleOcrClick()}>Use OCR</button>
-                    <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleEncClick()}>Use Image Enhancement</button>
-                    <button style={{marginLeft: "8vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
+                    <button style={{marginLeft: "12vw" , width:"6vw"}} className="pop-button" onClick={() => handleOcrClick()}>Use OCR</button>
+                    <button style={{marginLeft: "8vw" , width:"13vw"}} className="pop-button" onClick={() => handleEncClick()}>Use Image Enhancement</button>
+                    <button style={{marginLeft: "17vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
                     </>
                   )
                 }
@@ -176,7 +180,7 @@ function Uploadfunc(info){
         )}
         {imageEclicked === true &&(
           <>
-          <Imageenhancement closewindow={handleEncClose} useOcrcontent={handleEncClick} token={info.token} image={imagefile}></Imageenhancement>
+          <Imageenhancement closewindow={handleEncClose} useEnccontent={resultenc} token={info.token} image={imagefile}></Imageenhancement>
           </>
         )}
         </>
