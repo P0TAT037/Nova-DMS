@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { truncate } from "../Home-functions/truncation";
 import { OcrWindow } from "./Ocr";
+import { Imageenhancement } from "./ImageEnhancement";
 function Uploadfunc(info){
     var file;
     var defaultperm
@@ -10,7 +11,8 @@ function Uploadfunc(info){
     const [isimage,setIsimage] = useState(false);
     const [exit,setExit] = useState("");
     const [ocrclicked, setOcrclicked] = useState(false);
-    const [isinvisible,setIsinvisible] = useState(1)
+    const [imageEclicked,setImageEclicked] = useState(false);
+    const [isinvisible,setIsinvisible] = useState(1);
     var location = info.location
     function handlebuttonclick(){
         setExit("");
@@ -44,6 +46,14 @@ function Uploadfunc(info){
     }
     function handleOcrClose(){
       setOcrclicked(false);
+      setIsinvisible(1);
+    }
+    function handleEncClick(){
+      setImageEclicked(true);
+      setIsinvisible(0);
+    }
+    function handleEncClose(){
+      setImageEclicked(false);
       setIsinvisible(1);
     }
     function handleOcrContent(content){
@@ -142,6 +152,7 @@ function Uploadfunc(info){
                   isimage ===true && (
                     <>
                     <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleOcrClick()}>Use OCR</button>
+                    <button style={{marginLeft: "5.5vw"}} className="pop-button" onClick={() => handleEncClick()}>Use Image Enhancement</button>
                     <button style={{marginLeft: "8vw"}} className="pop-button" onClick={() => handleuploadclick()}>Upload</button>    
                     </>
                   )
@@ -161,6 +172,11 @@ function Uploadfunc(info){
         {ocrclicked === true &&(
           <>
           <OcrWindow closewindow={handleOcrClose} useOcrcontent={handleOcrContent} token={info.token} image={imagefile}></OcrWindow>
+          </>
+        )}
+        {imageEclicked === true &&(
+          <>
+          <Imageenhancement closewindow={handleEncClose} useOcrcontent={handleEncClick} token={info.token} image={imagefile}></Imageenhancement>
           </>
         )}
         </>
