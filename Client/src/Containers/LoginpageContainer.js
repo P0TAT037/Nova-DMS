@@ -17,15 +17,13 @@ function LoginPageContainer() {
   }
 
   return (
+    console.log(process.env),
     <div>
       {showSignup ? (
         <SignupPage onLoginClick={handleLoginClick} />
       ) : (
         <LoginPage onSignupClick={handleSignupClick} onAnimation={handleanimationcomplete} rendered={loginrenderd} />
       )}
-      <div className="wave"></div>
-     <div className="wave"></div>
-     <div className="wave"></div>
     </div>
   );
 }

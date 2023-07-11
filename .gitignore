@@ -37,7 +37,7 @@ yarn-error.log*
 
 # Mono auto generated files
 mono_crash.*
-
+weights/
 # Build results
 Client/build
 [Dd]ebug/
@@ -498,3 +498,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+OCR\prod\.txt
+OCR\prod\.jpg

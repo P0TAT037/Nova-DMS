@@ -98,7 +98,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("admin")]
-    public async Task<IActionResult> GetAdmins(int usrId)
+    public async Task<IActionResult> GetAdmins()
     {
 
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
@@ -178,7 +178,7 @@ public class UserController : ControllerBase
     [HttpGet]
     [Route("getUserRoles")]
     [AuthorizeAdmin]
-    public async Task<IEnumerable<dynamic>> GetUserRoles(int usrId)
+    public async Task<IEnumerable<dynamic>?> GetUserRoles(int usrId)
     {
         var db = new SqlConnection(config.GetConnectionString("SqlServer"));
         try
@@ -204,7 +204,7 @@ public class UserController : ControllerBase
             List<UserAndRolesDTO> usersWithRoles = new List<UserAndRolesDTO>();
             foreach (var user in result)
             {
-                usersWithRoles.Add(new UserAndRolesDTO() { User = user, Roles = await GetUserRoles(user.Id)});
+                usersWithRoles.Add(new UserAndRolesDTO() { User = user, Roles = (await GetUserRoles(user.Id))!});
             }
             
             return Ok(usersWithRoles);

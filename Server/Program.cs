@@ -11,6 +11,12 @@ using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+if(builder.Configuration["DbInitialized"]! == "false"){
+    await DbInitializer.InitDb(builder.Configuration.GetConnectionString("SQLServer")!, @"./[CONFIG]/SQLServerDbScript.sql");
+    builder.Configuration["DbInitialized"] = "true";
+}
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -20,9 +26,9 @@ builder.Services.AddCors(options =>
                     policy =>
                     {
                         policy.AllowAnyMethod()
-                              .AllowAnyHeader()
-                              .AllowCredentials()
-                              .WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()!);
+                            .AllowAnyHeader()
+                            .AllowCredentials()
+                            .WithOrigins(builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()!);
                     });
 });
 
@@ -69,7 +75,6 @@ builder.Services.AddAuthentication()
 
         ValidateLifetime = true,
     });
-
 
 
 
