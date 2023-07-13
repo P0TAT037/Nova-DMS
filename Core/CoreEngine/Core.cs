@@ -35,7 +35,7 @@ public class Core
     public async static void UnregisterEndpoint(int id) {
         InitGaurd();
 
-        await ElasticClient.DeleteAsync<Endpoint>(id);
+        await ElasticClient.DeleteAsync<Sequence>(id);
     }
     
     
@@ -110,14 +110,53 @@ public class Core
         return response;
     }
     
-    public static void ExecuteSequence(List<RequestResponse<dynamic>> requests) {
+    public static void ExecuteSequence(Sequence s) {
         InitGaurd();
 
-        for (int i = 0; i < requests.Count; i++) {
-            requests[i].Response = SendRequest(requests[i].Request);
+        for (int i = 0; i < s.Endpoints.Count; i++) {
+            var Request = new Request{
+                URL = s.Endpoints[i].URL,
+                Path = s.Endpoints[i].Path,
+                Method = s.Endpoints[i].Method,
+            };
+            
+            Request.Body = s.BodyPipe![i];
+
+            for (int j = 0; j< s.Endpoints[i].PathParameters!.Count; j++)
+            {
+                var paramName = s.Endpoints[i].PathParameters![j];
+                var paramValue = s.Pipe![i][0][j][paramName];
+                Request.PathParameters!.Add(paramName, paramValue);
+            }
+
+            for (int j = 0; j< s.Endpoints[i].QueryParameters!.Count; j++)
+            {
+                var paramName = s.Endpoints[i].QueryParameters![j];
+                var paramValue = s.Pipe![i][1][j][paramName];
+                Request.QueryParameters!.Add(paramName, paramValue);
+            }
+
+            for (int j = 0; j< s.Endpoints[i].FormData!.Count; j++)
+            {
+                var paramName = s.Endpoints[i].FormData![j];
+                var paramValue = s.Pipe![i][2][j][paramName];
+                Request.FormData!.Add(paramName, paramValue);
+            }
+
+            for (int j = 0; j< s.Endpoints[i].Headers!.Count; j++)
+            {
+                var paramName = s.Endpoints[i].Headers![j];
+                var paramValue = s.Pipe![i][3][j][paramName];
+                Request.Headers!.Add(paramName, paramValue);
+            }
+
+            var response = SendRequest(Request).Result;
+
+            s.Responses!.Add(response.Content!);
+
+        };
             
             /* code to pipe responses to request[i+1] on custom user conditions */
-        }
     }
     
     private static void InitGaurd()

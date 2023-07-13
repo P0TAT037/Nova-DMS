@@ -6,7 +6,9 @@ public class Endpoint
 {
     public string Name { get; set; } = null!;
     
-    public Method Method { get; set; }
+    public Method Method { get; set; } = Method.Get;
+
+    public string URL { get; set; } = null!;
 
     public string Path { get; set; } = null!;
 

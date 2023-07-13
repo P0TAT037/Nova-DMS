@@ -40,6 +40,7 @@ public static class ElasticSearchService
     {
         settings.DefaultMappingFor<Request>(p => p);
         settings.DefaultMappingFor<Endpoint>(p => p);
+        settings.DefaultMappingFor<Sequence>(p => p);
     }
 
     private static bool CreateIndex<T>(ElasticClient client, string? indexName) where T : class

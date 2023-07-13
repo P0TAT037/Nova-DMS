@@ -139,7 +139,7 @@ echo Writing credentials to JSON file...
 (
     echo {
     echo   "MinIO": {
-    echo     "Endpoint": "http://localhost:9000",
+    echo     "Endpoint": "localhost:9000",
     echo     "AccessKey": "dms-backend",
     echo     "SecretKey": "backend-passwd",
     echo     "BucketName": "dev"
