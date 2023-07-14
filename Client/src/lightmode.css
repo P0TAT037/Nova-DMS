@@ -1,5 +1,9 @@
 .div-colorlight{
-    background-color: whitesmoke;
+    background-color: rgb(34, 34, 34);
     height: 100vh;
     animation: explosion 2.75s ease-in-out;
+  }
+  .row-mainlight{
+    font-family: 'Agency FB', Arial;
+    color: white;
   }

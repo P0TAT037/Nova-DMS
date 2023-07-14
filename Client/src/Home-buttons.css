@@ -232,7 +232,7 @@
     background-position: 0.35vw 0.6vh ;
 }
 .span-menu{
-    color: aliceblue;
+    color: inherit;
     margin-left: 1.4vw;
     padding-bottom: 1vh;
     font-size: 1.1rem;

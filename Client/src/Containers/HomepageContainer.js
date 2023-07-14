@@ -32,6 +32,7 @@ function Home() {
     const navigate = useNavigate();
     const userinfo = parseJwt(token);
     const [pageonload, setPageonload] = useState(true)
+    const [colormode,setColormode] = useState(false);
     const [view,setView] = useState(0);
     const [filetree, setFiletree] = useState([{ name: "Root", hid: "/", metadata: { type: "folder" } }]);
     const [fileclicked, setFileclicked] = useState(false);
@@ -181,7 +182,7 @@ function Home() {
                    
 
 
-                    <div className="row row-main">
+                    <div id="row-main" className="row row-main">
                         {/*Menu Bar*/}
                     
                     
@@ -275,7 +276,16 @@ function Home() {
                                 {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (
                                         <></>
                                     )}
-                                <button className="darkmode-button" onClick={() => {switchtolight()}}></button>
+                                {colormode === false &&(
+                                    <>
+                                    <button className="darkmode-button" onClick={() => {switchtolight(1); setColormode(true)}}></button>
+                                    </>
+                                )}
+                                {colormode === true &&(
+                                    <>
+                                    <button className="darkmode-button" onClick={() => {switchtolight(2); setColormode(false)}}></button>
+                                    </>
+                                )}
                         </div>
                         {/* Metadata bar */}
                         <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick} movefileclicked={movefilepressed}/>
