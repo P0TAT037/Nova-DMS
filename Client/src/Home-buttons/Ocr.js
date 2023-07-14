@@ -64,7 +64,7 @@ function OcrWindow(props){
                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> OCR Detection</span>
                 <button  className="btn-popup-close" onClick={props.closewindow}>X</button>
                 </div>
-                <iframe style={{width:"44vw" , height: "80vh" , marginTop: "1vh", marginLeft:"1vw", border:"3px solid black", overflow: "auto"}} title="ocr" src="http://localhost:3000/OCR"></iframe>
+                <iframe style={{width:"44vw" , height: "80vh" , marginTop: "1vh", marginLeft:"1vw", border:"3px solid black"}} title="ocr" src="http://localhost:3000/OCR"></iframe>
                 <div style={{float:"right"}}>
                 <span style={{position: "absolute" , marginLeft: "0.7vw"}}>Content:</span>
                 <textarea id="content-textarea" style={{ height:"70vh" , width:"33vw" , marginRight:"1vw", marginTop:"6vh"}} className="pop-textarea">

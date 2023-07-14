@@ -20,7 +20,8 @@ function OCROutput(info){
     return(
         
        <>
-       <div style={{width: "100vw" , height: "100vh" , overflow: "auto"}}>
+       <div>
+        
         {hlep.map((line, index) =>
         
     <div key={index} className="ocr-div" title={hlep[hlep.length - (index + 1)].content} style={{ marginTop: `${line.startlocy}px`, marginLeft: `${line.startlocx}px` ,width: `${line.width - line.startlocx}px`, height: `${line.height - line.startlocy}px`}}></div> 

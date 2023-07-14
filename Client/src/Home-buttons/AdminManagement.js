@@ -24,7 +24,7 @@ function ManageAdmins(info){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("User Yeeted from admin");
+                alert("User Deleted from admin");
             }
         }
         xhttp.open("DELETE",process.env.REACT_APP_ENDPOINT_URL +`user/admin?usrId=${userid}`, false);
@@ -77,7 +77,7 @@ function ManageAdmins(info){
                 )
             }
             {addpressed !== false &&(
-                <div className={`div-popup${exit} z-index-2`} style={{top: "-74.6vh", overflowY: "auto"}}>
+                <div className={`div-popup${exit} z-index-2`} style={{ overflowY: "auto"}}>
                     <div className="div-popup-title">
                         <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Admin Management</span>
                         <button  className="btn-popup-close" onClick={() =>  handleexitclick()}>X</button>

@@ -16,6 +16,7 @@ import { Filetree } from "../Home-functions/Filetree";
 import { Directoryline } from "../Home-functions/Directoryline";
 import { Getversions } from "../Home-functions/getVersions";
 import { Movefile } from "../Home-buttons/Movefile";
+import { switchtolight } from "../Home-buttons/switchcolormode";
 
 var hidarr = [{
     name: "Root", hid: "/",
@@ -169,7 +170,7 @@ function Home() {
     return (
         console.log(filetree),
         <>
-            <div className="div-color z-index-1">
+            <div id="div-color" className="div-color z-index-1">
                 <div className="container-fluid">
                     {pageonload === true &&(
                         <>
@@ -185,7 +186,7 @@ function Home() {
                     
                     
                         {/* New Folder Function */}
-                        <div className="col-1 div-menu pt-1">
+                        <div id="div-menu" className="col-1 div-menu pt-1">
                         <img style={{width:"3.5vw" ,marginTop:"1.5vh", marginLeft:"1.5vw"}} src={require('../image/home-logo.png')} alt="logo" />
                             <Newfolderfunc location={hidarr} token={token} onComplete={handlecompeleted} />
                              <span className="span-menu">New Folder</span>
@@ -198,7 +199,7 @@ function Home() {
                         {userinfo.level > 0 && (
                             <>
                             <ManageRoles token={token} />
-                            <span style={{marginLeft:"0.9vw"}} className="span-menu">Manage Roles</span>
+                            <span style={{marginLeft:"0.9vw"}} className="span-menu">Manage Groups</span>
                             </>
                         )}
                             
@@ -274,12 +275,7 @@ function Home() {
                                 {movefile ? (<><Movefile id={movefileid} name={movefilename} location={hidarr} cancel={cancelmovefile} token={token} onComplete={handlecompeleted}></Movefile></>) : (
                                         <></>
                                     )}
-                           
-
-                            {/* Control Row */}
-                            
-                                
-
+                                <button className="darkmode-button" onClick={() => {switchtolight()}}></button>
                         </div>
                         {/* Metadata bar */}
                         <Getmetadata clicked={metadataclicked} onClick={handlemetaClick} onComplete={handlecompeleted} metadata={metadata} hid={selectedhid} token={token} userinfo={userinfo} getversionsclicked={handleversionsclick} movefileclicked={movefilepressed}/>

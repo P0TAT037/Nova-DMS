@@ -41,7 +41,7 @@ function ManageRoles(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("role added")
+                alert("Role Added")
                 Refresh(); 
                 setCurrentstate(0);
             }
@@ -54,7 +54,7 @@ function ManageRoles(props){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("role deleted")
+                alert("Role Deleted")
                 Refresh(); 
             }
         }
@@ -84,7 +84,7 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 Refresh();
-                alert("user added to role");
+                alert("User added to role");
                 setCurrentstate(0); //PIECE OF SHIT 
             }
         }
@@ -97,7 +97,7 @@ function ManageRoles(props){
         xhttp.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 Refresh();
-                alert("user deleted from role");
+                alert("User deleted from role");
                 setCurrentstate(0); //FUCK YOU JAVASCRIPT
             }
         }
@@ -119,7 +119,7 @@ function ManageRoles(props){
             {ispressed !== false &&(
             <div className={`div-popup${exit} z-index-2`} style={{top: "18vh" , marginLeft: "3vw"}}>
                 <div className="div-popup-title">
-                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Role Management</span>
+                 <span style={{fontSize:"1.4rem" , marginLeft:"1.3vw"}}> Group Management</span>
                 <button  className="btn-popup-close" onClick={() =>  handleexitclick()}>X</button>
                 </div>
                 {/* Show current roles */}
@@ -133,7 +133,7 @@ function ManageRoles(props){
                             <br></br>
                             </div>
                         ))}
-                        <button className="pop-button" style={{position:"relative", bottom:"-5vh" ,marginLeft:"18vw"}} onClick={() => setCurrentstate(1)}>Add New role</button>
+                        <button className="pop-button" style={{position:"relative", bottom:"-5vh" ,marginLeft:"18vw"}} onClick={() => setCurrentstate(1)}>Add New Group</button>
                     </div>
                 )}
                 {/* Create Role */}
@@ -141,7 +141,7 @@ function ManageRoles(props){
                    currentstate === 1 &&(
                     <div>
                         <button className="pop-back" onClick={() => setCurrentstate(0)}>Back</button>
-                        <span className="pop-span">What would you like to name this role?</span>
+                        <span className="pop-span">What would you like to name this group?</span>
                         <br></br>
                         <input id="role-name" className="pop-input" type="text" style={{marginLeft:"5vw",width: "40vw",animation: "slowappear 0.25s ease-in-out"}}></input>
                         <br></br>

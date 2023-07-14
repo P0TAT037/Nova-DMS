@@ -20,10 +20,6 @@ function EditFile(props){
     }
     function handleFileChange(event) {
         file = event.target.files[0];
-        if (file.type !== props.metadata.type){
-          alert("noononononononooooo");
-          return;
-        }
         
         document.getElementById("update-file-name").value=file.name;
         document.getElementById("filename-selected").innerHTML = `You Selected ${truncate(file.name, 45)}` 

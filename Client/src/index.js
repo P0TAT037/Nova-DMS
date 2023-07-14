@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './App.css';
 import './Login.css';
 import './Home-buttons.css'
+import './lightmode.css'
 import App from'./Router/Router.js';
 import 'bootstrap/dist/css/bootstrap.css';
 import reportWebVitals from './reportWebVitals';

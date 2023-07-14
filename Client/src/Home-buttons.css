@@ -243,3 +243,17 @@
     border: 1px solid #000000;
     border-radius: 10px;
 }
+.darkmode-button{
+    position: absolute;
+    top: 94vh;
+    left: 96vw;
+    height: 5vh;
+    width: 3vw;
+    border-radius: 15px;
+    background-color: #bdbdbdb5;
+    background-repeat: no-repeat;
+    background-size: 2.5vw 5vh;
+    background-position: 0.25vw;
+    border: #000000;
+    background-image: url("./image/dark-mode.png");
+}

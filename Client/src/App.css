@@ -7,7 +7,6 @@
 .row-main{
   font-family: 'Agency FB', Arial;
   animation: onload 3.5s;
-
 }
 .container-getfiles {
   display: flex;
@@ -249,7 +248,7 @@
 }
 
 .div-popup{
-  background-color: #2020207f;
+  background-color: #202020b5;
   color: aliceblue;
   border-radius: 10px;
   font-size: 22px;
@@ -485,6 +484,7 @@ input[type="file"] {
   position: absolute;
   top: 6vh;
   left: 15vw;
+  z-index: 2;
   height: 90vh;
   width: 65vw;
 }

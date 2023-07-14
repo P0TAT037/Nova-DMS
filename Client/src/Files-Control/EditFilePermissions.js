@@ -64,7 +64,7 @@ function FilePermissions(props){
             var xhttp2 = new XMLHttpRequest();
         xhttp2.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("ميه ميه يا باشا")
+                alert("User Permission Changed")
                 
             }
         }
@@ -82,7 +82,7 @@ function FilePermissions(props){
             var xhttp2 = new XMLHttpRequest();
         xhttp2.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
-                alert("ميه ميه يا باشا")
+                alert("User Permission Changed")
                 
             }
         }
@@ -106,7 +106,7 @@ function FilePermissions(props){
                     {mergedarray.map((item)=>(
                         item.level < 1 &&(<div className="pop-row" key={item.id}>
                             <span className="pop-span">{item.name}</span>
-                            <button style={{float: "right", height:"1vh"}} onClick={()=> ChangePerm(item.id)}>Change</button>
+                            <button style={{float: "right", height:"4.5vh" ,width:"5vw"}} className="pop-button" onClick={()=> ChangePerm(item.id)}>Change</button>
                             <select style={{float: "right", marginRight:" 15vw" , marginTop:"0.4vh"}} className="pop-select" id={item.id} defaultValue={`${item.perm}`}>
                               <option value="true">Read and Write</option>
                               <option value="false">Read only</option>
@@ -120,18 +120,19 @@ function FilePermissions(props){
                     )}
                 {rolespressed === true &&(
                     <>
-                    <button onClick={() => setRolespressed(false)}>Back</button>
+                    <button className="pop-back" onClick={() => setRolespressed(false)}>Back</button>
                     {roles.map((role) => (
                         <>
-                        <div key={role.id} >
-                            {role.name}
-                            <select id={role.id} >
+                        <div key={role.id} className="pop-row" >
+                            <span className="pop-span"> {role.name}</span>
+                            <button style={{float: "right", height:"4.5vh" ,width:"5vw"}} className="pop-button" onClick={()=> Changeroleperm(role.id)}>Change</button>
+                            <select style={{float: "right", marginRight:" 15vw" , marginTop:"0.4vh"}} className="pop-select" id={role.id} >
                             <option value="notchosen">Please Choose an option</option>
                               <option value="true">Read and Write</option>
                               <option value="false">Read only</option>
                               <option value="">Only User</option>
                               </select>
-                              <button onClick={()=> Changeroleperm(role.id)}>Change</button>
+                              
                         </div>
                         </>
                     ))}

@@ -1,0 +1,5 @@
+.div-colorlight{
+    background-color: whitesmoke;
+    height: 100vh;
+    animation: explosion 2.75s ease-in-out;
+  }

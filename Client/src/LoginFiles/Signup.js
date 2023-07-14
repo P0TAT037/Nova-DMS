@@ -60,7 +60,7 @@ function SignupPage({ onLoginClick }) {
           <button  type="submit" className="btn-login">SignUp</button>
         </form>
         <br />
-        <div id="login conformation"></div>
+        <div id="login conformation" style={{color: "white"}}></div>
         
       </div>
     </div>

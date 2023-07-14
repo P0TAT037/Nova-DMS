@@ -68,7 +68,7 @@ function LoginPage(props) {
         <button type="submit" className="btn-login">Login</button>
       </form>
       <br />
-      <div id="login conformation"></div>
+      <div id="login conformation" style={{color:"white"}}></div>
       <p className='p-login'>Don't have an account?</p>
       <button onClick={props.onSignupClick} className="btn-signup">Sign Up</button>
     </div>

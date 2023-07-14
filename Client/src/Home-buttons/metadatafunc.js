@@ -7,13 +7,11 @@ import data from "../Endpoint-url.json"
 import { useState } from "react";
 function Getmetadata(props){
     var allusers =[]
+    console.log(props);
     if(props.clicked === true){
         if (document.getElementById("input-search")){
             document.getElementById("main-coloumn").className="col-9 col-home-base";
             document.getElementById("input-search").className="input-search-aftermeta";
-        }
-        else if (!document.getElementById("input-search")) {
-            
         }
         
     var xhttp = new XMLHttpRequest();
@@ -46,7 +44,19 @@ function Getmetadata(props){
             <div className="row">
 
                 {/* Permission Control */}
-            <div className="col-6"><FilePermissions metadata={props.metadata} token={props.token} allusers={allusers} id={props.metadata.id}/></div>
+                {props.userinfo.level !== "0" &&(
+                    <>
+                    <div className="col-6"><FilePermissions metadata={props.metadata} token={props.token} allusers={allusers} id={props.metadata.id}/></div>
+                    </>
+                )}
+                {props.userinfo.level === "0" &&(
+                    <>
+                    <div className="col-12">
+            <button className="btn-popup-close" onClick={() => close()}>X</button>
+            </div>
+                    </>
+                )}
+            
 
                 
 
@@ -57,10 +67,18 @@ function Getmetadata(props){
                 )}   
             </div>
             
-            
-                <div className="col-4">
+            {props.userinfo.level === "0" &&(
+                    <>
+                    </>
+                )}
+                {props.userinfo.level !== "0" &&(
+                    <>
+                    <div className="col-4">
             <button className="btn-popup-close" onClick={() => close()}>X</button>
             </div>
+                    </>
+                )}
+                
             </div>
             {}
             <p className="span-metadata">Name: <span className="pop-span"> {metadata.name}</span></p>
@@ -78,8 +96,13 @@ function Getmetadata(props){
         <div className="col-3"><DeleteFile metadata={props.metadata} hid={props.hid} token={props.token} onDelete={sendtocontainer}/></div>
         {metadata.type !== "folder" && (
             <>
-            <div className="col-7"><button onClick={() => props.getversionsclicked(metadata.id, metadata.type)} className="metadata-nav-button">Get Previous Versions</button></div>
-            <div className="col-2"><button onClick={() => props.movefileclicked(metadata.id, metadata.name)} className="metadata-nav-button">Move </button></div>
+            {metadata.version !== 1 &&(
+                <>
+                <div className="col-7"><button onClick={() => props.getversionsclicked(metadata.id, metadata.type)} className="metadata-nav-button">Get Previous Versions</button></div>
+                </>
+            )}
+            
+            <div className="col-2"><button onClick={() => {props.movefileclicked(metadata.id, metadata.name);document.getElementById("main-coloumn").className="col-11 col-home-base"; document.getElementById("input-search").className="input-search";}} className="metadata-nav-button">Move </button></div>
             </>
         )}
         </div>
